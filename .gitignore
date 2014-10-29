@@ -20,3 +20,5 @@ nbproject/*
 *.DS_Store
 *.lock
 /I coinquilini/nbproject/private/
+
+build.xml
