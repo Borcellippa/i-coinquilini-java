@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <script type="text/javascript">
+    (function() {
+       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+       po.src = 'https://apis.google.com/js/client:plusone.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+     })();
+     
+    function signinCallback(authResult) {
+        if (authResult['access_token']) {
+          // Autorizzazione riuscita
+          // Nascondi il pulsante di accesso ora che l'utente è autorizzato. Ad esempio: 
+          document.getElementById('signinButton').setAttribute('style', 'display: none');
+          alert("Bravo scemo, sei connesso!");
+        } else if (authResult['error']) {
+          // Si è verificato un errore.
+          // Possibili codici di errore:
+          //   "access_denied" - L'utente ha negato l'accesso alla tua app
+          //   "immediate_failed" - Impossibile eseguire l'accesso automatico dell'utente
+            console.log('There was an error: ' + authResult['error']);
+        }
+    }   
+    
+     
+    </script>
+    
+    <body>
+        <span id="signinButton">
+          <span
+            class="g-signin"
+            data-callback="signinCallback"
+            data-clientid="25065769096-62u268do2oeenc39pe3719s7n9d946f7.apps.googleusercontent.com"
+            data-cookiepolicy="single_host_origin"
+            data-requestvisibleactions="http://schemas.google.com/AddActivity"
+            data-scope="https://www.googleapis.com/auth/plus.login">
+          </span>
+        </span>
+        
+        
+        
+        
+    </body>
+</html>
