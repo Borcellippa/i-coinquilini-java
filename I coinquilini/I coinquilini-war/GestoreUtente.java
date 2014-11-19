@@ -4,18 +4,8 @@
  * and open the template in the editor.
  */
 
-package web;
-
-import ejb.coinquilini.users.GestoreUtenteLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Bortignon Gianluca
+ * @author Mattia
  */
-public class UserController extends HttpServlet {
-    @EJB
-    GestoreUtenteLocal gestoreUtente;
+public class GestoreUtente extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +26,6 @@ public class UserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -47,17 +34,10 @@ public class UserController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserController</title>");            
+            out.println("<title>Servlet GestoreUtente</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserController at " + request.getContextPath() + "</h1>");
-            RequestDispatcher rd = null;
-            String action = request.getParameter("action");
-            if(action.equals("addUtente")){
-                out.println("CIAOOOdfsdfsrfseOOOOO");
-                gestoreUtente.addUtente("nome", "cognome");
-                out.println("CIAO15151552");
-            }
+            out.println("<h1>Servlet GestoreUtente at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
