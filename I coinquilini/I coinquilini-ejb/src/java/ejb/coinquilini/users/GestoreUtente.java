@@ -8,13 +8,13 @@ package ejb.coinquilini.users;
 
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Bortignon Gianluca
  */
-@Stateful
+@Stateless
 public class GestoreUtente implements GestoreUtenteLocal {
     @EJB
     private UtenteFacadeLocal utenteFacade;
