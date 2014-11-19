@@ -7,8 +7,10 @@
 package web;
 
 import ejb.coinquilini.users.GestoreUtenteLocal;
+import ejb.coinquilini.users.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,9 +51,16 @@ public class UserController extends HttpServlet {
             RequestDispatcher rd = null;
             String action = request.getParameter("action");
             if(action.equals("addUtente")){
-                out.println("CIAOOOdfsdfsrfseOOOOO");
-                gestoreUtente.addUtente("nome", "cognome");
-                out.println("CIAO15151552");
+                out.println("ADD-UTENTE");
+                gestoreUtente.addUtente("nome2", "cognome2");
+            }
+            
+            if(action.equals("getUtente")){
+                out.println("GET-UTENTE</br>");
+                List<Utente> users = gestoreUtente.getUtenti();
+                for(Utente u: users){
+                    out.println(u.getCognome() + " - " + u.getNome() + "<br/>");
+                }
             }
             out.println("</body>");
             out.println("</html>");
