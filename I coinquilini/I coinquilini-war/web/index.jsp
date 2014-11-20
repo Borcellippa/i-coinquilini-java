@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>login</title>
+        <title>Dashboard</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
 
