@@ -25,24 +25,37 @@ public class Utente implements Serializable {
     private Long id;
 
     private String email;
-
+    private String password;
     private String nome;
-
     private String cognome;
-
     private String telefono;
-
-    private int eta;
-
+    private String data_nascita;
     private String nazionalita;
-
     private String g_access_token;
-
     private String fb_access_token;
-
     private String fb_user_id;
-
     private String foto_path;
+    
+    private String citta_natale;
+
+    /**
+     * Get the value of citta_natale
+     *
+     * @return the value of citta_natale
+     */
+    public String getCitta_natale() {
+        return citta_natale;
+    }
+
+    /**
+     * Set the value of citta_natale
+     *
+     * @param citta_natale new value of citta_natale
+     */
+    public void setCitta_natale(String citta_natale) {
+        this.citta_natale = citta_natale;
+    }
+
 
    // private List<Preferito> preferiti;
     
@@ -65,6 +78,24 @@ public class Utente implements Serializable {
         this.preferiti = preferiti;
     }*/
 
+    /**
+     * Get the value of password
+     *
+     * @return the value of password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @param password new value of password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     /**
      * Get the value of foto_path
      *
@@ -156,21 +187,21 @@ public class Utente implements Serializable {
     }
 
     /**
-     * Get the value of eta
+     * Get the value of data_nascita
      *
-     * @return the value of eta
+     * @return the value of data_nascita
      */
-    public int getEta() {
-        return eta;
+    public String getData_nascita() {
+        return data_nascita;
     }
 
     /**
-     * Set the value of eta
+     * Set the value of data_nascita
      *
-     * @param eta new value of eta
+     * @param data_nascita new value of data_nascita
      */
-    public void setEta(int eta) {
-        this.eta = eta;
+    public void setData_nascita(String data_nascita) {
+        this.data_nascita = data_nascita;
     }
 
     /**

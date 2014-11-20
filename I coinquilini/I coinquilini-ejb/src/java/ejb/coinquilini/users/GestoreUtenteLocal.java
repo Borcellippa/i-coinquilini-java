@@ -18,6 +18,10 @@ public interface GestoreUtenteLocal {
 
     List<Utente> getUtenti();
 
-    void addUtente(String nome, String cognome);
+    void addUtente(String nome, String cognome, String email, String password, String telefono, String nazionalita, String data_nascita, String citta_natale);
+
+    Utente getUtente(String email, String password);
+
+    Utente getUtenteByEmail(String email);
     
 }

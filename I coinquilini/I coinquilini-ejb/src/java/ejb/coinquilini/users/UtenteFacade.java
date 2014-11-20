@@ -10,6 +10,7 @@ import ejb.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,5 +29,10 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
     public UtenteFacade() {
         super(Utente.class);
     }
-    
+
+    @Override
+    public Utente getUtenteByEmail(String email) {
+        TypedQuery<Utente> query = em.createQuery("SELECT u FROM Utente u WHERE u.email ='"+email+"'", Utente.class);
+        return query.getSingleResult();
+    }
 }

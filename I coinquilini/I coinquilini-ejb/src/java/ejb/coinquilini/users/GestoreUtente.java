@@ -30,11 +30,31 @@ public class GestoreUtente implements GestoreUtenteLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
+    
+    
     @Override
-    public void addUtente(String nome, String cognome) {
+    public void addUtente(String nome, String cognome, String email, String password, String telefono, String nazionalita, String data_nascita, String citta_natale) {
         Utente u = new Utente();
-        u.setCognome(cognome);
         u.setNome(nome);
+        u.setCognome(cognome);
+        u.setEmail(email);
+        u.setPassword(password);
+        u.setTelefono(telefono);
+        u.setNazionalita(nazionalita);
+        u.setData_nascita(data_nascita);
+        u.setCitta_natale(citta_natale);
+        
         utenteFacade.create(u);
+    }
+
+    @Override
+    public Utente getUtente(String email, String password) {
+        Utente u = new Utente();
+        return utenteFacade.find(u);
+    }
+
+    @Override
+    public Utente getUtenteByEmail(String email) {
+        return utenteFacade.getUtenteByEmail(email);
     }
 }

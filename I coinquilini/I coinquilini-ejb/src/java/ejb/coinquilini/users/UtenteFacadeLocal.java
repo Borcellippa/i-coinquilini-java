@@ -30,5 +30,7 @@ public interface UtenteFacadeLocal {
     List<Utente> findRange(int[] range);
 
     int count();
+
+    Utente getUtenteByEmail(String email);
     
 }

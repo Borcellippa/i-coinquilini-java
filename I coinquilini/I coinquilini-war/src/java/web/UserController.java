@@ -50,17 +50,25 @@ public class UserController extends HttpServlet {
             out.println("<h1>Servlet UserController at " + request.getContextPath() + "</h1>");
             RequestDispatcher rd = null;
             String action = request.getParameter("action");
-            if(action.equals("addUtente")){
-                out.println("ADD-UTENTE");
-                gestoreUtente.addUtente("nome2", "cognome2");
-            }
             
-            if(action.equals("getUtente")){
+            if(action.equals("addUtente")){
+                String nome = request.getParameter("nome");
+                String cognome = request.getParameter("cognome");
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                String telefono = request.getParameter("telefono");
+                String nazionalita = request.getParameter("nazionalita");
+                String data_nascita = request.getParameter("data_nascita");
+                String citta_natale = request.getParameter("citta_natale");
+                
+                gestoreUtente.addUtente(nome, cognome, email, password, telefono, nazionalita, data_nascita, citta_natale);
+            }
+            if(action.equals("login")){
                 out.println("GET-UTENTE</br>");
-                List<Utente> users = gestoreUtente.getUtenti();
-                for(Utente u: users){
-                    out.println(u.getCognome() + " - " + u.getNome() + "<br/>");
-                }
+                String email = request.getParameter("email");
+                //List<Utente> users = gestoreUtente.getUtenti();
+                Utente user = gestoreUtente.getUtenteByEmail(email);
+                out.println(user.getEmail()+ "<br/>");
             }
             out.println("</body>");
             out.println("</html>");
