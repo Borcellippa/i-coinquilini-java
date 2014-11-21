@@ -23,7 +23,6 @@
                                     <h3 class="panel-title">Login</h3>
                                 </div>
                                 <div class="panel-body">
-
                                     <form action="UserController" method="POST" role="form">
                                         <div class="form-group">
                                             <label for="email">Email address</label>
@@ -35,6 +34,8 @@
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">Login</button>
+                                        oppure
+                                        <a href="registrazione.jsp" class="btn btn-default" role="button">Registrati</a>
 
                                         <input type="hidden" name="action" value="login">
                                     </form>
@@ -43,6 +44,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <%@include  file="footer.html" %>
             </div>
         </div>
     </div>
