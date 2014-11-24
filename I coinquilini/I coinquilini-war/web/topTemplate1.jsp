@@ -1,10 +1,11 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="com.google.gson.Gson"%>
-<% Gson gson = new Gson(); %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title><%=titolo %></title>
+        <title>I Coinquilini</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
 
