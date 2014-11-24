@@ -25,13 +25,9 @@ public class GestoreUtente implements GestoreUtenteLocal {
         return listaUtenti;
     }
     
-    
-
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    
-    
     @Override
     public void addUtente(String nome, String cognome, String email, String password, String telefono, String nazionalita, String data_nascita, String citta_natale) {
         Utente u = new Utente();

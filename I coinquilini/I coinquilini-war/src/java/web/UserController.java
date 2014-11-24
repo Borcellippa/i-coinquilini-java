@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web;
 
+import com.google.gson.Gson;
 import ejb.coinquilini.users.GestoreUtenteLocal;
 import ejb.coinquilini.users.Utente;
 import java.io.IOException;
@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Bortignon Gianluca
  */
 public class UserController extends HttpServlet {
+
     @EJB
     GestoreUtenteLocal gestoreUtente;
 
@@ -35,43 +36,37 @@ public class UserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserController at " + request.getContextPath() + "</h1>");
-            RequestDispatcher rd = null;
-            String action = request.getParameter("action");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        RequestDispatcher rd = null;
+        String action = request.getParameter("action");
+
+        if (action.equals("addUtente")) {
+            String nome = request.getParameter("nome");
+            String cognome = request.getParameter("cognome");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String telefono = request.getParameter("telefono");
+            String nazionalita = request.getParameter("nazionalita");
+            String data_nascita = request.getParameter("data_nascita");
+            String citta_natale = request.getParameter("citta_natale");
+
+            gestoreUtente.addUtente(nome, cognome, email, password, telefono, nazionalita, data_nascita, citta_natale);
+        }
+        if (action.equals("login")) {
+            String email = request.getParameter("email");
             
-            if(action.equals("addUtente")){
-                String nome = request.getParameter("nome");
-                String cognome = request.getParameter("cognome");
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                String telefono = request.getParameter("telefono");
-                String nazionalita = request.getParameter("nazionalita");
-                String data_nascita = request.getParameter("data_nascita");
-                String citta_natale = request.getParameter("citta_natale");
-                
-                gestoreUtente.addUtente(nome, cognome, email, password, telefono, nazionalita, data_nascita, citta_natale);
+            Utente user = gestoreUtente.getUtenteByEmail(email);
+            if(user != null){
+                String gsonUser = buildGson(user);
+                String gsonTitolo = buildGson("Profilo utente");
+                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                request.setAttribute("titolo", gsonTitolo);
+                request.setAttribute("utente", gsonUser);
             }
-            if(action.equals("login")){
-                out.println("GET-UTENTE</br>");
-                String email = request.getParameter("email");
-                //List<Utente> users = gestoreUtente.getUtenti();
-                Utente user = gestoreUtente.getUtenteByEmail(email);
-                out.println(user.getEmail()+ "<br/>");
-            }
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 
@@ -113,5 +108,17 @@ public class UserController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private String buildGson(Object obj) {
+        Gson gson = new Gson();
+        String json = gson.toJson(obj);
+
+        if (json == null) {
+            System.out.println("servlet buildGson: NULL");
+        } else {
+            System.out.println("servlet buildGson: NOT NULL  " + json);
+        }
+        return json;
+    }
 
 }

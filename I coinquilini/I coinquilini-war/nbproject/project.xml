@@ -10,8 +10,8 @@
                     <file>${reference.I_coinquilini-ejb.dist}</file>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.i-coinquilini-java-Librerie}</file>
-                    <path-in-war>WEB-INF/classes</path-in-war>
+                    <file>${file.reference.gson-2.3.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
