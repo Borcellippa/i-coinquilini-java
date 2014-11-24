@@ -32,7 +32,7 @@
                             <input type="password" name="password" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="tel">Telefono</label>
+                            <label for="telefono">Telefono</label>
                             <input type="text" name="telefono" class="form-control" pattern="[0-9]*">
                         </div>
                         <div class="form-group">

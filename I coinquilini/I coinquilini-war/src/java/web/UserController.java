@@ -60,14 +60,19 @@ public class UserController extends HttpServlet {
             String email = request.getParameter("email");
             
             Utente user = gestoreUtente.getUtenteByEmail(email);
+            
             if(user != null){
                 String gsonUser = buildGson(user);
                 String gsonTitolo = buildGson("Profilo utente");
-                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
                 request.setAttribute("titolo", gsonTitolo);
                 request.setAttribute("utente", gsonUser);
+                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+            }
+            else{
+                rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
