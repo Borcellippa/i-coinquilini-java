@@ -33,13 +33,15 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
 
     @Override
     public Utente getUtenteByEmail(String email) {
-        TypedQuery<Utente> query = em.createQuery("SELECT u FROM Utente u WHERE u.email ='"+email+"'", Utente.class);
-        
         try {
+            TypedQuery<Utente> query = em.createQuery("SELECT u FROM Utente u WHERE u.email ='"+email+"'", Utente.class);
             return query.getSingleResult();
         }
         catch(NoResultException e) {
             return null;
+        }
+        catch(Exception e){
+            return new Utente();
         }
     }
 }

@@ -11,7 +11,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-        <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/global.css" rel="stylesheet" type="text/css" media="all" />
     </head>
     <body>
         <!-----start-wrap--------->
@@ -27,7 +27,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <!-----start-search-bar-section--------->
                 <div class="buttom">
                     <div class="seach_bar">
-                        <p>you can go to <span><a href="#">home</a></span> page or search here</p>
+                        <p>you can go to <span><a href="index.jsp">home</a></span> page or search here</p>
                     </div>
                 </div>
                 <!-----end-sear-bar--------->
