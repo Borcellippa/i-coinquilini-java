@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             <label for="data_nascita">Data di Nascita</label>
-                            <input type="date" name="data_nascita" class="form-control">
+                            <input autocomplete="false" name="data" class="form-control" placeholder="gg/mm/aaaa" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true">
                         </div>
                         <div class="form-group">
                             <label for="citta_natale">Città natale</label>
