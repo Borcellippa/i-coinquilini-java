@@ -55,6 +55,8 @@ public class UserController extends HttpServlet {
             String citta_natale = request.getParameter("citta_natale");
 
             gestoreUtente.addUtente(nome, cognome, email, password, telefono, nazionalita, data_nascita, citta_natale);
+            
+            rd = getServletContext().getRequestDispatcher("/index.jsp");
         }
         if (action.equals("login")) {
             String email = request.getParameter("email");
