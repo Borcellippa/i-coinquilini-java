@@ -54,23 +54,32 @@ public class UserController extends HttpServlet {
             String data_nascita = request.getParameter("data_nascita");
             String citta_natale = request.getParameter("citta_natale");
 
-            gestoreUtente.addUtente(nome, cognome, email, password, telefono, nazionalita, data_nascita, citta_natale);
+            //Controllo che la mail non sia già presente nel DB
+            Utente user = gestoreUtente.getUtenteByEmail(email);
+            if (user == null) {
+                gestoreUtente.addUtente(nome, cognome, email, password, telefono, nazionalita, data_nascita, citta_natale);
+                user = gestoreUtente.getUtenteByEmail(email);
+                String gsonUser = buildGson(user);
+                request.setAttribute("utente", gsonUser);
+                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+            }
+            else {
+                rd = getServletContext().getRequestDispatcher("/errore.jsp");
+            }
             
+
             rd = getServletContext().getRequestDispatcher("/index.jsp");
         }
         if (action.equals("login")) {
             String email = request.getParameter("email");
-            
+
             Utente user = gestoreUtente.getUtenteByEmail(email);
-            
-            if(user != null){
+
+            if (user != null) {
                 String gsonUser = buildGson(user);
-                String gsonTitolo = buildGson("Profilo utente");
-                request.setAttribute("titolo", gsonTitolo);
                 request.setAttribute("utente", gsonUser);
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
-            }
-            else{
+            } else {
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }

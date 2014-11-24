@@ -9,6 +9,7 @@ package ejb.coinquilini.users;
 import ejb.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -33,6 +34,12 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
     @Override
     public Utente getUtenteByEmail(String email) {
         TypedQuery<Utente> query = em.createQuery("SELECT u FROM Utente u WHERE u.email ='"+email+"'", Utente.class);
-        return query.getSingleResult();
+        
+        try {
+            return query.getSingleResult();
+        }
+        catch(NoResultException e) {
+            return null;
+        }
     }
 }
