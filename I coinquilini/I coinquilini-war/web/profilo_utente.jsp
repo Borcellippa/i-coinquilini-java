@@ -4,10 +4,10 @@
     Author     : Bortignon Gianluca
 --%>
 <%@page import="ejb.coinquilini.users.Utente"%>
-<%@include  file="topTemplate1.jsp" %>
+<%@include  file="topTemplateSideMenu.jsp" %>
 <%  Gson gsonUtente = new Gson();
     String utenteFromJson = (request.getAttribute("utente")).toString();
     Utente utente = gsonUtente.fromJson(utenteFromJson, Utente.class);
 %>
-    <h1><%= utente.getEmail() %></h1>
-<%@include  file="botTemplate1.jsp" %>
+<h1><%= utente.getEmail()%></h1>
+<%@include  file="botTemplateSideMenu.jsp" %>

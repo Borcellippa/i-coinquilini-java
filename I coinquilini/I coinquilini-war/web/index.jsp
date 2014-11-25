@@ -1,4 +1,4 @@
-<%@include  file="topTemplate1.jsp" %>
+<%@include  file="topTemplateSideMenu.jsp" %>
 <div class="col-md-3">
     <div class="row">
         <div class="panel panel-default">
@@ -26,4 +26,4 @@
         </div>
     </div>
 </div>
-<%@include  file="botTemplate1.jsp" %>
+<%@include  file="botTemplateSideMenu.jsp" %>

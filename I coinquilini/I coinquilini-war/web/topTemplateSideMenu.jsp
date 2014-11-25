@@ -16,6 +16,6 @@
             <div class="row">
                 <%@include  file="header.html" %>
                 <div class="col-md-2">
-                    <%@include  file="sidemenu.html" %>
+                    <%@include  file="sidemenu.jsp" %>
                 </div>
                 <div class="col-md-10">

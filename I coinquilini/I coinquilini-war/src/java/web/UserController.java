@@ -69,6 +69,7 @@ public class UserController extends HttpServlet {
             }
             else {
                 System.out.println("Trovato: "+email);
+                request.setAttribute("utente", buildGson(user));
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
@@ -80,6 +81,7 @@ public class UserController extends HttpServlet {
             if (user != null) {
                 String gsonUser = buildGson(user);
                 request.setAttribute("utente", gsonUser);
+                request.setAttribute("location", buildGson("profilo_utente"));
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
             } else {
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");

@@ -38,9 +38,11 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
             return query.getSingleResult();
         }
         catch(NoResultException e) {
+            System.out.println("##### Nessun risultato");
             return null;
         }
         catch(Exception e){
+            System.out.println("##### Eccezione generica");
             return new Utente();
         }
     }

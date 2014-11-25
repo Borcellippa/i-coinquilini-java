@@ -1,3 +1,5 @@
+<%@page import="ejb.coinquilini.users.Utente"%>
+<%@page import="com.google.gson.Gson"%>
 <!--A Design by W3layouts
 Author: W3layout
 Author URL: http://w3layouts.com
@@ -28,6 +30,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="buttom">
                     <div class="seach_bar">
                         <p>you can go to <span><a href="index.jsp">home</a></span> page or search here</p>
+                        <p>
+                            <%  Gson gsonUtente = new Gson();
+                                String utenteFromJson = (request.getAttribute("utente")).toString();
+                                Utente utente = gsonUtente.fromJson(utenteFromJson, Utente.class);
+                            %>
+                            <%= utente.getEmail()%>
+                        </p>
                     </div>
                 </div>
                 <!-----end-sear-bar--------->
