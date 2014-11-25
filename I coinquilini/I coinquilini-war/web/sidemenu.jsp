@@ -1,9 +1,14 @@
 <%@page import="ejb.coinquilini.users.Utente"%>
 <%@page import="com.google.gson.Gson"%>
 <div class="list-group">
-    <%Gson gsonLocation = new Gson();
-    String locationFromJson = (request.getAttribute("location")).toString();
-    String location = gsonLocation.fromJson(locationFromJson, String.class);%>
+    <%
+        Gson gsonLocation = new Gson();
+        String location = "";
+        if (request.getAttribute("location") != null) {
+            String loc = request.getAttribute("location").toString();
+            location = gsonLocation.fromJson(loc, String.class);
+        }
+    %>
     <a href="index.jsp" class="list-group-item">Home</a>
     <a href="dashboard.jsp" class="list-group-item">&nbsp&nbsp Dashboard</a>
     <a href="#" class="list-group-item<% if (location.equals("coinquilini")) out.print("active"); %>

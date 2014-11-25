@@ -9,11 +9,11 @@
                 <form action="UserController" method="POST" role="form">
                     <div class="form-group">
                         <label for="email">Email address</label>
-                        <input class="form-control" type="text" name="email" id="email" placeholder="Email">
+                        <input class="form-control" type="text" name="email" id="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+                        <input class="form-control" type="password" name="password" id="password" placeholder="Password" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Login</button>
