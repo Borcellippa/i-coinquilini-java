@@ -115,8 +115,13 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
+        if (action.equals("logout")) {
+            session = request.getSession();
+            session.invalidate();
+            rd = getServletContext().getRequestDispatcher("/index.jsp");
+        }
         if (action.equals("home")) {
-            rd = getServletContext().getRequestDispatcher("/home.jsp");
+            rd = getServletContext().getRequestDispatcher("/index.jsp");
         }
         rd.forward(request, response);
     }
