@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ejb.coinquilini.users;
 
 import java.io.Serializable;
@@ -19,6 +18,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class Utente implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,8 +35,27 @@ public class Utente implements Serializable {
     private String fb_access_token;
     private String fb_user_id;
     private String foto_path;
-    
     private String citta_natale;
+    private Casa casa;
+
+    /**
+     * Get the value of casa
+     *
+     * @return the value of casa
+     */
+    public Casa getCasa() {
+        return casa;
+    }
+
+    /**
+     * Set the value of casa
+     *
+     * @param casa new value of casa
+     */
+    public void setCasa(Casa casa) {
+        this.casa = casa;
+    }
+
 
     /**
      * Get the value of citta_natale
@@ -56,28 +75,23 @@ public class Utente implements Serializable {
         this.citta_natale = citta_natale;
     }
 
-
    // private List<Preferito> preferiti;
-    
-
     /**
      * Get the value of preferiti
      *
      * @return the value of preferiti
      */
-  /*  public List<Preferito> getPreferiti() {
+    /*  public List<Preferito> getPreferiti() {
         return preferiti;
     }*/
-
     /**
      * Set the value of preferiti
      *
      * @param preferiti new value of preferiti
      */
-  /*  public void setPreferiti(List<Preferito> preferiti) {
+    /*  public void setPreferiti(List<Preferito> preferiti) {
         this.preferiti = preferiti;
     }*/
-
     /**
      * Get the value of password
      *
@@ -95,7 +109,7 @@ public class Utente implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     /**
      * Get the value of foto_path
      *
@@ -308,5 +322,5 @@ public class Utente implements Serializable {
     public String toString() {
         return "ejb.Utente[ id=" + id + " ]";
     }
-    
+
 }

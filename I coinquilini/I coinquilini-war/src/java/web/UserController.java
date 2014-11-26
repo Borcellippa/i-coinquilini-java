@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,8 +39,18 @@ public class UserController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
+        // creo la sessione utente o richiamo quella già creata
+        HttpSession session = request.getSession();
+
+        if (session.getAttribute("email") == null) {
+            session.setAttribute("email", "ospite");
+            session.setAttribute("tipoAccount", "ospite");
+            session.setAttribute("nome_utente", "ospite");
+        }
 
         RequestDispatcher rd = null;
         String action = request.getParameter("action");
@@ -55,35 +66,52 @@ public class UserController extends HttpServlet {
             String citta_natale = request.getParameter("citta_natale");
 
             //Controllo che la mail non sia già presente nel DB
-            System.out.println("Cerco: "+email);
             Utente user = gestoreUtente.getUtenteByEmail(email);
             if (user == null) {
-                System.out.println("Non trovato: "+email);
                 gestoreUtente.addUtente(nome, cognome, email, password, telefono, nazionalita, data_nascita, citta_natale);
-                System.out.println("Aggiunto utente: "+email);
                 user = gestoreUtente.getUtenteByEmail(email);
-                System.out.println("Recuperato utente: "+email);
                 String gsonUser = buildGson(user);
                 request.setAttribute("utente", gsonUser);
+                request.setAttribute("location", buildGson("profilo"));
+
+                // session
+                session = request.getSession();
+                session.setAttribute("email", email);
+                session.setAttribute("nome", nome);
+                session.setAttribute("tipoAccount", "utente");
+
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
-            }
-            else {
-                System.out.println("Trovato: "+email);
+            } else {
                 request.setAttribute("utente", buildGson(user));
+                request.setAttribute("location", buildGson("errore"));
+
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
         if (action.equals("login")) {
             String email = request.getParameter("email");
-
             Utente user = gestoreUtente.getUtenteByEmail(email);
 
+            // controllo password
             if (user != null) {
                 String gsonUser = buildGson(user);
                 request.setAttribute("utente", gsonUser);
-                request.setAttribute("location", buildGson("profilo_utente"));
+                request.setAttribute("location", buildGson("profilo"));
+
+                // session
+                session = request.getSession();
+                session.setAttribute("email", user.getEmail());
+                session.setAttribute("nome", user.getNome());
+                session.setAttribute("tipoAccount", "utente");
+                
+                if(user.getCasa() != null) {
+                    session.setAttribute("tipoAccount", "utente");
+                    session.setAttribute("casa", user.getCasa().getId());
+                }
+                
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
             } else {
+                request.setAttribute("location", buildGson("errore"));
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
