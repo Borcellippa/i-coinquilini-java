@@ -20,19 +20,19 @@
         </div>
         <div class="uk-grid" id="home-container" style="bottom: 0;display: block;">
             <div class="uk-width-1-2" style="margin-right: 0px;padding-right: 1px">
-                <div class="uk-overlay">
+                <div class="uk-overlay uk-animation-hover uk-animation-scale-down">
                     <img src="images/a.jpg" style="" alt="">
                     <div class="uk-overlay-area">
                         <div class="uk-overlay-area-content">
-                                Entra in casa e inizia e rendere produttiva la tua convivenza
-                                </br>
-                                <button class="uk-button-primary uk-botton-large" type="button">Entra</button>
+                            Entra in casa e inizia e rendere produttiva la tua convivenza
+                            </br>
+                            <button class="uk-button-primary uk-botton-large" type="button">Entra</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="uk-width-1-2">
-                <div class="uk-overlay">
+                <div class="uk-overlay uk-animation-hover uk-animation-scale-down">
                     <img src="images/b.jpg" style="margin-left: 0px;padding-left: 1px" alt="">
                     <div class="uk-overlay-area">
                         <div class="uk-overlay-area-content">
