@@ -26,8 +26,8 @@
                     <div class="uk-overlay">
                         <img src="images/a.jpg" style="" alt="">
                         <div class="uk-overlay-area">
-                            <div class="uk-overlay-area-content">
-                                Entra in casa e inizia e rendere produttiva la tua convivenza
+                            <div class="uk-overlay-area-content lato-font">
+                                Entra in casa e organizza la tua convivenza
                                 <br/><br/>
                                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">
                                     Entra
@@ -40,7 +40,7 @@
                     <div class="uk-overlay">
                         <img src="images/b.jpg" style="margin-left: 0px;padding-left: 1px" alt="">
                         <div class="uk-overlay-area">
-                            <div class="uk-overlay-area-content">
+                            <div class="uk-overlay-area-content lato-font">
                                 Cerca facilmente una casa in base alle tue esigenze
                                 <br/><br/>
                                 <form action="AnnunciController" method="POST" role="form"><form>
