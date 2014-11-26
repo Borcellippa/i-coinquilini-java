@@ -43,9 +43,10 @@
                             <div class="uk-overlay-area-content">
                                 Cerca facilmente una casa in base alle tue esigenze
                                 <br/><br/>
-                                <button type="button" class="btn btn-primary btn-lg">
-                                    Entra
-                                </button>
+                                <form action="AnnunciController" method="POST" role="form"><form>
+                                    <button type="submit" class="btn btn-primary btn-lg">Entra</button>
+                                    <input type="hidden" name="action" value="visualizza_annunci">
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -64,18 +65,18 @@
             <div class="row">
                 <div class="col-md-4 home-component">
                     <div class="component-title">
-                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Promemoria
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Semplifica la vita
                     </div>
                     <h4>
-                        Non dimenticare più impegni, appuntamenti e occasioni.
+                        Devi organizzare una cena con dei tuoi amici? Dovrai comprare qualcosa e addebitare alle persone giuste le spese...<br/>Roommates ti aiuta a fare tutte queste cose!
                     </h4>
                 </div>
                 <div class="col-md-4 home-component">
                     <div class="component-title">
-                        <span class="glyphicon glyphicon-euro" aria-hidden="true"></span> Gestione economica
+                        <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Gestione economica
                     </div>
                     <h4>
-                        Basta discussioni su debiti o crediti, precisione al centesimo
+                        Basta discussioni su debiti o crediti, la precisione con Roommates è al centesimo!
                     </h4>
                 </div>
                 <div class="col-md-4 home-component">
@@ -83,7 +84,7 @@
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Mansioni
                     </div>
                     <h4>
-                        A chi tocca questa settimana? Gestisci i turni delle varie pulizie con facilità
+                        A chi tocca questa settimana pulire il bagno? Gestisci i turni delle varie pulizie con facilità
                     </h4>
                 </div>
             </div>
@@ -135,11 +136,11 @@
                         <form action="UserController" method="POST" role="form">
                             <div class="form-group">
                                 <label for="email">Email address</label>
-                                <input class="form-control" type="text" name="email" id="email" placeholder="Email">
+                                <input class="form-control" type="text" name="email" id="email" placeholder="Email" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+                                <input class="form-control" type="password" name="password" id="password" placeholder="Password" required>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Login</button>
