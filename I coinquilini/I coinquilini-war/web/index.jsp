@@ -26,7 +26,13 @@
                         <div class="uk-overlay-area-content">
                             Entra in casa e inizia e rendere produttiva la tua convivenza
                             </br>
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#loginModal">
+                            <button type="button" class="btn btn-primary"
+                                    <%
+                                        String nomeAccount = (String) session.getAttribute("nome");
+                                        if (nomeAccount == null) {
+                                    %>
+                                        data-toggle="modal" data-target="#loginModal"
+                                    <% } %>>
                                 Entra
                             </button>
                         </div>
@@ -40,7 +46,9 @@
                         <div class="uk-overlay-area-content">
                             Cerca facilmente una casa in base alle tue esigenze
                             </br>
-                            <button class="uk-button-primary uk-botton-large" type="button">Entra</button>
+                            <button type="button" class="btn btn-primary">
+                                Entra
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -55,32 +63,25 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Modal title</h4>
+                        <h4 class="modal-title">Login</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Login</h3>
+                        <form action="UserController" method="POST" role="form">
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input class="form-control" type="text" name="email" id="email" placeholder="Email">
                             </div>
-                            <div class="panel-body">
-                                <form action="UserController" method="POST" role="form">
-                                    <div class="form-group">
-                                        <label for="email">Email address</label>
-                                        <input class="form-control" type="text" name="email" id="email" placeholder="Email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input class="form-control" type="password" name="password" id="password" placeholder="Password">
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary">Login</button>
-                                    oppure
-                                    <a href="registrazione.jsp" class="btn btn-default" role="button">Registrati</a>
-
-                                    <input type="hidden" name="action" value="login">
-                                </form>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input class="form-control" type="password" name="password" id="password" placeholder="Password">
                             </div>
-                        </div>
+
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            oppure
+                            <a href="registrazione.jsp" class="btn btn-default" role="button">Registrati</a>
+
+                            <input type="hidden" name="action" value="login">
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
