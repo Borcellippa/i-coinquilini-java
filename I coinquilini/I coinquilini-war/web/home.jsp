@@ -44,9 +44,9 @@
                                 Cerca facilmente una casa in base alle tue esigenze
                                 <br/><br/>
                                 <form action="AnnunciController" method="POST" role="form"><form>
-                                    <button type="submit" class="btn btn-primary btn-lg">Entra</button>
-                                    <input type="hidden" name="action" value="visualizza_annunci">
-                                </form>
+                                        <button type="submit" class="btn btn-primary btn-lg">Entra</button>
+                                        <input type="hidden" name="action" value="visualizza_annunci">
+                                    </form>
                             </div>
                         </div>
                     </div>
@@ -121,6 +121,7 @@
                 </p>
             </div>
         </div>
+        <%@include  file="footer.html" %>
 
 
 
