@@ -12,53 +12,118 @@
         <title>I coinquilini</title>
         <%@include  file="imports.html" %>
     </head>
-    <body>
-        <div id="jumbotron" class="jumbotron">
-            <div id="jumbotron-man" class="container">
-                <h1 id="jumbotronLabel">Roommates</h1>
+    <body id="homepage-body">
+        <div class="row">
+            <div id="jumbotron" class="jumbotron">
+                <div id="jumbotron-man" class="container">
+                    <h1 id="jumbotronLabel">Roommates</h1>
+                </div>
             </div>
         </div>
-        <div class="uk-grid" id="home-container" style="bottom: 0;display: block;">
-            <div class="uk-width-1-2" style="margin-right: 0px;padding-right: 1px">
-                <div class="uk-overlay">
-                    <img src="images/a.jpg" style="" alt="">
-                    <div class="uk-overlay-area">
-                        <div class="uk-overlay-area-content">
-                            Entra in casa e inizia e rendere produttiva la tua convivenza
-                            </br>
-                            <%
-                                String nomeAccount = (String) session.getAttribute("nome");
-                                if (nomeAccount == null) {
-                            %>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-                            <% } else { %>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-                            <% }%>
-                                Entra
-                            </button>
+        <div class="row">
+            <div class="uk-grid" id="home-container" style="bottom: 0;display: block;">
+                <div class="uk-width-1-2" style="margin-right: 0px;padding-right: 1px">
+                    <div class="uk-overlay">
+                        <img src="images/a.jpg" style="" alt="">
+                        <div class="uk-overlay-area">
+                            <div class="uk-overlay-area-content">
+                                Entra in casa e inizia e rendere produttiva la tua convivenza
+                                <br/><br/>
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">
+                                    Entra
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="uk-width-1-2">
-                <div class="uk-overlay">
-                    <img src="images/b.jpg" style="margin-left: 0px;padding-left: 1px" alt="">
-                    <div class="uk-overlay-area">
-                        <div class="uk-overlay-area-content">
-                            Cerca facilmente una casa in base alle tue esigenze
-                            </br>
-                            <button type="button" class="btn btn-primary">
-                                Entra
-                            </button>
+                <div class="uk-width-1-2">
+                    <div class="uk-overlay">
+                        <img src="images/b.jpg" style="margin-left: 0px;padding-left: 1px" alt="">
+                        <div class="uk-overlay-area">
+                            <div class="uk-overlay-area-content">
+                                Cerca facilmente una casa in base alle tue esigenze
+                                <br/><br/>
+                                <button type="button" class="btn btn-primary btn-lg">
+                                    Entra
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="home-motto">
+                        Navighiamo per divertirvi
+                    </div>
+                </div>
+            </div>
+            <hr class="soften">
+            <div class="row">
+                <div class="col-md-4 home-component">
+                    <div class="component-title">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Promemoria
+                    </div>
+                    <h4>
+                        Non dimenticare più impegni, appuntamenti e occasioni.
+                    </h4>
+                </div>
+                <div class="col-md-4 home-component">
+                    <div class="component-title">
+                        <span class="glyphicon glyphicon-euro" aria-hidden="true"></span> Gestione economica
+                    </div>
+                    <h4>
+                        Basta discussioni su debiti o crediti, precisione al centesimo
+                    </h4>
+                </div>
+                <div class="col-md-4 home-component">
+                    <div class="component-title">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Mansioni
+                    </div>
+                    <h4>
+                        A chi tocca questa settimana? Gestisci i turni delle varie pulizie con facilità
+                    </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 home-component">
+                    <div class="component-title">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Wishlist
+                    </div>
+                    <h4>
+                        Condividi cosa manca nella dispensa con i tuoi coinquilini e una volta comprato inserisci direttamente in borsellino le spese sostenute
+                    </h4>
+                </div>
+                <div class="col-md-4 home-component">
+                    <div class="component-title">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Socializza
+                    </div>
+                    <h4>
+                        Incontra e organizza feste con altre case tramite una bacheca e una wishlist condivisa
+                    </h4>
+                </div>
+                <div class="col-md-4 home-component">
+                    <div class="component-title">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp Promemoria
+                    </div>
+                    <h4>
+                        L'idraulico viene a casa vostra domani pomeriggio? Ricordalo a tutti in modo che qualcuno sia sempre in casa
+                    </h4>
+                </div>
+            </div>
+            <hr class="soften">
+            <div class="row">
+                <p style="text-align: center">
+                    &copy Borticelli SAP
+                </p>
+            </div>
+        </div>
 
 
 
-
+        <!-- MODAL -->
         <div class="modal fade" id="loginModal">
             <div class="modal-dialog">
                 <div class="modal-content">
