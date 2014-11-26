@@ -26,13 +26,14 @@
                         <div class="uk-overlay-area-content">
                             Entra in casa e inizia e rendere produttiva la tua convivenza
                             </br>
-                            <button type="button" class="btn btn-primary"
-                                    <%
-                                        String nomeAccount = (String) session.getAttribute("nome");
-                                        if (nomeAccount == null) {
-                                    %>
-                                        data-toggle="modal" data-target="#loginModal"
-                                    <% } %>>
+                            <%
+                                String nomeAccount = (String) session.getAttribute("nome");
+                                if (nomeAccount == null) {
+                            %>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+                            <% } else { %>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+                            <% }%>
                                 Entra
                             </button>
                         </div>
@@ -82,10 +83,6 @@
 
                             <input type="hidden" name="action" value="login">
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

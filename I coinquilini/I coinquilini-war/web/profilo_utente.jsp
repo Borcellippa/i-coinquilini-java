@@ -9,5 +9,5 @@
     String utenteFromJson = (request.getAttribute("utente")).toString();
     Utente utente = gsonUtente.fromJson(utenteFromJson, Utente.class);
 %>
-<h1><%= utente.getEmail()%></h1>
+<h1>Questo è il profilo <%= utente.getEmail()%></h1>
 <%@include  file="botTemplateSideMenu.jsp" %>
