@@ -7,6 +7,7 @@
 package ejb.coinquilini.users;
 
 import ejb.AbstractFacade;
+import static java.lang.System.exit;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -42,7 +43,7 @@ public class UtenteFacade extends AbstractFacade<Utente> implements UtenteFacade
             return null;
         }
         catch(Exception e){
-            System.out.println("##### Eccezione generica");
+            System.out.println("##### Eccezione generica: "+e.getMessage());
             return new Utente();
         }
     }

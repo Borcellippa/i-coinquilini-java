@@ -81,8 +81,10 @@ public class UserController extends HttpServlet {
                 session.setAttribute("tipoAccount", "utente");
 
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
-            } else {
+            }
+            else {
                 request.setAttribute("utente", buildGson(user));
+                request.setAttribute("errore", buildGson("User già registrato"));
                 request.setAttribute("location", buildGson("errore"));
 
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
@@ -112,6 +114,7 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
             } else {
                 request.setAttribute("location", buildGson("errore"));
+                request.setAttribute("errore", buildGson("Login non riuscito"));
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }

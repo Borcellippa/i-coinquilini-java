@@ -30,13 +30,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="buttom">
                     <div class="seach_bar">
                         <p>you can go to <span><a href="index.jsp">home</a></span> page or search here</p>
-                        <p>
-                            <%  Gson gsonUtente = new Gson();
-                                String utenteFromJson = (request.getAttribute("utente")).toString();
-                                Utente utente = gsonUtente.fromJson(utenteFromJson, Utente.class);
-                            %>
-                            <%= utente.getEmail()%>
-                        </p>
+                        <%  Gson gsonErrore = new Gson();
+                            String erroreFromJson = (request.getAttribute("errore")).toString();
+                            String errore = gsonErrore.fromJson(erroreFromJson, String.class);
+                        %>
+                        <h2><%= errore%></h2>
                     </div>
                 </div>
                 <!-----end-sear-bar--------->
