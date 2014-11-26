@@ -123,8 +123,8 @@ public class UserController extends HttpServlet {
             session.invalidate();
             rd = getServletContext().getRequestDispatcher("/index.jsp");
         }
-        if (action.equals("home")) {
-            rd = getServletContext().getRequestDispatcher("/index.jsp");
+        if (action.equals("firstRedirect")) {
+            rd = getServletContext().getRequestDispatcher("/home.jsp");
         }
         rd.forward(request, response);
     }
@@ -178,6 +178,10 @@ public class UserController extends HttpServlet {
             System.out.println("servlet buildGson: NOT NULL  " + json);
         }
         return json;
+    }
+    
+    private boolean setSession(HttpServletRequest request){
+        return true;
     }
 
 }
