@@ -87,6 +87,9 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
+        if (action.equals("home")) {
+            rd = getServletContext().getRequestDispatcher("/home.jsp");
+        }
         rd.forward(request, response);
     }
 
