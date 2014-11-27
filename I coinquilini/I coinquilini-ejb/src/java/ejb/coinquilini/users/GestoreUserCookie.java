@@ -37,6 +37,10 @@ public class GestoreUserCookie implements GestoreUserCookieLocal {
     @Override
     public String createUserCookie(String email) {
         Utente u = utenteFacade.getUtenteByEmail(email);
+        UserCookie actualCookie = userCookieFacade.getCookieByUser(u);
+        /* Se un cookie è già presente nel db lo si elimina prima di inserire il nuovo */
+        if(actualCookie != null)
+            userCookieFacade.remove(actualCookie);
         UserCookie uc = new UserCookie();
         uc.setUtente(u);
         String token = encryptEmail(email);
@@ -64,8 +68,12 @@ public class GestoreUserCookie implements GestoreUserCookieLocal {
         }
         /* Funzione che effettua l'hash con SHA-256 del token */
         messageDigest.update(stringToEncrypt.getBytes());
-        String encryptedString = new String(messageDigest.digest());
-        return encryptedString;
+        byte[] digest = messageDigest.digest();
+        StringBuffer sb = new StringBuffer();
+        for(byte b: digest){
+            sb.append(String.format("%02x", b & 0xff));
+        }
+        return sb.toString();
     }
 
     @Override

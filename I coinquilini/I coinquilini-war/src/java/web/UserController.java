@@ -6,6 +6,7 @@
 package web;
 
 import com.google.gson.Gson;
+import ejb.coinquilini.users.GestoreUserCookieLocal;
 import ejb.coinquilini.users.GestoreUtenteLocal;
 import ejb.coinquilini.users.Utente;
 import java.io.IOException;
@@ -24,6 +25,9 @@ import javax.servlet.http.HttpSession;
  * @author Bortignon Gianluca
  */
 public class UserController extends HttpServlet {
+
+    @EJB
+    private GestoreUserCookieLocal gestoreUserCookie;
 
     @EJB
     GestoreUtenteLocal gestoreUtente;
@@ -75,11 +79,10 @@ public class UserController extends HttpServlet {
                 request.setAttribute("location", buildGson("profilo"));
 
                 // session
-                response = this.initializeLogin(request,response,nome,email,-1);               
+                response = this.initializeLogin(request, response, nome, email, -1);
 
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
-            }
-            else {
+            } else {
                 request.setAttribute("utente", buildGson(user));
                 request.setAttribute("errore", buildGson("User già registrato"));
                 request.setAttribute("location", buildGson("errore"));
@@ -87,10 +90,21 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
+        
+        if(action.equals("profilo_utente")){
+            session = request.getSession();
+            String email = (String)session.getAttribute("email");
+            Utente user = gestoreUtente.getUtenteByEmail(email);
+            String gsonUser = buildGson(user);
+            request.setAttribute("utente", gsonUser);
+            request.setAttribute("location", buildGson("profilo"));
+            rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+        }
+        
         if (action.equals("login")) {
             String email = request.getParameter("email");
             Utente user = gestoreUtente.getUtenteByEmail(email);
-            
+
             // controllo password
             if (user != null) {
                 String gsonUser = buildGson(user);
@@ -98,11 +112,12 @@ public class UserController extends HttpServlet {
                 request.setAttribute("location", buildGson("profilo"));
 
                 // session
-               if(user.getCasa() != null)
-                    response = this.initializeLogin(request,response,user.getNome(),email,user.getCasa().getId());
-               else
-                   response = this.initializeLogin(request,response,user.getNome(),email,-1);
-                
+                if (user.getCasa() != null) {
+                    response = this.initializeLogin(request, response, user.getNome(), email, user.getCasa().getId());
+                } else {
+                    response = this.initializeLogin(request, response, user.getNome(), email, -1);
+                }
+
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
             } else {
                 request.setAttribute("location", buildGson("errore"));
@@ -110,11 +125,12 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
+        
         if (action.equals("logout")) {
             session = request.getSession();
             session.invalidate();
             Cookie[] cookies = request.getCookies();
-            for(int i = 0; i < cookies.length; i++) {
+            for (int i = 0; i < cookies.length; i++) {
                 if (cookies[i].getName().equals("login")) {
                     cookies[i].setMaxAge(0);
                     cookies[i].setValue("nd");
@@ -124,33 +140,44 @@ public class UserController extends HttpServlet {
             }
             rd = getServletContext().getRequestDispatcher("/index.jsp");
         }
+        
         if (action.equals("firstRedirect")) {
             Cookie[] cookies = request.getCookies();
             boolean foundCookie = false;
             Cookie userCookie = null;
-            for(int i = 0; i < cookies.length; i++) {
+            for (int i = 0; i < cookies.length; i++) {
                 if (cookies[i].getName().equals("login")) {
                     foundCookie = true;
                     userCookie = cookies[i];
                     break;
                 }
-            }  
+            }
 
             if (!foundCookie || (userCookie != null && userCookie.getValue().equals("nd"))) {
-                rd = getServletContext().getRequestDispatcher("/home.jsp"); 
-            }
-            else{
-                System.out.println("########### VALUE = " + userCookie);
-                Utente u = gestoreUtente.getUtenteByEmail(userCookie.getValue());
-                System.out.println("########### UTENTE = " + u);
-                long casaId;
-                if(u.getCasa() != null) casaId = u.getCasa().getId();
-                else casaId = -1;
-                response = this.initializeLogin(request, response, u.getNome(), u.getEmail(),casaId);
-                String gsonUser = buildGson(u);
-                request.setAttribute("utente", gsonUser);
-                request.setAttribute("location", buildGson("profilo"));
-                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                rd = getServletContext().getRequestDispatcher("/home.jsp");
+            } else {
+                System.out.println("########### VALUE = " + userCookie.toString());
+                Utente u = gestoreUserCookie.getUtenteByToken(userCookie.getValue());
+                if (u != null) {
+                    System.out.println("########### UTENTE = " + u.toString());
+                    long casaId;
+                    if (u.getCasa() != null) {
+                        casaId = u.getCasa().getId();
+                    } else {
+                        casaId = -1;
+                    }
+                    response = this.initializeLogin(request, response, u.getNome(), u.getEmail(), casaId);
+                    String gsonUser = buildGson(u);
+                    request.setAttribute("utente", gsonUser);
+                    request.setAttribute("location", buildGson("profilo"));
+                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                } else {
+                    /* Se il cookie è presente ma sbagliato lo si cancella */
+                    userCookie.setMaxAge(0);
+                    userCookie.setValue("nd");
+                    response.addCookie(userCookie);
+                    rd = getServletContext().getRequestDispatcher("/home.jsp");
+                }
             }
         }
         rd.forward(request, response);
@@ -206,15 +233,16 @@ public class UserController extends HttpServlet {
         }
         return json;
     }
-    
-    private HttpServletResponse initializeLogin(HttpServletRequest request,HttpServletResponse response,String nome, String email,long idCasa){
+
+    private HttpServletResponse initializeLogin(HttpServletRequest request, HttpServletResponse response, String nome, String email, long idCasa) {
         HttpSession session = request.getSession();
         session.setAttribute("email", email);
         session.setAttribute("nome", nome);
         session.setAttribute("tipoAccount", "utente");
         session.setAttribute("idCasa", idCasa);
-        Cookie cookie1 = new Cookie("login", email);
-        cookie1.setMaxAge(24*60*60);
+        String token = gestoreUserCookie.createUserCookie(email);
+        Cookie cookie1 = new Cookie("login", token);
+        cookie1.setMaxAge(365 * 24 * 60 * 60);
         response.addCookie(cookie1);
         return response;
     }

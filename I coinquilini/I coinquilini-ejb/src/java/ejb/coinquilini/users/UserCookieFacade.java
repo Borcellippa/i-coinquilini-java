@@ -32,13 +32,39 @@ public class UserCookieFacade extends AbstractFacade<UserCookie> implements User
     @Override
     public Utente getUtenteByToken(String token) {
         try {
-            TypedQuery<Utente> query = em.createQuery("SELECT u FROM UserCookie u WHERE u.token ='"+token+"'", Utente.class);
+            TypedQuery<Utente> query = em.createQuery("SELECT u.utente FROM UserCookie u WHERE u.token ='"+token+"'", Utente.class);
             return query.getSingleResult();
+        }
+        catch(NoResultException e) {
+            System.out.println("##### Nessun risultato");
+            return null;
         }
         catch(Exception e){
             System.out.println("##### Eccezione generica: "+e.getMessage());
             return null;
         }
     }
+
+    /**
+     *
+     * @param utente the value of utente
+     */
+    @Override
+    public UserCookie getCookieByUser(Utente utente) {
+        try {
+            TypedQuery<UserCookie> query = em.createQuery("SELECT u FROM UserCookie u WHERE u.utente.id ='"+utente.getId()+"'", UserCookie.class);
+            return query.getSingleResult();
+        }
+        catch(NoResultException e) {
+            System.out.println("##### Nessun risultato");
+            return null;
+        }
+        catch(Exception e){
+            System.out.println("##### Eccezione generica: "+e.getMessage());
+            return null;
+        }
+    }
+    
+    
     
 }

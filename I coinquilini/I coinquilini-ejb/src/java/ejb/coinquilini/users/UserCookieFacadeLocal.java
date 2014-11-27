@@ -30,5 +30,11 @@ public interface UserCookieFacadeLocal {
     int count();
 
     Utente getUtenteByToken(String token);
+
+    /**
+     *
+     * @param utente the value of utente
+     */
+    UserCookie getCookieByUser(ejb.coinquilini.users.Utente utente);
     
 }

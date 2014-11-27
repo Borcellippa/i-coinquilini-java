@@ -29,9 +29,19 @@
                             <div class="uk-overlay-area-content lato-font">
                                 Entra in casa e organizza la tua convivenza
                                 <br/><br/>
+                                <%
+                                    String tipoAccount = (String) session.getAttribute("tipoAccount");
+                                    if (tipoAccount != null && tipoAccount == "utente") {
+                                %>
+                                <form action="UserController" method="POST" role="form"><form>
+                                    <button type="submit" class="btn btn-primary btn-lg">Entra</button>
+                                    <input type="hidden" name="action" value="profilo_utente">
+                                </form>
+                                <% } else { %>
                                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">
                                     Entra
                                 </button>
+                                <% }%>
                             </div>
                         </div>
                     </div>
@@ -44,9 +54,9 @@
                                 Cerca facilmente una casa in base alle tue esigenze
                                 <br/><br/>
                                 <form action="AnnunciController" method="POST" role="form"><form>
-                                        <button type="submit" class="btn btn-primary btn-lg">Entra</button>
-                                        <input type="hidden" name="action" value="visualizza_annunci">
-                                    </form>
+                                    <button type="submit" class="btn btn-primary btn-lg">Entra</button>
+                                    <input type="hidden" name="action" value="visualizza_annunci">
+                                </form>
                             </div>
                         </div>
                     </div>
