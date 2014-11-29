@@ -69,7 +69,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div id="home-motto">
-                    La vita è troppo breve per essere complicata
+                    Fare l'amore con te è stato come lanciare un salame in un corridoio
                 </div>
 
             </div>
