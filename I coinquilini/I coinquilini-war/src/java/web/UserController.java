@@ -103,9 +103,9 @@ public class UserController extends HttpServlet {
         
         if (action.equals("login")) {
             String email = request.getParameter("email");
-            Utente user = gestoreUtente.getUtenteByEmail(email);
-
-            // controllo password
+            String password = request.getParameter("password");
+            Utente user = gestoreUtente.verificaLogin(email,password);
+            
             if (user != null) {
                 String gsonUser = buildGson(user);
                 request.setAttribute("utente", gsonUser);
@@ -119,6 +119,7 @@ public class UserController extends HttpServlet {
                 }
 
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+            // se la password è sbagliata e l'utente non esiste
             } else {
                 request.setAttribute("location", buildGson("errore"));
                 request.setAttribute("errore", buildGson("Login non riuscito"));

@@ -43,7 +43,7 @@ public class GestoreUserCookie implements GestoreUserCookieLocal {
             userCookieFacade.remove(actualCookie);
         UserCookie uc = new UserCookie();
         uc.setUtente(u);
-        String token = encryptEmail(email);
+        String token = hashEmail(email);
         uc.setToken(token);
         userCookieFacade.create(uc);
         return token;
@@ -56,7 +56,7 @@ public class GestoreUserCookie implements GestoreUserCookieLocal {
      * @param email Email dell'utente 
      * @return Il token generato da inserire nel cookie
      */
-    private String encryptEmail(String email){
+    private String hashEmail(String email){
         Date date= new Date();
         /* Il token viene creato concatenando l'email al timestamp */
         String stringToEncrypt = email+date.getTime();
