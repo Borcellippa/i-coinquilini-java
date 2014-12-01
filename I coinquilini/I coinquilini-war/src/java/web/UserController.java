@@ -90,22 +90,22 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
-        
-        if(action.equals("profilo_utente")){
+
+        if (action.equals("profilo_utente")) {
             session = request.getSession();
-            String email = (String)session.getAttribute("email");
+            String email = (String) session.getAttribute("email");
             Utente user = gestoreUtente.getUtenteByEmail(email);
             String gsonUser = buildGson(user);
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
             rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
         }
-        
+
         if (action.equals("login")) {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            Utente user = gestoreUtente.verificaLogin(email,password);
-            
+            Utente user = gestoreUtente.verificaLogin(email, password);
+
             if (user != null) {
                 String gsonUser = buildGson(user);
                 request.setAttribute("utente", gsonUser);
@@ -119,14 +119,14 @@ public class UserController extends HttpServlet {
                 }
 
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
-            // se la password è sbagliata e l'utente non esiste
+                // se la password è sbagliata e l'utente non esiste
             } else {
-                request.setAttribute("location", buildGson("errore"));
-                request.setAttribute("errore", buildGson("Login non riuscito"));
-                rd = getServletContext().getRequestDispatcher("/errore.jsp");
+                request.setAttribute("location", buildGson("home"));
+                request.setAttribute("errore", buildGson("errore_login"));
+                rd = getServletContext().getRequestDispatcher("/home.jsp");
             }
         }
-        
+
         if (action.equals("logout")) {
             session = request.getSession();
             session.invalidate();
@@ -141,7 +141,7 @@ public class UserController extends HttpServlet {
             }
             rd = getServletContext().getRequestDispatcher("/index.jsp");
         }
-        
+
         if (action.equals("firstRedirect")) {
             Cookie[] cookies = request.getCookies();
             boolean foundCookie = false;
@@ -181,6 +181,11 @@ public class UserController extends HttpServlet {
                 }
             }
         }
+        if (action.equals("registrazione")) {
+            request.setAttribute("location", buildGson("registrazione"));
+            rd = getServletContext().getRequestDispatcher("/registrazione.jsp");
+        }
+
         rd.forward(request, response);
     }
 
