@@ -10,7 +10,6 @@ import ejb.coinquilini.users.GestoreUserCookieLocal;
 import ejb.coinquilini.users.GestoreUtenteLocal;
 import ejb.coinquilini.users.Utente;
 import java.io.IOException;
-import static java.lang.Thread.sleep;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -157,7 +156,7 @@ public class UserController extends HttpServlet {
             if (!foundCookie || (userCookie != null && userCookie.getValue().equals("nd"))) {
                 rd = getServletContext().getRequestDispatcher("/home.jsp");
             } else {
-                System.out.println("########### VALUE = " + userCookie.toString());
+                System.out.println("########### VALUE = " + userCookie);
                 Utente u = gestoreUserCookie.getUtenteByToken(userCookie.getValue());
                 if (u != null) {
                     System.out.println("########### UTENTE = " + u.toString());
