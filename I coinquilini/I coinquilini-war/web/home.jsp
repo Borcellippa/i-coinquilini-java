@@ -4,6 +4,7 @@
     Author     : Bortignon Gianluca
 --%>
 
+<%@page import="com.google.gson.Gson"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -70,6 +71,23 @@
             <div class="col-md-12">
                 <div id="home-motto">
                     Fare l'amore con te è stato come lanciare un salame in un corridoio
+
+                    <%  // Gestione della stampa in caso di errore di login
+                        Gson gsonErrore = new Gson();
+                        String erroreFromJson = (String) request.getAttribute("errore");
+                        Boolean erroreLogin = false;
+                        if (erroreFromJson != null) {
+                            String err = gsonErrore.fromJson(erroreFromJson, String.class);
+                            if (err.equals("errore_login")) {
+                                erroreLogin = true;
+                            }
+                        }
+                        if (erroreLogin) {
+                    %>
+                    <div class="alert alert-danger" role="alert"> Email o Password errate </div>
+                    <%
+                        }
+                    %>
                 </div>
 
             </div>
@@ -157,10 +175,12 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">Login</button>
-                            oppure
-                            <a href="registrazione.jsp" class="btn btn-default" role="button">Registrati</a>
-
                             <input type="hidden" name="action" value="login">
+                        </form>
+                        
+                        <form action="UserController" method="POST" role="form">
+                            <button type="submit" class="btn btn-default">Registrazione</button>
+                            <input type="hidden" name="action" value="registrazione">
                         </form>
                     </div>
                 </div><!-- /.modal-content -->
