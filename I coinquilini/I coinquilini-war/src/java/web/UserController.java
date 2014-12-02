@@ -159,7 +159,7 @@ public class UserController extends HttpServlet {
                 System.out.println("########### VALUE = " + userCookie);
                 Utente u = gestoreUserCookie.getUtenteByToken(userCookie.getValue());
                 if (u != null) {
-                    System.out.println("########### UTENTE = " + u.toString());
+                    System.out.println("########### UTENTE = " + u);
                     long casaId;
                     if (u.getCasa() != null) {
                         casaId = u.getCasa().getId();
