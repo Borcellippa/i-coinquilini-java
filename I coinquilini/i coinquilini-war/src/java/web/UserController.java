@@ -197,17 +197,20 @@ public class UserController extends HttpServlet {
             JsonParser parser = new JsonParser();
             JsonObject jsonPerson = parser.parse(userData).getAsJsonObject();
 
+            // info from facebook
             String email = jsonPerson.get("email").getAsString();
             String nome = jsonPerson.get("first_name").getAsString();
+            String cognome = jsonPerson.get("last_name").getAsString();
+            String genere = jsonPerson.get("gender").getAsString();
+            String fb_id = jsonPerson.get("id").getAsString();
+            String fb_token = jsonPerson.get("accessToken").getAsString();
+
             //Controllo che la mail non sia già presente nel DB
             Utente u = gestoreUtente.getUtenteByEmail(email);
 
-            //Se l'utente non si è mai registrato lo creo, altrimenti lo tiro solo su
+            //Se l'utente non si è mai registrato lo invio alla pagina di richesta passoword
+            boolean needPwd = false;
             if (u == null) {
-                String cognome = jsonPerson.get("last_name").getAsString();
-                String genere = jsonPerson.get("gender").getAsString();
-                String fb_id = jsonPerson.get("id").getAsString();
-                String fb_token = jsonPerson.get("accessToken").getAsString();
                 u = new Utente();
                 u.setNome(nome);
                 u.setCognome(cognome);
@@ -215,19 +218,36 @@ public class UserController extends HttpServlet {
                 u.setFb_access_token(fb_token);
                 u.setFb_user_id(fb_id);
                 u.setEmail(email);
-
                 gestoreUtente.addUtente(u);
-                u = gestoreUtente.getUtenteByEmail(email);
+                needPwd = true;
+
+            } // Altrimenti lo tiro solo su introducendo le informazioni di facebook
+            else {
+                u.setNome(nome);
+                u.setCognome(cognome);
+                u.setGenere(genere);
+                u.setFb_access_token(fb_token);
+                u.setFb_user_id(fb_id);
+                gestoreUtente.editUtente(u);
             }
 
+            u = gestoreUtente.getUtenteByEmail(email);
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
-            request.setAttribute("location", buildGson("profilo"));
+            
+            // se mi sono loggato con facebook devo ancora modificare il profilo per inserire una passoword
+            if (needPwd) { 
+                request.setAttribute("location", buildGson("profilo"));
+                rd = getServletContext().getRequestDispatcher("/completaFacebook.jsp");
 
+            } else {
+                request.setAttribute("location", buildGson("profilo"));
+                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+
+            }
             // session
             response = this.initializeLogin(request, response, nome, email, -1);
 
-            rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
         }
 
         if (action.equals("gLogin")) {

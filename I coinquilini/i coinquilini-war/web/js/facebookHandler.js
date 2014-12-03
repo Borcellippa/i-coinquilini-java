@@ -31,8 +31,6 @@ function sendFacebookRequest(path, method, action, userData) {
 
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
     accessToken = response.authResponse.accessToken;
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
@@ -47,12 +45,28 @@ function statusChangeCallback(response) {
     }
 }
 
-// This function is called when someone finishes with the Login
-// Button.  See the onlogin handler attached to it in the sample
-// code below.
+// Funzione chiamata quando si fa il sign-up con facebook
 function checkLoginState() {
     FB.getLoginStatus(function(response) {
         statusChangeCallback(response);
+    });
+}
+
+// Funzione chiamata per recuperare la foto
+function getProfilePhoto() {
+    FB.getLoginStatus(function(response) {
+        if (response.status === "connected") {
+            FB.api('/me/picture', {
+                "redirect": false,
+                "height": "200",
+                "type": "normal",
+                "width": "200"
+            }, function(response) {
+                userData = response;
+                userData['accessToken'] = accessToken;
+                
+            });
+        }
     });
 }
 
