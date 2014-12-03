@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package web;
 
 import com.google.gson.Gson;
@@ -28,15 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Bortignon Gianluca
- */
 public class UserController extends HttpServlet {
 
     @EJB
     private GestoreUserCookieLocal gestoreUserCookie;
-    
 
     @EJB
     GestoreUtenteLocal gestoreUtente;
@@ -241,11 +231,12 @@ public class UserController extends HttpServlet {
         }
 
         if (action.equals("gLogin")) {
-            
+
             String token = request.getParameter("param1");
-            
+
             if (token != null) {
-                
+                String email = "";
+                String nome = "";
                 String s = "https://www.googleapis.com/plus/v1/people/me?access_token=" + token;
                 InputStream is = new URL(s).openStream();
                 try {
@@ -265,10 +256,10 @@ public class UserController extends HttpServlet {
                     JsonArray emailsJsonArray = jsonPerson.getAsJsonArray("emails");
                     JsonElement emailJsonElement = emailsJsonArray.get(0);
                     JsonObject primaryEmailJsonObject = emailJsonElement.getAsJsonObject();
-                    String email = primaryEmailJsonObject.get("value").getAsString();
+                    email = primaryEmailJsonObject.get("value").getAsString();
 
                     JsonObject nomeJson = jsonPerson.getAsJsonObject("name");
-                    String nome = nomeJson.get("givenName").getAsString();
+                    nome = nomeJson.get("givenName").getAsString();
                     String cognome = nomeJson.get("familyName").getAsString();
 
                     JsonObject imageJson = jsonPerson.getAsJsonObject("image");
@@ -306,14 +297,23 @@ public class UserController extends HttpServlet {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                System.out.println("IN GLOGIN");
-                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
-                System.out.println("RD SETTATO");
+                // Se l'inserimento in db è andato a buon fine carico i dati da lì per usarli nella prossima view
+                if (!email.equals("")) {
+                    // creazione argomenti per la prossima pagina
+                    Utente user = gestoreUtente.getUtenteByEmail(email);
+                    String gsonUser = buildGson(user);
+                    request.setAttribute("utente", gsonUser);
+                    request.setAttribute("location", buildGson("profilo"));
+
+                    // session
+                    response = this.initializeLogin(request, response, nome, email, -1);
+
+                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                }
             } else {
                 rd = getServletContext().getRequestDispatcher("/errore.jsp");
             }
         }
-
         rd.forward(request, response);
     }
 

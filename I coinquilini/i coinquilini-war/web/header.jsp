@@ -14,7 +14,7 @@
                 Ciao <%=nomeAccount%>
                 <form method="POST" action="UserController" role="form">
                     <input type="hidden" name="action" value="logout">
-                    <button type="submit" class="btn btn-warning">Logout</button>
+                    <button id="revokeButton" type="submit" class="btn btn-warning">Logout</button>
                 </form>
                 <% }%>
             </p>
