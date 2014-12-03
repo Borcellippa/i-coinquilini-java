@@ -20,10 +20,9 @@
             </p>
             <form method="POST" action="UserController" role="form">
                 <input type="hidden" name="action" value="logout">
-                <button type="submit" class="btn btn-warning btn-sm" style="margin-top: -2px;">Logout</button>
+                <button id="revokeButton" type="submit" class="btn btn-warning btn-sm" style="margin-top: -2px;">Logout</button>
             </form>
         </div>
         <% }%>
-        </p>
     </div>
 </div>

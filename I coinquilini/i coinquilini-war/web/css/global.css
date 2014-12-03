@@ -80,3 +80,5 @@ h4{
 .lato-font{
     font-family: 'Lato', sans-serif;
 }
+
+iframe[src^="https://apis.google.com/u/0/_/widget/oauthflow/toast"] {display: none;}

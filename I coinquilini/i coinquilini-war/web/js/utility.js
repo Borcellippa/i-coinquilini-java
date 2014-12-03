@@ -25,3 +25,34 @@ function sendHTMLRequest(path, method, action, param1, param2) {
     document.body.appendChild(form);
     form.submit();
 }
+
+var gButtonClicked = false;
+
+function gButtonClick() {
+    gButtonClicked = true;
+}
+
+(function() {
+    var po = document.createElement('script');
+    po.type = 'text/javascript';
+    po.async = true;
+    po.src = 'https://apis.google.com/js/client:plusone.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(po, s);
+})();
+
+function signinCallback(authResult) {
+    if (gButtonClicked) {
+        if (authResult['access_token']) {
+            // Autorizzazione riuscita
+            sendHTMLRequest("UserController", "post", "gLogin", authResult['access_token']);
+
+        } else if (authResult['error']) {
+            // Si è verificato un errore.
+            // Possibili codici di errore:
+            //   "access_denied" - L'utente ha negato l'accesso alla tua app
+            //   "immediate_failed" - Impossibile eseguire l'accesso automatico dell'utente
+            console.log('There was an error: ' + authResult['error']);
+        }
+    }
+}

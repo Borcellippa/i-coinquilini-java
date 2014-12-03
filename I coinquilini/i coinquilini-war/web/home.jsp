@@ -16,41 +16,8 @@
         <script src="js/core/scrollspy.js"></script>
         <script src="js/facebookHandler.js"></script>
         <script src="js/utility.js"></script>
+
     </head>
-
-    <script type="text/javascript">
-        var gButtonClicked = false;
-
-        function gButtonClick() {
-            gButtonClicked = true;
-        }
-
-        (function() {
-            var po = document.createElement('script');
-            po.type = 'text/javascript';
-            po.async = true;
-            po.src = 'https://apis.google.com/js/client:plusone.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(po, s);
-        })();
-
-        function signinCallback(authResult) {
-            if (gButtonClicked) {
-                if (authResult['access_token']) {
-                    // Autorizzazione riuscita
-                    sendHTMLRequest("UserController", "post", "gLogin", authResult['access_token']);
-
-                } else if (authResult['error']) {
-                    // Si è verificato un errore.
-                    // Possibili codici di errore:
-                    //   "access_denied" - L'utente ha negato l'accesso alla tua app
-                    //   "immediate_failed" - Impossibile eseguire l'accesso automatico dell'utente
-                    console.log('There was an error: ' + authResult['error']);
-                }
-            }
-        }
-    </script>
-
     <body id="homepage-body">
         <div id="jumbotron" class="jumbotron">
             <div id="jumbotron-man" class="container">
@@ -72,7 +39,7 @@
                                 if (tipoAccount != null && tipoAccount == "utente") {
                             %>
                             <form action="UserController" method="POST" role="form"><form>
-                                    <button type="submit" class="btn btn-primary btn-lg">Entra</button>
+                                    <button id="modalLogin" type="submit" class="btn btn-primary btn-lg">Entra</button>
                                     <input type="hidden" name="action" value="profilo_utente">
                                 </form>
                                 <% } else { %>
