@@ -237,8 +237,8 @@ public class UserController extends HttpServlet {
             
             // se mi sono loggato con facebook devo ancora modificare il profilo per inserire una passoword
             if (needPwd) { 
-                request.setAttribute("location", buildGson("profilo"));
-                rd = getServletContext().getRequestDispatcher("/completaFacebook.jsp");
+                request.setAttribute("location", buildGson("completaSocial"));
+                rd = getServletContext().getRequestDispatcher("/completaSocial.jsp");
 
             } else {
                 request.setAttribute("location", buildGson("profilo"));
