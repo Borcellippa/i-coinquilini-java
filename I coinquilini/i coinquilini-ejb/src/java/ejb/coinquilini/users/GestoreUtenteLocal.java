@@ -25,5 +25,7 @@ public interface GestoreUtenteLocal {
     Utente getUtenteByEmail(String email);
 
     Utente verificaLogin(String email, String password);
+
+    void editUtente(Utente u);
     
 }

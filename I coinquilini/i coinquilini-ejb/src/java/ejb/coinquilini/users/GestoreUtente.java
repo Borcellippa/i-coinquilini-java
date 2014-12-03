@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ejb.coinquilini.users;
 
 import java.security.MessageDigest;
@@ -20,6 +19,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class GestoreUtente implements GestoreUtenteLocal {
+
     @EJB
     private UtenteFacadeLocal utenteFacade;
 
@@ -28,15 +28,24 @@ public class GestoreUtente implements GestoreUtenteLocal {
         List<Utente> listaUtenti = utenteFacade.findAll();
         return listaUtenti;
     }
-    
+
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
     @Override
-    public void addUtente(ejb.coinquilini.users.Utente u) {
+    public void addUtente(Utente u) {
+        String pwd = u.getPassword();
+        if (pwd != null) {
+            u.setPassword(hashPassword(pwd)); // hasho la password prima di inserirla in db
+        }
+
         utenteFacade.create(u);
     }
-    
+
+    @Override
+    public void editUtente(Utente u) {
+        utenteFacade.edit(u);
+
+    }
 
     @Override
     public Utente getUtente(String email, String password) {
@@ -48,14 +57,14 @@ public class GestoreUtente implements GestoreUtenteLocal {
     public Utente getUtenteByEmail(String email) {
         return utenteFacade.getUtenteByEmail(email);
     }
-    
+
     /**
      * Funzione che effettua l'hash della password
-     * 
+     *
      * @param password
      * @return L'hash della password
      */
-    private String hashPassword(String password){
+    private String hashPassword(String password) {
         MessageDigest messageDigest = null;
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
@@ -66,7 +75,7 @@ public class GestoreUtente implements GestoreUtenteLocal {
         messageDigest.update(password.getBytes());
         byte[] digest = messageDigest.digest();
         StringBuffer sb = new StringBuffer();
-        for(byte b: digest){
+        for (byte b : digest) {
             sb.append(String.format("%02x", b & 0xff));
         }
         return sb.toString();
@@ -75,10 +84,12 @@ public class GestoreUtente implements GestoreUtenteLocal {
     @Override
     public Utente verificaLogin(String email, String password) {
         Utente u = this.getUtenteByEmail(email);
-        if(u != null){
-            if(this.hashPassword(password).equals(u.getPassword()))
+        if (u != null) {
+            if (this.hashPassword(password).equals(u.getPassword())) {
                 return u;
+            }
         }
         return null;
     }
+
 }
