@@ -14,7 +14,7 @@
         <title>I coinquilini</title>
         <%@include  file="imports.html" %>
         <script src="js/core/scrollspy.js"></script>
-        <script src="js/facebookLogin.js"></script>
+        <script src="js/facebookHandler.js"></script>
         <script src="js/utility.js"></script>
     </head>
 
