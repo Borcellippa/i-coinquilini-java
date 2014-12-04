@@ -25,8 +25,8 @@
                             <input type="passwordConf" name="passwordConf" required class="form-control inputForm">
                         </div>
                     </div>
-                    <div class="form-group"  style="margin-top: 15px;">
-                        <button type="submit" class="btn btn-default">Salva</button>
+                    <div class="form-group"  style="margin-top: 15px;text-align: center">
+                        <button type="submit" class="btn btn-lg custom-button">Salva</button>
                     </div>
                     <input type="hidden" name="action" value="completeSocial">
                 </form>

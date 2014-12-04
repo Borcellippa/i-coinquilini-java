@@ -7,15 +7,15 @@
     </div>
     <div class="col-md-4">
         <div class="col-md-3"></div>
+        <%
+            String nomeAccount = (String) session.getAttribute("nome");
+            if (nomeAccount != null) {
+        %>
         <div class="col-md-4">
             <img src="images/user.png" class="img-thumbnail" height="70px" width="70px" style="margin-top: 10px; float: right">
         </div>
         <div class="col-md-5">
             <p style="color: white; font-weight: bold; margin-top: 12px; font-size: large;">
-                <%
-                    String nomeAccount = (String) session.getAttribute("nome");
-                    if (nomeAccount != null) {
-                %>
                 Ciao <%=nomeAccount%> !
             </p>
             <form method="POST" action="UserController" role="form">
