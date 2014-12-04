@@ -83,7 +83,7 @@ public class UserController extends HttpServlet {
                 request.setAttribute("location", buildGson("profilo"));
 
                 // session
-                response = this.initializeLogin(request, response, nome, email, -1);
+                response = this.initializeLogin(request, response, nome, email, -1,u.getFoto_path());
 
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
             } else {
@@ -113,9 +113,9 @@ public class UserController extends HttpServlet {
 
                 // session
                 if (user.getCasa() != null) {
-                    response = this.initializeLogin(request, response, user.getNome(), email, user.getCasa().getId());
+                    response = this.initializeLogin(request, response, user.getNome(), email, user.getCasa().getId(),user.getFoto_path());
                 } else {
-                    response = this.initializeLogin(request, response, user.getNome(), email, -1);
+                    response = this.initializeLogin(request, response, user.getNome(), email, -1,user.getFoto_path());
                 }
 
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
@@ -162,7 +162,7 @@ public class UserController extends HttpServlet {
                     } else {
                         casaId = -1;
                     }
-                    response = this.initializeLogin(request, response, u.getNome(), u.getEmail(), casaId);
+                    response = this.initializeLogin(request, response, u.getNome(), u.getEmail(), casaId,u.getFoto_path());
                     String gsonUser = buildGson(u);
                     request.setAttribute("utente", gsonUser);
                     request.setAttribute("location", buildGson("profilo"));
@@ -244,7 +244,7 @@ public class UserController extends HttpServlet {
 
             }
             // session
-            response = this.initializeLogin(request, response, nome, email, -1);
+            response = this.initializeLogin(request, response, nome, email, -1,u.getFoto_path());
 
         } else if (action.equals("gLogin")) {
 
@@ -348,7 +348,7 @@ public class UserController extends HttpServlet {
 
             }
             // session
-            response = this.initializeLogin(request, response, nome, email, -1);
+            response = this.initializeLogin(request, response, nome, email, -1,user.getFoto_path());
 
         } else if (action.equals("completaSocial")) {
             // quando un utente si collega con un social gli diamo la possibilità 
@@ -428,12 +428,13 @@ public class UserController extends HttpServlet {
         return json;
     }
 
-    private HttpServletResponse initializeLogin(HttpServletRequest request, HttpServletResponse response, String nome, String email, long idCasa) {
+    private HttpServletResponse initializeLogin(HttpServletRequest request, HttpServletResponse response, String nome, String email, long idCasa,String url) {
         HttpSession session = request.getSession();
         session.setAttribute("email", email);
         session.setAttribute("nome", nome);
         session.setAttribute("tipoAccount", "utente");
         session.setAttribute("idCasa", idCasa);
+        session.setAttribute("url", url);
         String token = gestoreUserCookie.createUserCookie(email);
         Cookie cookie1 = new Cookie("login", token);
         cookie1.setMaxAge(365 * 24 * 60 * 60);

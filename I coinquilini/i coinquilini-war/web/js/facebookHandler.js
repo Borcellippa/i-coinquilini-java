@@ -37,7 +37,12 @@ function statusChangeCallback(response) {
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
     if (response.status === "connected") {
-        FB.api('/me/picture', function(pictureResponse) {
+        FB.api('/me/picture', {
+                "redirect": false,
+                "height": "500",
+                "type": "normal",
+                "width": "500"
+                }, function(pictureResponse) {
             FB.api('/me', function(response) {
                 userData = response;
                 userData['accessToken'] = accessToken;

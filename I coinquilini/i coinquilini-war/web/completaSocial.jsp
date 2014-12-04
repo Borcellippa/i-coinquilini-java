@@ -22,7 +22,7 @@
                         </div>
                         <div style="margin-top: 15px;">
                             <label  class="labelForm">Conferma Password</label>
-                            <input type="passwordConf" name="passwordConf" required class="form-control inputForm">
+                            <input type="password" name="passwordConf" required class="form-control inputForm">
                         </div>
                     </div>
                     <div class="form-group"  style="margin-top: 15px;text-align: center">
