@@ -275,7 +275,10 @@ public class UserController extends HttpServlet {
             JsonParser parser = new JsonParser();
             JsonObject jsonPerson = parser.parse(jsonText).getAsJsonObject();
 
-            String genere = jsonPerson.get("gender").getAsString();
+            String genere = "";
+            if(genere != null) {
+                jsonPerson.get("gender").getAsString();
+            }
 
             JsonArray emailsJsonArray = jsonPerson.getAsJsonArray("emails");
             JsonElement emailJsonElement = emailsJsonArray.get(0);
@@ -340,9 +343,9 @@ public class UserController extends HttpServlet {
             response = this.initializeLogin(request, response, nome, email, -1);
         }
 
-        if (action.equals("completaSocial")) {
+        //if (action.equals("completaSocial")) {
 
-        }
+        //}
 
         rd.forward(request, response);
     }
