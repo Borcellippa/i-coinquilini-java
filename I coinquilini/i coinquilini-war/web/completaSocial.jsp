@@ -22,13 +22,13 @@
                         </div>
                         <div style="margin-top: 15px;">
                             <label  class="labelForm">Conferma Password</label>
-                            <input type="passwordConf" name="passwordConf" required class="form-control inputForm">
+                            <input type="password" name="passwordConf" required class="form-control inputForm">
                         </div>
                     </div>
                     <div class="form-group"  style="margin-top: 15px;text-align: center">
                         <button type="submit" class="btn btn-lg custom-button">Salva</button>
                     </div>
-                    <input type="hidden" name="action" value="completeSocial">
+                    <input type="hidden" name="action" value="completaSocial">
                 </form>
             </div>
         </section>

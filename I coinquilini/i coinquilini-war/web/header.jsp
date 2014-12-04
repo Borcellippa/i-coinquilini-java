@@ -1,3 +1,5 @@
+<%@page import="ejb.coinquilini.users.Utente"%>
+<%@page import="com.google.gson.Gson"%>
 <div class="top-navbar">
     <div class="col-md-8">
         <a href="home.jsp" style="color: white;text-decoration: none;">
@@ -10,11 +12,12 @@
     <div class="col-md-4">
         <div class="col-md-3"></div>
         <%
+            String url = (String) session.getAttribute("url");
             String nomeAccount = (String) session.getAttribute("nome");
             if (nomeAccount != null) {
         %>
         <div class="col-md-4">
-            <img src="images/user.png" class="img-thumbnail" height="70px" width="70px" style="margin-top: 10px; float: right">
+            <img src="<%= url %>" class="img-thumbnail" id="userPicture" height="70px" width="70px" style="margin-top: 10px; float: right">
         </div>
         <div class="col-md-5">
             <p style="color: white; font-weight: bold; margin-top: 12px; font-size: large;">

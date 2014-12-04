@@ -37,10 +37,18 @@ function statusChangeCallback(response) {
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
     if (response.status === "connected") {
-        FB.api('/me', function(response) {
-            userData = response;
-            userData['accessToken'] = accessToken;
-            sendFacebookRequest("UserController", "post", "loginFacebook", JSON.stringify(userData));
+        FB.api('/me/picture', {
+                "redirect": false,
+                "height": "500",
+                "type": "normal",
+                "width": "500"
+                }, function(pictureResponse) {
+            FB.api('/me', function(response) {
+                userData = response;
+                userData['accessToken'] = accessToken;
+                userData['urlImmagine'] = pictureResponse.data.url;
+                sendFacebookRequest("UserController", "post", "loginFacebook", JSON.stringify(userData));
+            });
         });
     }
 }
@@ -51,25 +59,6 @@ function checkLoginState() {
         statusChangeCallback(response);
     });
 }
-
-// Funzione chiamata per recuperare la foto
-function getProfilePhoto() {
-    FB.getLoginStatus(function(response) {
-        if (response.status === "connected") {
-            FB.api('/me/picture', {
-                "redirect": false,
-                "height": "200",
-                "type": "normal",
-                "width": "200"
-            }, function(response) {
-                userData = response;
-                userData['accessToken'] = accessToken;
-                
-            });
-        }
-    });
-}
-
 
 // CARICO API FACEBOOK
 window.fbAsyncInit = function() {

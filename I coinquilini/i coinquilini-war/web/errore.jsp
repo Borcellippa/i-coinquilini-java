@@ -22,8 +22,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="content">
                 <!-----start-logo--------->
                 <div class="logo">
-                    <h1><a href="#"><img src="images/logo.png"/></a></h1>
-                    <span><img src="images/signal.png"/>Oops! The Page you requested was not found!</span>
+
                 </div>
                 <!-----end-logo--------->
                 <!-----start-search-bar-section--------->
@@ -31,7 +30,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="seach_bar">
                         <p>you can go to <span><a href="index.jsp">home</a></span> page or search here</p>
                         <%  Gson gsonErrore = new Gson();
-                            String erroreFromJson = (request.getAttribute("errore")).toString();
+                            String erroreFromJson = (String)request.getAttribute("errorPage");
                             String errore = gsonErrore.fromJson(erroreFromJson, String.class);
                         %>
                         <h2><%= errore%></h2>
