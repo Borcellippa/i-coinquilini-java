@@ -31,7 +31,7 @@
        <% if (location.equals("debiti")) out.print("active"); %>">&nbsp&nbsp Debiti</a>
     <a href="#" class="list-group-item
        <% if (location.equals("opzioni")) out.print("active"); %>">Opzioni</a>
-    <a href="#" class="list-group-item
+    <a href="profilo_utente.jsp" class="list-group-item
         <% if (location.equals("profilo")) out.print("active"); %>">&nbsp&nbsp Profilo</a>
     <a href="#" class="list-group-item
        <% if (location.equals("inviti")) out.print("active"); %>">&nbsp&nbsp Inviti</a>

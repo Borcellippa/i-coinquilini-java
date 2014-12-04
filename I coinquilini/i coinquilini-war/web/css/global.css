@@ -193,4 +193,50 @@ h4{
     font-family: 'Lato', sans-serif;
 }
 
+//Stili per i widget di G+
 iframe[src^="https://apis.google.com/u/0/_/widget/oauthflow/toast"] {display: none;}
+#customBtn {
+    display: inline-block;
+    background: #dd4b39;
+    color: white;
+    width: 100%;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+#customBtn:hover {
+    background: #e74b37;
+    cursor: hand;
+}
+span.label {
+    font-weight: bold;
+}
+span.icon {
+    background: url('/+/images/branding/btn_red_32.png') transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 35px;
+    height: 35px;
+    border-right: #bb3f30 1px solid;
+}
+span.buttonText {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 14px;
+    /* Use the Roboto font that is loaded in the <head> */
+    font-family: 'Roboto',arial,sans-serif;
+}
+
+.btn-facebook{
+    height: 30px;
+    width: 113px;
+    line-height: 1;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+}
+
+.btn-social{
+    text-align: center;
+}

@@ -56,3 +56,13 @@ function signinCallback(authResult) {
         }
     }
 }
+
+function render() {
+    gapi.signin.render('customBtn', {
+      'callback': 'signinCallback',
+      'clientid': '702958319868-kj4pe0qgtdo34b9t150qsb318kfqulp7.apps.googleusercontent.com',
+      'cookiepolicy': 'single_host_origin',
+      'requestvisibleactions': 'http://schemas.google.com/AddActivity',
+      'scope': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email'
+    });
+  }

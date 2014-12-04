@@ -39,11 +39,13 @@
                                 if (tipoAccount != null && tipoAccount == "utente") {
                             %>
                             <form action="UserController" method="POST" role="form"><form>
-                                    <button id="modalLogin" type="submit" class="btn btn-primary btn-lg">Entra</button>
+                                    <button id="modalLogin" type="submit" class="btn btn-primary btn-lg custom-button">
+                                        Entra
+                                    </button>
                                     <input type="hidden" name="action" value="profilo_utente">
                                 </form>
                                 <% } else { %>
-                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">
+                                <button type="button" class="btn btn-lg custom-button" data-toggle="modal" data-target="#loginModal">
                                     Entra
                                 </button>
                                 <% }%>
@@ -59,7 +61,7 @@
                             Cerca facilmente una casa in base alle tue esigenze
                             <br/><br/>
                             <form action="AnnunciController" method="POST" role="form"><form>
-                                    <button type="submit" class="btn btn-primary btn-lg">Entra</button>
+                                    <button type="submit" class="btn btn-lg custom-button">Entra</button>
                                     <input type="hidden" name="action" value="visualizza_annunci">
                                 </form>
                         </div>
@@ -90,8 +92,7 @@
                         <div class="alert alert-danger" role="alert"> <%=errore%> </div>
 
                         <%
-                            }
-                            else {
+                            } else {
                                 out.println("Fare l'amore con te è stato come lanciare un salame in un corridoio");
                             }
                         %>
@@ -174,12 +175,14 @@
                         <h4 class="modal-title">Login</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="col-md-6">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
                             <a class="btn btn-block btn-social btn-facebook" onclick="fb_login();">
-                                <i class="uk-icon-facebook"></i> Sign in with Facebook
+                                <i class="uk-icon-facebook"></i> Accedi
                             </a>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
                             <span id="signinButton" onclick="gButtonClick();">
                                 <span
                                     class="g-signin"
@@ -190,7 +193,7 @@
                                     data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email">
                                 </span>
                             </span>
-                            <!--<a class="btn btn-block btn-social btn-google-plus">
+                            <!--<a class="btn btn-block btn-social btn-google-plus" >
                                 <i class="uk-icon-google-plus"></i> Sign in with Google+
                             </a>-->
                         </div>

@@ -137,7 +137,7 @@
         <div class="col-md-4"></div>
         <div class="col-md-4" style="text-align: right">
             <div class="form-group">
-                <button type="submit" class="btn btn-lg custom-button">Submit</button>
+                <button type="submit" class="btn custom-button">Submit</button>
             </div>
         </div>
 
