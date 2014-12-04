@@ -190,7 +190,7 @@ public class UserController extends HttpServlet {
         if (action.equals("registrazione")) {
             request.setAttribute("location", buildGson("registrazione"));
             rd = getServletContext().getRequestDispatcher("/registrazione.jsp");
-        }
+        }        
 
         if (action.equals("loginFacebook")) {
             String userData = (String) request.getParameter("userData");
