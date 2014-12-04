@@ -2,6 +2,30 @@ body{
     min-width: 1150px;
 }
 
+.custom-button:hover{
+    color: white;
+    background: -webkit-linear-gradient(top,cadetblue 0, 100%);
+    background: -o-linear-gradient(top,#426E6F 0,cadetblue 100%);
+    background: -webkit-gradient(linear,left top,left bottom,from(#426E6F),to(cadetblue));
+    background: linear-gradient(to bottom,#426E6F 0,cadetblue 100%);
+}
+
+.custom-button{
+    background: -webkit-linear-gradient(top,cadetblue 0,#426E6F 100%);
+    background: -o-linear-gradient(top,cadetblue 0,#426E6F 100%);
+    background: -webkit-gradient(linear,left top,left bottom,from(cadetblue),to(#426E6F));
+    background: linear-gradient(to bottom,cadetblue 0,#426E6F 100%);
+    color: white;
+}
+
+#formRegistrazione .form-control{
+    display: inline;
+    width: 78%;
+}
+#formRegistrazione label{
+    width: 21%;
+}
+
 .labelForm{
     width: 145px;
 }
@@ -37,7 +61,7 @@ body{
 }
 
 #social-wizard {
-    margin: 45px auto 0 auto;
+    margin: 0 auto 0 auto;
     width: 560px;
 }
 
