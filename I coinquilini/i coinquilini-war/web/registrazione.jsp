@@ -3,10 +3,10 @@
     <header>
         <h1>Registrazione</h1>
     </header>
-    <div class="wizard-content">
+    <div class="wizard-content" id="formRegistrazione"> 
         <form method="POST" action="UserController" role="form">
             <div class="form-group">
-                <label for="nome">Nome</label>
+                <label>Nome</label>
                 <input type="text" name="nome" class="form-control" required>
             </div>
             <div class="form-group">
@@ -20,6 +20,19 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Genere</label>
+                <div class="radio" style="display: inline">
+                    <label>
+                        <input type="radio" name="genere" id="male" value="male" checked>
+                        Uomo
+                    </label>&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <label>
+                        <input type="radio" name="genere" id="female" value="female">
+                        Donna
+                    </label>
+                </div>
             </div>
             <div class="form-group">
                 <label for="telefono">Telefono</label>
@@ -37,8 +50,8 @@
                 <label for="citta_natale">Città natale</label>
                 <input type="text" name="citta_natale" class="form-control">
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-default">Submit</button>
+            <div class="form-group" style="text-align: center">
+                <button type="submit" class="btn btn-lg custom-button">Registrati</button>
             </div>
 
             <input type="hidden" name="action" value="addUtente">
