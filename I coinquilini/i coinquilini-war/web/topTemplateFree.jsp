@@ -15,3 +15,5 @@
         <div class="container-fluid">
             <div class="row">
                 <%@include  file="header.jsp" %>
+            </div>
+            <div class="row">

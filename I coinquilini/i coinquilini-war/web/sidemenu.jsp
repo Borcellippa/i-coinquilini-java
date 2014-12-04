@@ -1,6 +1,6 @@
 <%@page import="ejb.coinquilini.users.Utente"%>
 <%@page import="com.google.gson.Gson"%>
-<div class="list-group">
+<div class="list-group" id="sidemenu">
     <%
         Gson gsonLocation = new Gson();
         String location = "";

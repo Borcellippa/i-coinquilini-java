@@ -191,6 +191,11 @@ public class UserController extends HttpServlet {
             request.setAttribute("location", buildGson("registrazione"));
             rd = getServletContext().getRequestDispatcher("/registrazione.jsp");
         }
+        
+        if (action.equals("testLogin")) {
+            rd = getServletContext().getRequestDispatcher("/completaSocial.jsp");
+        }
+        
 
         if (action.equals("loginFacebook")) {
             String userData = (String) request.getParameter("userData");
