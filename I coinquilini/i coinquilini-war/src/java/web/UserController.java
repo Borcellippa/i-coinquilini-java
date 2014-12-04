@@ -208,7 +208,7 @@ public class UserController extends HttpServlet {
             //Controllo che la mail non sia già presente nel DB
             Utente u = gestoreUtente.getUtenteByEmail(email);
 
-            //Se l'utente non si è mai registrato lo invio alla pagina di richesta passoword
+            //Se l'utente non si è mai registrato lo invio alla pagina di richesta password
             boolean needPwd = false;
             if (u == null) {
                 u = new Utente();
@@ -234,11 +234,11 @@ public class UserController extends HttpServlet {
             u = gestoreUtente.getUtenteByEmail(email);
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
-            
+
             // se mi sono loggato con facebook devo ancora modificare il profilo per inserire una passoword
-            if (needPwd) { 
-                request.setAttribute("location", buildGson("profilo"));
-                rd = getServletContext().getRequestDispatcher("/completaFacebook.jsp");
+            if (needPwd) {
+                request.setAttribute("location", buildGson("completaSocial"));
+                rd = getServletContext().getRequestDispatcher("/completaSocial.jsp");
 
             } else {
                 request.setAttribute("location", buildGson("profilo"));
@@ -253,91 +253,101 @@ public class UserController extends HttpServlet {
         if (action.equals("gLogin")) {
 
             String token = request.getParameter("param1");
+            String jsonText = "";
 
-            if (token != null) {
-                String email = "";
-                String nome = "";
-                String s = "https://www.googleapis.com/plus/v1/people/me?access_token=" + token;
-                InputStream is = new URL(s).openStream();
-                try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-                    StringBuilder sb = new StringBuilder();
-                    int cp;
-                    while ((cp = reader.read()) != -1) {
-                        sb.append((char) cp);
-                    }
-                    String jsonText = sb.toString();
-
-                    JsonParser parser = new JsonParser();
-                    JsonObject jsonPerson = parser.parse(jsonText).getAsJsonObject();
-
-                    String genere = jsonPerson.get("gender").getAsString();
-
-                    JsonArray emailsJsonArray = jsonPerson.getAsJsonArray("emails");
-                    JsonElement emailJsonElement = emailsJsonArray.get(0);
-                    JsonObject primaryEmailJsonObject = emailJsonElement.getAsJsonObject();
-                    email = primaryEmailJsonObject.get("value").getAsString();
-
-                    JsonObject nomeJson = jsonPerson.getAsJsonObject("name");
-                    nome = nomeJson.get("givenName").getAsString();
-                    String cognome = nomeJson.get("familyName").getAsString();
-
-                    JsonObject imageJson = jsonPerson.getAsJsonObject("image");
-                    String imageUrl = imageJson.get("url").getAsString();
-
-                    JsonArray placesJsonArray = jsonPerson.getAsJsonArray("placesLived");
-                    JsonElement placeJsonElement = placesJsonArray.get(0);
-                    JsonObject primaryPlaceJsonObject = placeJsonElement.getAsJsonObject();
-                    String location = primaryPlaceJsonObject.get("value").getAsString();
-
-                    Utente user = gestoreUtente.getUtenteByEmail(email);
-                    if (user == null) {
-                        user = new Utente();
-                        user.setNome(nome);
-                        user.setCognome(cognome);
-                        user.setGenere(genere);
-                        user.setEmail(email);
-                        user.setG_access_token(token);
-
-                        //System.out.println(u.toString());
-                        gestoreUtente.addUtente(user);
-                        user = gestoreUtente.getUtenteByEmail(email);
-                        String gsonUser = buildGson(user);
-                        request.setAttribute("utente", gsonUser);
-                        // Serve per accendere le entry della pagina di arrivo
-                        request.setAttribute("location", buildGson("profilo"));
-
-                        // set session
-                        response = this.initializeLogin(request, response, nome, email, -1);
-                    } else {
-                        // TODO Integrazione dati g+ con quelli nel nostro DB da registrazione normale
-                    }
-                    // chiudi lo stream
-                    is.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            String s = "https://www.googleapis.com/plus/v1/people/me?access_token=" + token;
+            InputStream is = new URL(s).openStream();
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+                StringBuilder sb = new StringBuilder();
+                int cp;
+                while ((cp = reader.read()) != -1) {
+                    sb.append((char) cp);
                 }
-                // Se l'inserimento in db è andato a buon fine carico i dati da lì per usarli nella prossima view
-                if (!email.equals("")) {
-                    // creazione argomenti per la prossima pagina
-                    Utente user = gestoreUtente.getUtenteByEmail(email);
-                    String gsonUser = buildGson(user);
-                    request.setAttribute("utente", gsonUser);
-                    request.setAttribute("location", buildGson("profilo"));
 
-                    // session
-                    response = this.initializeLogin(request, response, nome, email, -1);
-
-                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
-                }
-            } else {
-                rd = getServletContext().getRequestDispatcher("/errore.jsp");
+                jsonText = sb.toString();
+                // chiudi lo stream
+                is.close();
+            } catch (Exception e) {
             }
+
+            // dopo aver preso le informazioni da google vengono estratte
+            JsonParser parser = new JsonParser();
+            JsonObject jsonPerson = parser.parse(jsonText).getAsJsonObject();
+
+            String genere = jsonPerson.get("gender").getAsString();
+
+            JsonArray emailsJsonArray = jsonPerson.getAsJsonArray("emails");
+            JsonElement emailJsonElement = emailsJsonArray.get(0);
+            JsonObject primaryEmailJsonObject = emailJsonElement.getAsJsonObject();
+            String email = primaryEmailJsonObject.get("value").getAsString();
+
+            JsonObject nomeJson = jsonPerson.getAsJsonObject("name");
+            String nome = nomeJson.get("givenName").getAsString();
+            String cognome = nomeJson.get("familyName").getAsString();
+
+            JsonObject imageJson = jsonPerson.getAsJsonObject("image");
+            String imageUrl = imageJson.get("url").getAsString();
+
+            JsonArray placesJsonArray = jsonPerson.getAsJsonArray("placesLived");
+            JsonElement placeJsonElement = placesJsonArray.get(0);
+            JsonObject primaryPlaceJsonObject = placeJsonElement.getAsJsonObject();
+            String location = primaryPlaceJsonObject.get("value").getAsString();
+
+            //Controllo che la mail non sia già presente nel DB
+            Utente user = gestoreUtente.getUtenteByEmail(email);
+
+            //Se l'utente non si è mai registrato lo invio alla pagina di richesta password
+            boolean needPwd = false;
+            if (user == null) {
+                user = new Utente();
+                user.setNome(nome);
+                user.setCognome(cognome);
+                user.setGenere(genere);
+                user.setEmail(email);
+                user.setG_access_token(token);
+                user.setCitta_natale(location);
+                user.setFoto_path(imageUrl);
+
+                gestoreUtente.addUtente(user);
+                needPwd = true;
+            } // Altrimenti lo tiro solo su introducendo le informazioni di google
+            else {
+                user.setNome(nome);
+                user.setCognome(cognome);
+                user.setGenere(genere);
+                user.setG_access_token(token);
+                user.setCitta_natale(location);
+                user.setFoto_path(imageUrl);
+                gestoreUtente.editUtente(user);
+            }
+
+            user = gestoreUtente.getUtenteByEmail(email);
+            String gsonUser = buildGson(user);
+            request.setAttribute("utente", gsonUser);
+
+            // se mi sono loggato con g+ devo ancora modificare il profilo per inserire una passoword
+            if (needPwd) {
+                request.setAttribute("location", buildGson("completaSocial"));
+                rd = getServletContext().getRequestDispatcher("/completaSocial.jsp");
+
+            } else {
+                request.setAttribute("location", buildGson("profilo"));
+                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+
+            }
+            // session
+            response = this.initializeLogin(request, response, nome, email, -1);
         }
+
+        if (action.equals("completaSocial")) {
+
+        }
+
         rd.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
