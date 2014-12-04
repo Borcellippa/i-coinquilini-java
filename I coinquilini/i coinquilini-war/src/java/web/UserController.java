@@ -90,6 +90,7 @@ public class UserController extends HttpServlet {
                 request.setAttribute("location", buildGson("home"));
                 rd = getServletContext().getRequestDispatcher("/home.jsp");
             }
+
         } else if (action.equals("profilo_utente")) {
             session = request.getSession();
             String email = (String) session.getAttribute("email");
@@ -98,6 +99,7 @@ public class UserController extends HttpServlet {
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
             rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+
         } else if (action.equals("login")) {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -122,6 +124,7 @@ public class UserController extends HttpServlet {
                 request.setAttribute("errore", buildGson("errore_login"));
                 rd = getServletContext().getRequestDispatcher("/home.jsp");
             }
+
         } else if (action.equals("logout")) {
             session = request.getSession();
             session.invalidate();
@@ -135,6 +138,7 @@ public class UserController extends HttpServlet {
                 }
             }
             rd = getServletContext().getRequestDispatcher("/index.jsp");
+
         } else if (action.equals("firstRedirect")) {
             Cookie[] cookies = request.getCookies();
             boolean foundCookie = false;
@@ -146,7 +150,6 @@ public class UserController extends HttpServlet {
                     break;
                 }
             }
-
             if (!foundCookie || (userCookie != null && userCookie.getValue().equals("nd"))) {
                 rd = getServletContext().getRequestDispatcher("/home.jsp");
             } else {
@@ -171,12 +174,12 @@ public class UserController extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/home.jsp");
                 }
             }
+
         } else if (action.equals("registrazione")) {
             request.setAttribute("location", buildGson("registrazione"));
             rd = getServletContext().getRequestDispatcher("/registrazione.jsp");
-        }
 
-        if (action.equals("loginFacebook")) {
+        } else if (action.equals("loginFacebook")) {
             String userData = (String) request.getParameter("userData");
             JsonParser parser = new JsonParser();
             JsonObject jsonPerson = parser.parse(userData).getAsJsonObject();
@@ -188,6 +191,7 @@ public class UserController extends HttpServlet {
             String genere = jsonPerson.get("gender").getAsString();
             String fb_id = jsonPerson.get("id").getAsString();
             String fb_token = jsonPerson.get("accessToken").getAsString();
+            String imageUrl = jsonPerson.get("urlImmagine").getAsString();
 
             //Controllo che la mail non sia già presente nel DB
             Utente u = gestoreUtente.getUtenteByEmail(email);
@@ -202,6 +206,7 @@ public class UserController extends HttpServlet {
                 u.setFb_access_token(fb_token);
                 u.setFb_user_id(fb_id);
                 u.setEmail(email);
+                u.setFoto_path(imageUrl);
                 gestoreUtente.addUtente(u);
                 needPwd = true;
 
@@ -212,6 +217,8 @@ public class UserController extends HttpServlet {
                 u.setGenere(genere);
                 u.setFb_access_token(fb_token);
                 u.setFb_user_id(fb_id);
+                u.setFoto_path(imageUrl);
+
                 gestoreUtente.editUtente(u);
             }
 
@@ -330,6 +337,7 @@ public class UserController extends HttpServlet {
             }
             // session
             response = this.initializeLogin(request, response, nome, email, -1);
+
         } else if (action.equals("completaSocial")) {
             // quando un utente si collega con un social gli diamo la possibilità 
             // di inserire una pwd in modo che possa collegarsi successivamente con la mail
@@ -347,10 +355,13 @@ public class UserController extends HttpServlet {
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
             rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
-        } else {
-            request.setAttribute("location", buildGson("error_page_1"));
-            rd = getServletContext().getRequestDispatcher("/errore_action.htlm");
+
+        } else { // caso in cui non ci sia nessuna action da eseguire
+            request.setAttribute("location", buildGson("error_page"));
+            request.setAttribute("errorPage", buildGson("no_action"));
+            rd = getServletContext().getRequestDispatcher("/errore.jsp");
         }
+
         rd.forward(request, response);
     }
 
