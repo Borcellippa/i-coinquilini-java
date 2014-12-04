@@ -10,11 +10,6 @@
     Utente utente = gsonUtente.fromJson(utenteFromJson, Utente.class);
 %>
 
-<% if (utente.getFb_user_id() != null) {%>    
-<h3>
-    <%=utente.getFb_user_id()%>
-</h3>
-<% } %>
 <form method="POST" action="UserController" role="form">
     <div class="row">
         <div class="col-md-3">

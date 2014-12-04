@@ -2,9 +2,97 @@ body{
     min-width: 1150px;
 }
 
+.labelForm{
+    width: 145px;
+}
+
+#account-password{
+    height: 190px;
+}
+
+.inputForm{
+    width: 200px;
+    display: inline;
+}
+
+#leftPasswordDiv{
+    float: left;
+    background-color: cadetblue;
+    width: 20%;
+    height: 100%;
+}
+
+#rightPasswordDiv{
+    float: right;
+    width: 80%;
+    margin-top: 6%;
+    margin-left: 0px;
+}
+
+#sidemenu .active{
+    background-image: -webkit-linear-gradient(top,cadetblue 0,cadetblue 100%);
+    background-image: -o-linear-gradient(top,cadetblue 0,cadetblue 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(cadetblue),to(cadetblue));
+    background-image: linear-gradient(to bottom,cadetblue 0,cadetblue 100%);
+}
+
+#social-wizard {
+    margin: 45px auto 0 auto;
+    width: 560px;
+}
+
+#social-wizard header {
+    position: relative;
+    padding: 40px 0 20px 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    /* background-color: #426E6F; */
+    color: #fff;
+    text-align: center;
+    background-image: url("../images/top-mini-banner.png");
+}
+
+#social-wizard h1 {
+    margin: 0;
+    font-size: 36px;
+    color: #fff;
+    /* margin-top: 0pc; */
+}
+
+#social-wizard .wizard-content {
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#social-wizard .wizard-content>section {
+    position: relative;
+    margin-bottom: 20px;
+    /* padding: 30px 20px 30px 120px; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+a {
+    color: #3572b0;
+    text-decoration: none;
+}   
+
+.top-navbar{
+    height: 90px;
+    margin-bottom: 25px;
+    /*background-image: -webkit-linear-gradient(top,cadetblue 0,#426E6F 100%);
+    background-image: -o-linear-gradient(top,cadetblue 0,#426E6F 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(cadetblue),to(#426E6F));
+    background-image: linear-gradient(to bottom,cadetblue 0,#426E6F 100%);*/
+    background-color: cadetblue;
+}
+
 #jumbotron{
-    width: 34%;
-    margin-left: 33%;
+    width: 30%;
+    margin-left: 35%;
     position: relative;
     z-index: 3;
     border-bottom-left-radius: 100px;

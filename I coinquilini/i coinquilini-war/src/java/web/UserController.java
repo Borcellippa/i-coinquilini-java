@@ -29,7 +29,7 @@ public class UserController extends HttpServlet {
     private GestoreUserCookieLocal gestoreUserCookie;
 
     @EJB
-    GestoreUtenteLocal gestoreUtente;
+    private GestoreUtenteLocal gestoreUtente;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -91,11 +91,9 @@ public class UserController extends HttpServlet {
 
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
             } else {
-                request.setAttribute("utente", buildGson(user));
-                request.setAttribute("errore", buildGson("User già registrato"));
-                request.setAttribute("location", buildGson("errore"));
-
-                rd = getServletContext().getRequestDispatcher("/errore.jsp");
+                request.setAttribute("errore", buildGson("utente_registrato"));
+                request.setAttribute("location", buildGson("home"));
+                rd = getServletContext().getRequestDispatcher("/home.jsp");
             }
         }
 
@@ -190,7 +188,7 @@ public class UserController extends HttpServlet {
         if (action.equals("registrazione")) {
             request.setAttribute("location", buildGson("registrazione"));
             rd = getServletContext().getRequestDispatcher("/registrazione.jsp");
-        }        
+        }
 
         if (action.equals("loginFacebook")) {
             String userData = (String) request.getParameter("userData");
@@ -275,15 +273,15 @@ public class UserController extends HttpServlet {
             JsonParser parser = new JsonParser();
             JsonObject jsonPerson = parser.parse(jsonText).getAsJsonObject();
 
-            String genere = "";
-            if(genere != null) {
-                jsonPerson.get("gender").getAsString();
-            }
+            String genere = jsonPerson.get("gender").getAsString();
 
             JsonArray emailsJsonArray = jsonPerson.getAsJsonArray("emails");
-            JsonElement emailJsonElement = emailsJsonArray.get(0);
-            JsonObject primaryEmailJsonObject = emailJsonElement.getAsJsonObject();
-            String email = primaryEmailJsonObject.get("value").getAsString();
+            String email = "";
+            if (emailsJsonArray != null) {
+                JsonElement emailJsonElement = emailsJsonArray.get(0);
+                JsonObject primaryEmailJsonObject = emailJsonElement.getAsJsonObject();
+                email = primaryEmailJsonObject.get("value").getAsString();
+            }
 
             JsonObject nomeJson = jsonPerson.getAsJsonObject("name");
             String nome = nomeJson.get("givenName").getAsString();
@@ -293,9 +291,12 @@ public class UserController extends HttpServlet {
             String imageUrl = imageJson.get("url").getAsString();
 
             JsonArray placesJsonArray = jsonPerson.getAsJsonArray("placesLived");
-            JsonElement placeJsonElement = placesJsonArray.get(0);
-            JsonObject primaryPlaceJsonObject = placeJsonElement.getAsJsonObject();
-            String location = primaryPlaceJsonObject.get("value").getAsString();
+            String location = "";
+            if (placesJsonArray != null) {
+                JsonElement placeJsonElement = placesJsonArray.get(0);
+                JsonObject primaryPlaceJsonObject = placeJsonElement.getAsJsonObject();
+                location = primaryPlaceJsonObject.get("value").getAsString();
+            }
 
             //Controllo che la mail non sia già presente nel DB
             Utente user = gestoreUtente.getUtenteByEmail(email);
@@ -309,7 +310,9 @@ public class UserController extends HttpServlet {
                 user.setGenere(genere);
                 user.setEmail(email);
                 user.setG_access_token(token);
-                user.setCitta_natale(location);
+                if (!"".equals(location)) {
+                    user.setCitta_natale(location);
+                }
                 user.setFoto_path(imageUrl);
 
                 gestoreUtente.addUtente(user);
@@ -320,7 +323,9 @@ public class UserController extends HttpServlet {
                 user.setCognome(cognome);
                 user.setGenere(genere);
                 user.setG_access_token(token);
-                user.setCitta_natale(location);
+                if (!"".equals(location)) {
+                    user.setCitta_natale(location);
+                }
                 user.setFoto_path(imageUrl);
                 gestoreUtente.editUtente(user);
             }
@@ -344,9 +349,7 @@ public class UserController extends HttpServlet {
         }
 
         //if (action.equals("completaSocial")) {
-
         //}
-
         rd.forward(request, response);
     }
 

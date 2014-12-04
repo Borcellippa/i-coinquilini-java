@@ -1,8 +1,8 @@
-<div style="background-color: cadetblue; height: 90px; margin-bottom: 25px">
+<div class="top-navbar">
     <div class="col-md-8">
-        <div class="col-md-2" style="margin-top: 7px">
+        <div class="col-md-2" style="margin-top: 2px;">
             <img src="images/a.jpg" class="img-circle img-thumbnail" height="140px" width="140px">
-        </div>
+        </div> 
         <h1 style="color: white">Roommates</h1>
     </div>
     <div class="col-md-4">
