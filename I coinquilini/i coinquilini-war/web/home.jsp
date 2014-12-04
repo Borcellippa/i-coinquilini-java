@@ -71,20 +71,33 @@
             <div class="row">
                 <div class="col-md-12">
                     <div id="home-motto">
-                        Fare l'amore con te è stato come lanciare un salame in un corridoio
-
                         <%  // Gestione della stampa in caso di errore di login
                             Gson gsonErrore = new Gson();
                             String erroreFromJson = (String) request.getAttribute("errore");
+                            String errore = null;
                             if (erroreFromJson != null) {
                                 String err = gsonErrore.fromJson(erroreFromJson, String.class);
                                 if (err.equals("errore_login")) {
-                        %>
-                        <div class="alert alert-danger" role="alert"> Email o Password errate </div>
-                        <%
+                                    errore = "Email o Password errate";
+                                }
+                                if (err.equals("utente_registrato")) {
+                                    errore = "L'email è già presente nel sistema";
                                 }
                             }
+
+                            if (errore != null) {
                         %>
+                        <div class="alert alert-danger" role="alert"> <%=errore%> </div>
+
+                        <%
+                            }
+                            else {
+                                out.println("Fare l'amore con te è stato come lanciare un salame in un corridoio");
+                            }
+                        %>
+
+
+
                     </div>
                 </div>
                 <hr class="soften">
