@@ -74,6 +74,7 @@ public class UserController extends HttpServlet {
                 u.setNazionalita(request.getParameter("nazionalita"));
                 u.setData_nascita(request.getParameter("data_nascita"));
                 u.setCitta_natale(request.getParameter("citta_natale"));
+                u.setFoto_path("images/user.png");
 
                 gestoreUtente.addUtente(u);
                 user = gestoreUtente.getUtenteByEmail(email);
@@ -192,6 +193,9 @@ public class UserController extends HttpServlet {
             String fb_id = jsonPerson.get("id").getAsString();
             String fb_token = jsonPerson.get("accessToken").getAsString();
             String imageUrl = jsonPerson.get("urlImmagine").getAsString();
+            if (imageUrl == null) {
+                imageUrl = "images/user.png";
+            }
 
             //Controllo che la mail non sia già presente nel DB
             Utente u = gestoreUtente.getUtenteByEmail(email);
@@ -207,6 +211,7 @@ public class UserController extends HttpServlet {
                 u.setFb_user_id(fb_id);
                 u.setEmail(email);
                 u.setFoto_path(imageUrl);
+
                 gestoreUtente.addUtente(u);
                 needPwd = true;
 
@@ -217,7 +222,9 @@ public class UserController extends HttpServlet {
                 u.setGenere(genere);
                 u.setFb_access_token(fb_token);
                 u.setFb_user_id(fb_id);
-                u.setFoto_path(imageUrl);
+                if (!"images/user.png".equals(imageUrl)) {
+                    u.setFoto_path(imageUrl);
+                }
 
                 gestoreUtente.editUtente(u);
             }
@@ -280,6 +287,9 @@ public class UserController extends HttpServlet {
 
             JsonObject imageJson = jsonPerson.getAsJsonObject("image");
             String imageUrl = imageJson.get("url").getAsString();
+            if (imageUrl == null) {
+                imageUrl = "images/user.png";
+            }
 
             JsonArray placesJsonArray = jsonPerson.getAsJsonArray("placesLived");
             String location = "";
@@ -317,7 +327,9 @@ public class UserController extends HttpServlet {
                 if (!"".equals(location)) {
                     user.setCitta_natale(location);
                 }
-                user.setFoto_path(imageUrl);
+                if (!"images/user.png".equals(imageUrl)) {
+                    user.setFoto_path(imageUrl);
+                }
                 gestoreUtente.editUtente(user);
             }
 
