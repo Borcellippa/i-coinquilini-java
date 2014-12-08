@@ -175,48 +175,53 @@
                         <h4 class="modal-title">Login</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4">
-                            <a class="btn btn-block btn-social btn-facebook" onclick="fb_login();">
-                                <i class="uk-icon-facebook"></i> Accedi
-                            </a>
-                        </div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-4">
-                            <span id="signinButton" onclick="gButtonClick();">
-                                <span
-                                    class="g-signin"
-                                    data-callback="signinCallback"
-                                    data-clientid="702958319868-kj4pe0qgtdo34b9t150qsb318kfqulp7.apps.googleusercontent.com"
-                                    data-cookiepolicy="single_host_origin"
-                                    data-requestvisibleactions="http://schemas.google.com/AddActivity"
-                                    data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email">
+                        <div id="social-login" style="height: 53px">
+                            <div class="col-md-4">
+                                <a class="btn btn-block btn-social btn-facebook" onclick="fb_login();">
+                                    <i class="uk-icon-facebook"></i> Accedi con Facebook
+                                </a>
+                            </div>
+                            <div class="col-md-4" style="margin-left: 18%">
+                                <span id="signinButton" onclick="gButtonClick();">
+                                    <span
+                                        class="g-signin"
+                                        data-callback="signinCallback"
+                                        data-clientid="702958319868-kj4pe0qgtdo34b9t150qsb318kfqulp7.apps.googleusercontent.com"
+                                        data-cookiepolicy="single_host_origin"
+                                        data-requestvisibleactions="http://schemas.google.com/AddActivity"
+                                        data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
+                                        data-width="wide"
+                                        data-height="tall"
+                                        >
+                                    </span>
                                 </span>
-                            </span>
-                            <!--<a class="btn btn-block btn-social btn-google-plus" >
-                                <i class="uk-icon-google-plus"></i> Sign in with Google+
-                            </a>-->
+                                <!--<a class="btn btn-block btn-social btn-google-plus" >
+                                    <i class="uk-icon-google-plus"></i> Sign in with Google+
+                                </a>-->
+                            </div>
                         </div>
+                        <div id="loginDiv">
+                            <form action="UserController" id="loginForm" method="POST" role="form">
+                                <div class="form-group">
+                                    <label for="email" style="margin-top: 15px;">Email address</label>
+                                    <input class="form-control" type="text" name="email" id="email" placeholder="Email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input class="form-control" type="password" name="password" id="password" placeholder="Password" required>
+                                </div>
+                                <input type="hidden" name="action" value="login">
+                            </form>
 
-                        <form action="UserController" id="loginForm" method="POST" role="form">
-                            <div class="form-group">
-                                <label for="email" style="margin-top: 15px;">Email address</label>
-                                <input class="form-control" type="text" name="email" id="email" placeholder="Email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input class="form-control" type="password" name="password" id="password" placeholder="Password" required>
-                            </div>
-                            <input type="hidden" name="action" value="login">
-                        </form>
-
-                        <form action="UserController" id="registrazioneForm" method="POST" role="form">
-                            <input type="hidden" name="action" value="registrazione">
-                        </form>
-
-                        <button class="btn btn-primary" onclick="$('#loginForm').submit();">Login</button>
-                        <button type="submit" class="btn btn-default" onclick="$('#registrazioneForm').submit();">Registrazione</button>
-
+                            <form action="UserController" id="registrazioneForm" method="POST" role="form">
+                                <input type="hidden" name="action" value="registrazione">
+                            </form>
+                        </div>
+                        
+                        <div id="submitDiv" style="margin-top: 30px">
+                            <button class="btn btn-primary" onclick="$('#loginForm').submit();">Login</button>
+                            <button type="submit" class="btn btn-default" onclick="$('#registrazioneForm').submit();">Registrazione</button>
+                        </div>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

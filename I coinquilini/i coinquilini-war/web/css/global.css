@@ -5,16 +5,16 @@ body{
 .custom-button:hover{
     color: white;
     background: -webkit-linear-gradient(top,cadetblue 0, 100%);
-    background: -o-linear-gradient(top,#426E6F 0,cadetblue 100%);
-    background: -webkit-gradient(linear,left top,left bottom,from(#426E6F),to(cadetblue));
+    background: -o-linear-gradient(top,#90BFC9 0,cadetblue 100%);
+    background: -webkit-gradient(linear,left top,left bottom,from(#90BFC9),to(cadetblue));
     background: linear-gradient(to bottom,#426E6F 0,cadetblue 100%);
 }
 
 .custom-button{
-    background: -webkit-linear-gradient(top,cadetblue 0,#426E6F 100%);
-    background: -o-linear-gradient(top,cadetblue 0,#426E6F 100%);
+    background: -webkit-linear-gradient(top,cadetblue 0,#90BFC9 100%);
+    background: -o-linear-gradient(top,cadetblue 0,#90BFC9 100%);
     background: -webkit-gradient(linear,left top,left bottom,from(cadetblue),to(#426E6F));
-    background: linear-gradient(to bottom,cadetblue 0,#426E6F 100%);
+    background: linear-gradient(to bottom,cadetblue 0,#90BFC9 100%);
     color: white;
 }
 
@@ -229,11 +229,11 @@ span.buttonText {
 }
 
 .btn-facebook{
-    height: 30px;
-    width: 113px;
+    height: 43px;
+    width: 239px;
     line-height: 1;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 15px;
     text-align: center;
 }
 
