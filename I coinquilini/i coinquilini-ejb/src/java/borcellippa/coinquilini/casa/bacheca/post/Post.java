@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -27,7 +28,8 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String contenuto;
-    private Date data;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataPubblicazione;
     private Media media;
     private Inquilino autore;
     private Bacheca bacheca;
@@ -90,21 +92,21 @@ public class Post implements Serializable {
 
 
     /**
-     * Get the value of data
+     * Get the value of dataPubblicazione
      *
-     * @return the value of data
+     * @return the value of dataPubblicazione
      */
-    public Date getData() {
-        return data;
+    public Date getDataPubblicazione() {
+        return dataPubblicazione;
     }
 
     /**
-     * Set the value of data
+     * Set the value of dataPubblicazione
      *
-     * @param data new value of data
+     * @param dataPubblicazione new value of dataPubblicazione
      */
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataPubblicazione(Date dataPubblicazione) {
+        this.dataPubblicazione = dataPubblicazione;
     }
 
 
