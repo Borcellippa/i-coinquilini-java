@@ -25,7 +25,6 @@ public class Utente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String email;
     private String password;
     private String nome;
