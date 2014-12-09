@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Spesa implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String descrizione;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date data;
     private float importo;
     private Boolean pagato;

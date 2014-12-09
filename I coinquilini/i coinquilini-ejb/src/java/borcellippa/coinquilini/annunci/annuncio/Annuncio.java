@@ -8,11 +8,13 @@ package borcellippa.coinquilini.annunci.annuncio;
 
 import borcellippa.coinquilini.users.utente.Utente;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -36,6 +38,27 @@ public class Annuncio implements Serializable {
     private String citta;
     private String latitudine;
     private String longitudine;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataPubblicazione;
+
+    /**
+     * Get the value of dataPubblicazione
+     *
+     * @return the value of dataPubblicazione
+     */
+    public Date getDataPubblicazione() {
+        return dataPubblicazione;
+    }
+
+    /**
+     * Set the value of dataPubblicazione
+     *
+     * @param dataPubblicazione new value of dataPubblicazione
+     */
+    public void setDataPubblicazione(Date dataPubblicazione) {
+        this.dataPubblicazione = dataPubblicazione;
+    }
+
 
     /**
      * Get the value of longitudine
