@@ -194,7 +194,7 @@ h4{
 }
 
 //Stili per i widget di G+
-iframe[src^="https://apis.google.com/u/0/_/widget/oauthflow/toast"] {display: none;}
+
 #customBtn {
     display: inline-block;
     background: #dd4b39;
@@ -240,3 +240,5 @@ span.buttonText {
 .btn-social{
     text-align: center;
 }
+
+iframe[src^="https://apis.google.com/u/0/_/widget/oauthflow/toast"] {display: none;}
