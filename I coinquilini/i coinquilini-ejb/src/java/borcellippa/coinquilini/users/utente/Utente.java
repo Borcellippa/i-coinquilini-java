@@ -9,16 +9,24 @@ import borcellippa.coinquilini.annunci.annuncio.Annuncio;
 import borcellippa.coinquilini.casa.casa.Casa;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 /**
  *
  * @author Bortignon Gianluca
  */
 @Entity
+@Inheritance(strategy=SINGLE_TABLE)
+@DiscriminatorColumn(name="TIPO_UTENTE", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue("U")
 public class Utente implements Serializable {
 
     private static final long serialVersionUID = 1L;

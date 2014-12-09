@@ -5,26 +5,19 @@
  */
 package borcellippa.coinquilini.users.inquilino;
 
-import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.bacheca.post.Post;
+import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.gestione_economica.debito.Debito;
 import borcellippa.coinquilini.casa.gestione_economica.spesa.Spesa;
 import borcellippa.coinquilini.users.utente.Utente;
-import java.io.Serializable;
 import java.util.List;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-/**
- *
- * @author Fede
- */
 @Entity
-public class Inquilino extends Utente implements Serializable {
+@DiscriminatorValue("I")
+public class Inquilino extends Utente {
 
-    private static final long serialVersionUID = 1L;
     private Casa casa;
     private float affitto;
     private List<Debito> debiti;
@@ -120,4 +113,5 @@ public class Inquilino extends Utente implements Serializable {
     public void setCasa(Casa casa) {
         this.casa = casa;
     }
+
 }
