@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.coinquilini.users.utente;
+package ejb.coinquilini.users;
 
 import ejb.coinquilini.cookies.GestoreUserCookie;
+import ejb.coinquilini.users.utente.GestoreUtenteLocal;
+import ejb.coinquilini.users.utente.Utente;
+import ejb.coinquilini.users.utente.UtenteFacadeLocal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -46,6 +49,12 @@ public class GestoreUtente implements GestoreUtenteLocal {
     public void editUtente(Utente u) {
         utenteFacade.edit(u);
 
+    }
+
+    @Override
+    public void editUtentePassword(String pwd, Utente u) {
+        u.setPassword(hashPassword(pwd)); // hasho la password prima di inserirla in db
+        utenteFacade.edit(u);
     }
 
     @Override
