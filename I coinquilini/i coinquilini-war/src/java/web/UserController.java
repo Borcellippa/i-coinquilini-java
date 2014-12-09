@@ -72,6 +72,7 @@ public class UserController extends HttpServlet {
                 Utente u = new Utente();
                 u.setNome(request.getParameter("nome"));
                 u.setCognome(request.getParameter("cognome"));
+                u.setGenere(request.getParameter("genere"));
                 u.setEmail(request.getParameter("email"));
                 u.setPassword(request.getParameter("password"));
                 u.setTelefono(request.getParameter("telefono"));
@@ -323,7 +324,6 @@ public class UserController extends HttpServlet {
                     user.setCitta_natale(location);
                 }
                 user.setFoto_path(imageUrl);
-                
 
                 gestoreUtente.addUtente(user);
                 needPwd = true;
@@ -374,6 +374,38 @@ public class UserController extends HttpServlet {
 
             gestoreUtente.editUtentePassword(pwd, u); // aggiorno l'utente e hasho la pwd
 
+            String gsonUser = buildGson(u);
+            request.setAttribute("utente", gsonUser);
+            request.setAttribute("location", buildGson("profilo"));
+            rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+
+        } else if (action.equals("editUtente")) {
+            // aggiorno le info dell'utente dalla sua pagina profilo
+            String email = request.getParameter("email");
+            Utente u = gestoreUtente.getUtenteByEmail(email);
+
+            // aggiorno tutte le informazioni che provengono dalla form
+            u.setNome(request.getParameter("nome"));
+            u.setCognome(request.getParameter("cognome"));
+            u.setGenere(request.getParameter("genere"));
+            u.setTelefono(request.getParameter("telefono"));
+            u.setNazionalita(request.getParameter("nazionalita"));
+            u.setData_nascita(request.getParameter("data_nascita"));
+            u.setCitta_natale(request.getParameter("citta_natale"));
+            gestoreUtente.editUtente(u);
+
+            // aggiorno la sessione nel caso che venga modifica il nome
+            session = request.getSession();
+            session.setAttribute("nome", request.getParameter("nome"));
+
+            // gestione della modifica della password
+            String pwd = (String) request.getParameter("password");
+            if (pwd != null) {
+                gestoreUtente.editUtentePassword(pwd, u); // aggiorno l'utente e hasho la pwd
+            }
+
+            // caricamento della wiew
+            u = gestoreUtente.getUtenteByEmail(email);
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
