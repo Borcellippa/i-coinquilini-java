@@ -6,9 +6,6 @@
 package ejb.coinquilini.users.utente;
 
 import ejb.coinquilini.cookies.GestoreUserCookie;
-import ejb.coinquilini.users.utente.GestoreUtenteLocal;
-import ejb.coinquilini.users.utente.Utente;
-import ejb.coinquilini.users.utente.UtenteFacadeLocal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
