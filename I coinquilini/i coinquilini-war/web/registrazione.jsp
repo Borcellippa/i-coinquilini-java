@@ -1,10 +1,12 @@
 <%@include  file="topTemplateFree.jsp" %>
+<script src="js/validatePwd.js" type="text/javascript"></script>
+
 <div id="social-wizard">
     <header>
         <h1>Registrazione</h1>
     </header>
     <div class="wizard-content" id="formRegistrazione"> 
-        <form method="POST" action="UserController" role="form">
+        <form method="POST" action="UserController" role="form" onsubmit="return checkForm(this);">
             <div class="form-group">
                 <label>Nome</label>
                 <input type="text" name="nome" class="form-control" required>
@@ -17,9 +19,16 @@
                 <label for="email">Email</label>
                 <input type="email" name="email" class="form-control" required>
             </div>
-            <div class="form-group">
+            <div id="password" class="form-group">
                 <label for="password">Password</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control" required onfocus="removeError()">
+            </div>
+            <div id="passwordConf" class="form-group">
+                <label for="passwordConf">Conferma Password</label>
+                <input type="password" name="passwordConf" class="form-control" required onfocus="removeError()">            
+            </div>      
+            <div class="uk-hidden" id="testPwd" style="text-align: center; margin-bottom: 10px;">
+                <span class="label label-danger"  style="text-align: center;">Le password inserite non coincidono</span>
             </div>
             <div class="form-group">
                 <label for="password">Genere</label>
