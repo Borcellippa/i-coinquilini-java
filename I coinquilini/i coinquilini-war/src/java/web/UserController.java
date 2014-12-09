@@ -6,6 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import borcellippa.coinquilini.cookies.GestoreUserCookieLocal;
+import borcellippa.coinquilini.users.inquilino.GestoreInquilinoLocal;
+import borcellippa.coinquilini.users.inquilino.Inquilino;
 import borcellippa.coinquilini.users.utente.GestoreUtenteLocal;
 import borcellippa.coinquilini.users.utente.Utente;
 import java.io.BufferedReader;
@@ -24,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class UserController extends HttpServlet {
+
+    @EJB
+    private GestoreInquilinoLocal gestoreInquilino;
 
     @EJB
     private GestoreUserCookieLocal gestoreUserCookie;
@@ -115,7 +120,12 @@ public class UserController extends HttpServlet {
                 String gsonUser = buildGson(user);
                 request.setAttribute("utente", gsonUser);
                 request.setAttribute("location", buildGson("profilo"));
-                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
+                if (i == null) {
+                    rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                } else {
+                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                }
                 // se la password è sbagliata e l'utente non esiste
             } else {
                 request.setAttribute("location", buildGson("home"));
@@ -157,7 +167,12 @@ public class UserController extends HttpServlet {
                     String gsonUser = buildGson(u);
                     request.setAttribute("utente", gsonUser);
                     request.setAttribute("location", buildGson("profilo"));
-                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                    Inquilino i = gestoreInquilino.getInquilinoByEmail(u.getEmail());
+                    if (i == null) {
+                        rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                    } else {
+                        rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                    }
                 } else {
                     /* Se il cookie è presente ma sbagliato lo si cancella */
                     userCookie.setMaxAge(0);
@@ -233,7 +248,12 @@ public class UserController extends HttpServlet {
 
             } else {
                 request.setAttribute("location", buildGson("profilo"));
-                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
+                if (i == null) {
+                    rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                } else {
+                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                }
 
             }
             // session
@@ -341,7 +361,12 @@ public class UserController extends HttpServlet {
 
             } else {
                 request.setAttribute("location", buildGson("profilo"));
-                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
+                if (i == null) {
+                    rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                } else {
+                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                }
 
             }
             // session
@@ -363,7 +388,12 @@ public class UserController extends HttpServlet {
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
-            rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+            Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
+            if (i == null) {
+                rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+            } else {
+                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+            }
 
         } else if (action.equals("editUtente")) {
             // aggiorno le info dell'utente dalla sua pagina profilo
@@ -395,39 +425,12 @@ public class UserController extends HttpServlet {
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
-            rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
-
-        } else if (action.equals("editUtente")) {
-            // aggiorno le info dell'utente dalla sua pagina profilo
-            String email = request.getParameter("email");
-            Utente u = gestoreUtente.getUtenteByEmail(email);
-
-            // aggiorno tutte le informazioni che provengono dalla form
-            u.setNome(request.getParameter("nome"));
-            u.setCognome(request.getParameter("cognome"));
-            u.setGenere(request.getParameter("genere"));
-            u.setTelefono(request.getParameter("telefono"));
-            u.setNazionalita(request.getParameter("nazionalita"));
-            u.setData_nascita(request.getParameter("data_nascita"));
-            u.setCitta_natale(request.getParameter("citta_natale"));
-            gestoreUtente.editUtente(u);
-
-            // aggiorno la sessione nel caso che venga modifica il nome
-            session = request.getSession();
-            session.setAttribute("nome", request.getParameter("nome"));
-
-            // gestione della modifica della password
-            String pwd = (String) request.getParameter("password");
-            if (pwd != null) {
-                gestoreUtente.editUtentePassword(pwd, u); // aggiorno l'utente e hasho la pwd
+            Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
+            if (i == null) {
+                rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+            } else {
+                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
             }
-
-            // caricamento della wiew
-            u = gestoreUtente.getUtenteByEmail(email);
-            String gsonUser = buildGson(u);
-            request.setAttribute("utente", gsonUser);
-            request.setAttribute("location", buildGson("profilo"));
-            rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
 
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
