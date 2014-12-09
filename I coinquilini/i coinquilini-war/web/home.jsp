@@ -93,7 +93,7 @@
 
                         <%
                             } else {
-                                out.println("Fare l'amore con te è stato come lanciare un salame in un corridoio");
+                                out.println("What is love, baby don't hurt me, don't hurt me, no more...");
                             }
                         %>
 

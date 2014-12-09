@@ -5,9 +5,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import ejb.coinquilini.users.GestoreUserCookieLocal;
-import ejb.coinquilini.users.GestoreUtenteLocal;
-import ejb.coinquilini.users.Utente;
+import borcellippa.coinquilini.cookies.GestoreUserCookieLocal;
+import borcellippa.coinquilini.users.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.users.utente.Utente;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,7 +88,7 @@ public class UserController extends HttpServlet {
                 request.setAttribute("location", buildGson("profilo"));
 
                 // session
-                response = this.initializeLogin(request, response, nome, email, -1, u.getFoto_path());
+                response = this.initializeLogin(request, response, nome, email, null, u.getFoto_path());
 
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
             } else {
@@ -120,7 +120,7 @@ public class UserController extends HttpServlet {
                 if (user.getCasa() != null) {
                     response = this.initializeLogin(request, response, user.getNome(), email, user.getCasa().getId(), user.getFoto_path());
                 } else {
-                    response = this.initializeLogin(request, response, user.getNome(), email, -1, user.getFoto_path());
+                    response = this.initializeLogin(request, response, user.getNome(), email, null, user.getFoto_path());
                 }
 
                 rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
@@ -161,11 +161,11 @@ public class UserController extends HttpServlet {
             } else {
                 Utente u = gestoreUserCookie.getUtenteByToken(userCookie.getValue());
                 if (u != null) {
-                    long casaId;
+                    String casaId;
                     if (u.getCasa() != null) {
                         casaId = u.getCasa().getId();
                     } else {
-                        casaId = -1;
+                        casaId = null;
                     }
                     response = this.initializeLogin(request, response, u.getNome(), u.getEmail(), casaId, u.getFoto_path());
                     String gsonUser = buildGson(u);
@@ -251,7 +251,7 @@ public class UserController extends HttpServlet {
 
             }
             // session
-            response = this.initializeLogin(request, response, nome, email, -1, u.getFoto_path());
+            response = this.initializeLogin(request, response, nome, email, null, u.getFoto_path());
 
         } else if (action.equals("gLogin")) {
 
@@ -359,7 +359,7 @@ public class UserController extends HttpServlet {
 
             }
             // session
-            response = this.initializeLogin(request, response, nome, email, -1, user.getFoto_path());
+            response = this.initializeLogin(request, response, nome, email, null, user.getFoto_path());
 
         } else if (action.equals("completaSocial")) {
             // quando un utente si collega con un social gli diamo la possibilità 
@@ -374,6 +374,38 @@ public class UserController extends HttpServlet {
 
             gestoreUtente.editUtentePassword(pwd, u); // aggiorno l'utente e hasho la pwd
 
+            String gsonUser = buildGson(u);
+            request.setAttribute("utente", gsonUser);
+            request.setAttribute("location", buildGson("profilo"));
+            rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+
+        } else if (action.equals("editUtente")) {
+            // aggiorno le info dell'utente dalla sua pagina profilo
+            String email = request.getParameter("email");
+            Utente u = gestoreUtente.getUtenteByEmail(email);
+
+            // aggiorno tutte le informazioni che provengono dalla form
+            u.setNome(request.getParameter("nome"));
+            u.setCognome(request.getParameter("cognome"));
+            u.setGenere(request.getParameter("genere"));
+            u.setTelefono(request.getParameter("telefono"));
+            u.setNazionalita(request.getParameter("nazionalita"));
+            u.setData_nascita(request.getParameter("data_nascita"));
+            u.setCitta_natale(request.getParameter("citta_natale"));
+            gestoreUtente.editUtente(u);
+
+            // aggiorno la sessione nel caso che venga modifica il nome
+            session = request.getSession();
+            session.setAttribute("nome", request.getParameter("nome"));
+
+            // gestione della modifica della password
+            String pwd = (String) request.getParameter("password");
+            if (pwd != null) {
+                gestoreUtente.editUtentePassword(pwd, u); // aggiorno l'utente e hasho la pwd
+            }
+
+            // caricamento della wiew
+            u = gestoreUtente.getUtenteByEmail(email);
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
@@ -471,7 +503,7 @@ public class UserController extends HttpServlet {
         return json;
     }
 
-    private HttpServletResponse initializeLogin(HttpServletRequest request, HttpServletResponse response, String nome, String email, long idCasa, String url) {
+    private HttpServletResponse initializeLogin(HttpServletRequest request, HttpServletResponse response, String nome, String email, String idCasa, String url) {
         HttpSession session = request.getSession();
         session.setAttribute("email", email);
         session.setAttribute("nome", nome);
