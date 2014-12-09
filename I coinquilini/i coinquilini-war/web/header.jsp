@@ -19,7 +19,7 @@
         <div class="col-md-4">
             <img src="<%= url %>" class="img-thumbnail" id="userPicture" height="70px" width="70px" style="margin-top: 10px; float: right">
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5" style="overflow-x: hidden">
             <p style="color: white; font-weight: bold; margin-top: 12px; font-size: large;">
                 Ciao <%=nomeAccount%> !
             </p>
