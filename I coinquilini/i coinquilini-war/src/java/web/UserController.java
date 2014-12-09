@@ -221,16 +221,18 @@ public class UserController extends HttpServlet {
 
             } // Altrimenti lo tiro solo su introducendo le informazioni di facebook
             else {
-                u.setNome(nome);
-                u.setCognome(cognome);
-                u.setGenere(genere);
-                u.setFb_access_token(fb_token);
-                u.setFb_user_id(fb_id);
-                if (!"images/user.png".equals(imageUrl)) {
-                    u.setFoto_path(imageUrl);
-                }
+                if (u.getFb_access_token() == null) {
+                    u.setNome(nome);
+                    u.setCognome(cognome);
+                    u.setGenere(genere);
+                    u.setFb_access_token(fb_token);
+                    u.setFb_user_id(fb_id);
+                    if (!"images/user.png".equals(imageUrl)) {
+                        u.setFoto_path(imageUrl);
+                    }
 
-                gestoreUtente.editUtente(u);
+                    gestoreUtente.editUtente(u);
+                }
             }
 
             u = gestoreUtente.getUtenteByEmail(email);
@@ -324,17 +326,19 @@ public class UserController extends HttpServlet {
                 needPwd = true;
             } // Altrimenti lo tiro solo su introducendo le informazioni di google
             else {
-                user.setNome(nome);
-                user.setCognome(cognome);
-                user.setGenere(genere);
-                user.setG_access_token(token);
-                if (!"".equals(location)) {
-                    user.setCitta_natale(location);
+                if (user.getG_access_token() == null) { // in questo modo l'aggiornamento dei dati viene fatto solo la prima volta
+                    user.setNome(nome);
+                    user.setCognome(cognome);
+                    user.setGenere(genere);
+                    user.setG_access_token(token);
+                    if (!"".equals(location)) {
+                        user.setCitta_natale(location);
+                    }
+                    if ("images/user.png".equals(user.getFoto_path())) {
+                        user.setFoto_path(imageUrl);
+                    }
+                    gestoreUtente.editUtente(user);
                 }
-                if (!"images/user.png".equals(imageUrl)) {
-                    user.setFoto_path(imageUrl);
-                }
-                gestoreUtente.editUtente(user);
             }
 
             user = gestoreUtente.getUtenteByEmail(email);
