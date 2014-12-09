@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.coinquilini.users;
 
+package ejb.coinquilini.casa.casa;
+
+import ejb.coinquilini.casa.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Bortignon Gianluca
+ * @author Fede
  */
 @Stateless
 public class CasaFacade extends AbstractFacade<Casa> implements CasaFacadeLocal {

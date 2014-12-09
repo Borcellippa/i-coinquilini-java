@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.coinquilini.users;
+package ejb.coinquilini.users.utente;
 
+import ejb.coinquilini.annunci.annuncio.Annuncio;
+import ejb.coinquilini.casa.casa.Casa;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,6 +40,26 @@ public class Utente implements Serializable {
     private String citta_natale;
     private Casa casa;
     private String genere;
+    private List<Annuncio> annunci;
+
+    /**
+     * Get the value of annunci
+     *
+     * @return the value of annunci
+     */
+    public List<Annuncio> getAnnunci() {
+        return annunci;
+    }
+
+    /**
+     * Set the value of annunci
+     *
+     * @param annunci new value of annunci
+     */
+    public void setAnnunci(List<Annuncio> annunci) {
+        this.annunci = annunci;
+    }
+
 
     /**
      * Get the value of genere

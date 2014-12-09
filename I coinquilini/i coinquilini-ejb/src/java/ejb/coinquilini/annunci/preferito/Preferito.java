@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package ejb.coinquilini.users;
+package ejb.coinquilini.annunci.preferito;
 
 import java.io.Serializable;
 import javax.persistence.Entity;

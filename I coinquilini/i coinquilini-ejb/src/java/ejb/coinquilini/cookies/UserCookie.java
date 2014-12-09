@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.coinquilini.users;
+package ejb.coinquilini.cookies;
 
+import ejb.coinquilini.users.utente.Utente;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

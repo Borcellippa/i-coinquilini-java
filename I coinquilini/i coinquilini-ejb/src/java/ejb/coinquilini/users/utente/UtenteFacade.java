@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package ejb.coinquilini.users;
+package ejb.coinquilini.users.utente;
 
 import ejb.AbstractFacade;
 import static java.lang.System.exit;

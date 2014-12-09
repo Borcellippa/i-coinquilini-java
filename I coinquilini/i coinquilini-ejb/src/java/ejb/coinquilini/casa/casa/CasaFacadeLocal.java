@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.coinquilini.users;
+
+package ejb.coinquilini.casa.casa;
 
 import java.util.List;
 import javax.ejb.Local;
 
 /**
  *
- * @author Bortignon Gianluca
+ * @author Fede
  */
 @Local
 public interface CasaFacadeLocal {

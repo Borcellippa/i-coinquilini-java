@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.coinquilini.users;
+package ejb.coinquilini.cookies;
 
+import ejb.coinquilini.users.utente.Utente;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -35,6 +36,6 @@ public interface UserCookieFacadeLocal {
      *
      * @param utente the value of utente
      */
-    UserCookie getCookieByUser(ejb.coinquilini.users.Utente utente);
+    UserCookie getCookieByUser(ejb.coinquilini.users.utente.Utente utente);
     
 }

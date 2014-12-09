@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package ejb.coinquilini.users;
+package ejb.coinquilini.users.utente;
 
 import java.util.List;
 import javax.ejb.Local;
@@ -18,7 +18,7 @@ public interface GestoreUtenteLocal {
 
     List<Utente> getUtenti();
 
-    void addUtente(ejb.coinquilini.users.Utente par0);
+    void addUtente(ejb.coinquilini.users.utente.Utente par0);
 
     Utente getUtente(String email, String password);
 

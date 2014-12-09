@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.coinquilini.users;
+
+package ejb.coinquilini.media;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -13,14 +14,34 @@ import javax.persistence.Id;
 
 /**
  *
- * @author Mattia
+ * @author Fede
  */
 @Entity
-public class Casa implements Serializable {
+public class Media implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String path;
+
+    /**
+     * Get the value of path
+     *
+     * @return the value of path
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * Set the value of path
+     *
+     * @param path new value of path
+     */
+    public void setPath(String path) {
+        this.path = path;
+    }
+
 
     public Long getId() {
         return id;
@@ -40,10 +61,10 @@ public class Casa implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Casa)) {
+        if (!(object instanceof Media)) {
             return false;
         }
-        Casa other = (Casa) object;
+        Media other = (Media) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -52,7 +73,7 @@ public class Casa implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.coinquilini.users.Casa[ id=" + id + " ]";
+        return "ejb.coinquilini.media.Media[ id=" + id + " ]";
     }
     
 }

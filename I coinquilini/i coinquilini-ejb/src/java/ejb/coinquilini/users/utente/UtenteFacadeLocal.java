@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package ejb.coinquilini.users;
+package ejb.coinquilini.users.utente;
 
-import ejb.coinquilini.users.Utente;
+import ejb.coinquilini.users.utente.Utente;
 import java.util.List;
 import javax.ejb.Local;
 
