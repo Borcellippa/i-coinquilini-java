@@ -55,7 +55,7 @@ public class UserController extends HttpServlet {
             session.setAttribute("nome_utente", "ospite");
         }
 
-        RequestDispatcher rd = null;
+        RequestDispatcher rd;
         String action = request.getParameter("action");
 
         if (action == null) {
@@ -134,11 +134,11 @@ public class UserController extends HttpServlet {
             session = request.getSession();
             session.invalidate();
             Cookie[] cookies = request.getCookies();
-            for (int i = 0; i < cookies.length; i++) {
-                if (cookies[i].getName().equals("login")) {
-                    cookies[i].setMaxAge(0);
-                    cookies[i].setValue("nd");
-                    response.addCookie(cookies[i]);
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("login")) {
+                    cookie.setMaxAge(0);
+                    cookie.setValue("nd");
+                    response.addCookie(cookie);
                     break;
                 }
             }
@@ -148,10 +148,10 @@ public class UserController extends HttpServlet {
             Cookie[] cookies = request.getCookies();
             boolean foundCookie = false;
             Cookie userCookie = null;
-            for (int i = 0; i < cookies.length; i++) {
-                if (cookies[i].getName().equals("login")) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("login")) {
                     foundCookie = true;
-                    userCookie = cookies[i];
+                    userCookie = cookie;
                     break;
                 }
             }
@@ -295,6 +295,8 @@ public class UserController extends HttpServlet {
             String imageUrl = imageJson.get("url").getAsString();
             if (imageUrl == null) {
                 imageUrl = "images/user.png";
+            } else {
+                imageUrl = imageUrl + "0";
             }
 
             JsonArray placesJsonArray = jsonPerson.getAsJsonArray("placesLived");
@@ -320,8 +322,8 @@ public class UserController extends HttpServlet {
                 if (!"".equals(location)) {
                     user.setCitta_natale(location);
                 }
-                if(user.getFoto_path() == "images/user.png")
-                    user.setFoto_path(imageUrl);
+                user.setFoto_path(imageUrl);
+                
 
                 gestoreUtente.addUtente(user);
                 needPwd = true;
@@ -365,12 +367,12 @@ public class UserController extends HttpServlet {
 
             session = request.getSession(); // prendo l'utente dalla sessione
             String email = (String) session.getAttribute("email");
+            String pwd = (String) request.getParameter("password");
 
             // estraggo il profilo e setto la pwd
             Utente u = gestoreUtente.getUtenteByEmail(email);
-            u.setPassword(request.getParameter("password"));
 
-            gestoreUtente.editUtente(u); // aggiorno l'utente
+            gestoreUtente.editUtentePassword(pwd, u); // aggiorno l'utente e hasho la pwd
 
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);

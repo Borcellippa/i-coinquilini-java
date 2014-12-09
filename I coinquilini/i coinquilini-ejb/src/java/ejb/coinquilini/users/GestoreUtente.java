@@ -48,6 +48,12 @@ public class GestoreUtente implements GestoreUtenteLocal {
     }
 
     @Override
+    public void editUtentePassword(String pwd, Utente u) {
+        u.setPassword(hashPassword(pwd)); // hasho la password prima di inserirla in db
+        utenteFacade.edit(u);
+    }
+
+    @Override
     public Utente getUtente(String email, String password) {
         Utente u = new Utente();
         return utenteFacade.find(u);
