@@ -55,7 +55,7 @@ public class UserController extends HttpServlet {
             session.setAttribute("nome_utente", "ospite");
         }
 
-        RequestDispatcher rd = null;
+        RequestDispatcher rd;
         String action = request.getParameter("action");
 
         if (action == null) {
@@ -72,6 +72,7 @@ public class UserController extends HttpServlet {
                 Utente u = new Utente();
                 u.setNome(request.getParameter("nome"));
                 u.setCognome(request.getParameter("cognome"));
+                u.setGenere(request.getParameter("genere"));
                 u.setEmail(request.getParameter("email"));
                 u.setPassword(request.getParameter("password"));
                 u.setTelefono(request.getParameter("telefono"));
@@ -134,11 +135,11 @@ public class UserController extends HttpServlet {
             session = request.getSession();
             session.invalidate();
             Cookie[] cookies = request.getCookies();
-            for (int i = 0; i < cookies.length; i++) {
-                if (cookies[i].getName().equals("login")) {
-                    cookies[i].setMaxAge(0);
-                    cookies[i].setValue("nd");
-                    response.addCookie(cookies[i]);
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("login")) {
+                    cookie.setMaxAge(0);
+                    cookie.setValue("nd");
+                    response.addCookie(cookie);
                     break;
                 }
             }
@@ -148,10 +149,10 @@ public class UserController extends HttpServlet {
             Cookie[] cookies = request.getCookies();
             boolean foundCookie = false;
             Cookie userCookie = null;
-            for (int i = 0; i < cookies.length; i++) {
-                if (cookies[i].getName().equals("login")) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("login")) {
                     foundCookie = true;
-                    userCookie = cookies[i];
+                    userCookie = cookie;
                     break;
                 }
             }
@@ -295,6 +296,8 @@ public class UserController extends HttpServlet {
             String imageUrl = imageJson.get("url").getAsString();
             if (imageUrl == null) {
                 imageUrl = "images/user.png";
+            } else {
+                imageUrl = imageUrl + "0";
             }
 
             JsonArray placesJsonArray = jsonPerson.getAsJsonArray("placesLived");
@@ -320,8 +323,7 @@ public class UserController extends HttpServlet {
                 if (!"".equals(location)) {
                     user.setCitta_natale(location);
                 }
-                if(user.getFoto_path() == "images/user.png")
-                    user.setFoto_path(imageUrl);
+                user.setFoto_path(imageUrl);
 
                 gestoreUtente.addUtente(user);
                 needPwd = true;
@@ -365,13 +367,45 @@ public class UserController extends HttpServlet {
 
             session = request.getSession(); // prendo l'utente dalla sessione
             String email = (String) session.getAttribute("email");
+            String pwd = (String) request.getParameter("password");
 
             // estraggo il profilo e setto la pwd
             Utente u = gestoreUtente.getUtenteByEmail(email);
-            u.setPassword(request.getParameter("password"));
 
-            gestoreUtente.editUtente(u); // aggiorno l'utente
+            gestoreUtente.editUtentePassword(pwd, u); // aggiorno l'utente e hasho la pwd
 
+            String gsonUser = buildGson(u);
+            request.setAttribute("utente", gsonUser);
+            request.setAttribute("location", buildGson("profilo"));
+            rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+
+        } else if (action.equals("editUtente")) {
+            // aggiorno le info dell'utente dalla sua pagina profilo
+            String email = request.getParameter("email");
+            Utente u = gestoreUtente.getUtenteByEmail(email);
+
+            // aggiorno tutte le informazioni che provengono dalla form
+            u.setNome(request.getParameter("nome"));
+            u.setCognome(request.getParameter("cognome"));
+            u.setGenere(request.getParameter("genere"));
+            u.setTelefono(request.getParameter("telefono"));
+            u.setNazionalita(request.getParameter("nazionalita"));
+            u.setData_nascita(request.getParameter("data_nascita"));
+            u.setCitta_natale(request.getParameter("citta_natale"));
+            gestoreUtente.editUtente(u);
+
+            // aggiorno la sessione nel caso che venga modifica il nome
+            session = request.getSession();
+            session.setAttribute("nome", request.getParameter("nome"));
+
+            // gestione della modifica della password
+            String pwd = (String) request.getParameter("password");
+            if (pwd != null) {
+                gestoreUtente.editUtentePassword(pwd, u); // aggiorno l'utente e hasho la pwd
+            }
+
+            // caricamento della wiew
+            u = gestoreUtente.getUtenteByEmail(email);
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
