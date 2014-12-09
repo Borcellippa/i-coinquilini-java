@@ -320,7 +320,8 @@ public class UserController extends HttpServlet {
                 if (!"".equals(location)) {
                     user.setCitta_natale(location);
                 }
-                user.setFoto_path(imageUrl);
+                if(user.getFoto_path() == "images/user.png")
+                    user.setFoto_path(imageUrl);
 
                 gestoreUtente.addUtente(user);
                 needPwd = true;
