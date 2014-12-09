@@ -9,10 +9,15 @@ package borcellippa.coinquilini.casa.calendario.eventi.evento;
 import borcellippa.coinquilini.casa.calendario.Calendario;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
 import javax.persistence.Temporal;
 
 /**
@@ -20,6 +25,9 @@ import javax.persistence.Temporal;
  * @author Fede
  */
 @Entity
+@Inheritance(strategy=SINGLE_TABLE)
+@DiscriminatorColumn(name="TIPO_EVENTO", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue("E")
 public class Evento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

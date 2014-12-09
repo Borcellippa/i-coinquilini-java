@@ -1,4 +1,4 @@
-<%@page import="ejb.coinquilini.users.Utente"%>
+<%@page import="borcellippa.coinquilini.users.utente.Utente"%>
 <%@page import="com.google.gson.Gson"%>
 <div class="top-navbar">
     <div class="col-md-8">

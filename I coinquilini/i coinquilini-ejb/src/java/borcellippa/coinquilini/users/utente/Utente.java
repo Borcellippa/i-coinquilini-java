@@ -6,7 +6,6 @@
 package borcellippa.coinquilini.users.utente;
 
 import borcellippa.coinquilini.annunci.annuncio.Annuncio;
-import borcellippa.coinquilini.casa.casa.Casa;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.DiscriminatorColumn;
@@ -45,7 +44,6 @@ public class Utente implements Serializable {
     private String fb_user_id;
     private String foto_path;
     private String citta_natale;
-    private Casa casa;
     private String genere;
     private List<Annuncio> annunci;
 
@@ -86,25 +84,6 @@ public class Utente implements Serializable {
     public void setGenere(String genere) {
         this.genere = genere;
     }
-
-    /**
-     * Get the value of casa
-     *
-     * @return the value of casa
-     */
-    public Casa getCasa() {
-        return casa;
-    }
-
-    /**
-     * Set the value of casa
-     *
-     * @param casa new value of casa
-     */
-    public void setCasa(Casa casa) {
-        this.casa = casa;
-    }
-
 
     /**
      * Get the value of citta_natale

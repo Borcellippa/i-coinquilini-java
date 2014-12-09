@@ -7,7 +7,7 @@
 package borcellippa.coinquilini.casa.calendario.eventi.mansione;
 
 import borcellippa.coinquilini.casa.calendario.eventi.evento.Evento;
-import java.io.Serializable;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
@@ -15,7 +15,8 @@ import javax.persistence.Entity;
  * @author Fede
  */
 @Entity
-public class Mansione extends Evento implements Serializable{
+@DiscriminatorValue("M")
+public class Mansione extends Evento{
     private static final long serialVersionUID = 1L;
     private String durata;
 
