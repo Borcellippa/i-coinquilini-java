@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package borcellippa.coinquilini.casa.casa;
 
 import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
@@ -24,6 +23,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class Casa implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,7 +62,6 @@ public class Casa implements Serializable {
         this.codiceCasa = codiceCasa;
     }
 
-
     /**
      * Get the value of nomeCasa
      *
@@ -80,7 +79,7 @@ public class Casa implements Serializable {
     public void setNomeCasa(String nomeCasa) {
         this.nomeCasa = nomeCasa;
     }
-    
+
     /**
      * Get the value of wishlist
      *
@@ -98,7 +97,6 @@ public class Casa implements Serializable {
     public void setWishlist(Wishlist wishlist) {
         this.wishlist = wishlist;
     }
-
 
     /**
      * Get the value of gruppo
@@ -118,7 +116,6 @@ public class Casa implements Serializable {
         this.gruppo = gruppo;
     }
 
-
     /**
      * Get the value of bacheca
      *
@@ -136,7 +133,6 @@ public class Casa implements Serializable {
     public void setBacheca(Bacheca bacheca) {
         this.bacheca = bacheca;
     }
-
 
     /**
      * Get the value of inquilini
@@ -156,7 +152,6 @@ public class Casa implements Serializable {
         this.inquilini = inquilini;
     }
 
-
     /**
      * Get the value of calendario
      *
@@ -174,8 +169,6 @@ public class Casa implements Serializable {
     public void setCalendario(Calendario calendario) {
         this.calendario = calendario;
     }
-
-    
 
     /**
      * Get the value of inCasa
@@ -213,7 +206,6 @@ public class Casa implements Serializable {
         this.longitudine = longitudine;
     }
 
-
     /**
      * Get the value of lat
      *
@@ -231,7 +223,7 @@ public class Casa implements Serializable {
     public void setLatitudine(String latitudine) {
         this.latitudine = latitudine;
     }
-    
+
     private String citta;
 
     /**
@@ -288,7 +280,6 @@ public class Casa implements Serializable {
         this.postiTotali = postiTotali;
     }
 
-
     /**
      * Get the value of imagesPath
      *
@@ -325,7 +316,6 @@ public class Casa implements Serializable {
         this.ncivico = ncivico;
     }
 
-
     /**
      * Get the value of indirizzo
      *
@@ -343,7 +333,6 @@ public class Casa implements Serializable {
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
     }
-
 
     public String getId() {
         return id;
@@ -377,5 +366,5 @@ public class Casa implements Serializable {
     public String toString() {
         return "ejb.coinquilini.casa.Casa[ id=" + id + " ]";
     }
-    
+
 }
