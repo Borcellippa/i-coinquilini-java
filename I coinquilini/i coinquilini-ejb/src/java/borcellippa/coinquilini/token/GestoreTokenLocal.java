@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package borcellippa.coinquilini.casa.wishlist;
+package borcellippa.coinquilini.token;
 
 import javax.ejb.Local;
 
@@ -13,8 +13,10 @@ import javax.ejb.Local;
  * @author Bortignon Gianluca
  */
 @Local
-public interface GestoreWishlistLocal {
+public interface GestoreTokenLocal {
 
-    Wishlist getWishlistByHouse(String casaId);
+    void createToken(String token);
+
+    String getToken();
     
 }

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package borcellippa.coinquilini.casa.wishlist;
+package borcellippa.coinquilini.token;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,7 +17,7 @@ import javax.persistence.TypedQuery;
  * @author Bortignon Gianluca
  */
 @Stateless
-public class WishlistFacade extends AbstractFacade<Wishlist> implements WishlistFacadeLocal {
+public class UniqueTokenFacade extends AbstractFacade<UniqueToken> implements UniqueTokenFacadeLocal {
     @PersistenceContext(unitName = "I_coinquilini-ejbPU")
     private EntityManager em;
 
@@ -26,14 +26,14 @@ public class WishlistFacade extends AbstractFacade<Wishlist> implements Wishlist
         return em;
     }
 
-    public WishlistFacade() {
-        super(Wishlist.class);
+    public UniqueTokenFacade() {
+        super(UniqueToken.class);
     }
 
     @Override
-    public Wishlist getWishlistByHouse(String casaId) {
+    public UniqueToken getToken() {
         try {
-            TypedQuery<Wishlist> query = em.createQuery("SELECT w FROM Wishlist w WHERE w.casa ='"+casaId+"'", Wishlist.class);
+            TypedQuery<UniqueToken> query = em.createQuery("SELECT u FROM UniqueToken u", UniqueToken.class);
             return query.getSingleResult();
         }
         catch(NoResultException e) {
@@ -42,8 +42,10 @@ public class WishlistFacade extends AbstractFacade<Wishlist> implements Wishlist
         }
         catch(Exception e){
             System.out.println("##### Eccezione generica: "+e.getMessage());
-            return new Wishlist();
+            return new UniqueToken();
         }
     }
+    
+    
     
 }
