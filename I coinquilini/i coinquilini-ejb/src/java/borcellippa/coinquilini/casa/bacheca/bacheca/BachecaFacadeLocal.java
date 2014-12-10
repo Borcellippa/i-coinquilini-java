@@ -6,6 +6,7 @@
 
 package borcellippa.coinquilini.casa.bacheca.bacheca;
 
+import borcellippa.coinquilini.casa.bacheca.post.Post;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,9 @@ public interface BachecaFacadeLocal {
     List<Bacheca> findRange(int[] range);
 
     int count();
+
+    List<Post> getPosts(String casa_id);
+
+    Bacheca getBacheca(String casaId);
     
 }

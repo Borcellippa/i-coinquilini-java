@@ -6,6 +6,13 @@
 
 package borcellippa.coinquilini.casa.bacheca.bacheca;
 
+import borcellippa.coinquilini.casa.bacheca.post.Post;
+import borcellippa.coinquilini.casa.bacheca.post.PostFacadeLocal;
+import borcellippa.coinquilini.users.inquilino.Inquilino;
+import borcellippa.coinquilini.users.inquilino.InquilinoFacadeLocal;
+import java.util.Calendar;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -15,6 +22,44 @@ import javax.ejb.Stateless;
 @Stateless
 public class GestoreBacheca implements GestoreBachecaLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @EJB
+    private BachecaFacadeLocal bachecaFacade;
+    
+    @EJB
+    private PostFacadeLocal postFacade;
+    
+    @EJB
+    private InquilinoFacadeLocal inquilinoFacade;
+    
+    @Override
+    public List<Post> getPosts(String casaId) {
+        List<Post> listaPosts = bachecaFacade.getPosts(casaId);
+        return listaPosts;
+    }
+
+    @Override
+    public Post addPost(String email_autore, String contenuto, String bacheca_id, String casa_id) {
+        Post post = new Post();
+        Inquilino i = inquilinoFacade.getInquilinoByEmail(email_autore);
+        post.setAutore(i);
+        post.setContenuto(contenuto);
+        Bacheca b = bachecaFacade.getBacheca(casa_id);
+        post.setBacheca(b);
+        Calendar cal = Calendar.getInstance();
+        post.setDataPubblicazione(cal.getTime());
+        postFacade.create(post);
+        return post;
+    }
+
+    @Override
+    public Bacheca getBacheca(String casaId) {
+        Bacheca bacheca = bachecaFacade.getBacheca(casaId);
+        return bacheca;
+    }
+
+    @Override
+    public void eliminaPost(String idPost) {
+        Post post = postFacade.find(idPost);
+        postFacade.remove(post);
+    }
 }
