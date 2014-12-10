@@ -65,7 +65,7 @@ public class UserController extends HttpServlet {
 
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
-            rd = getServletContext().getRequestDispatcher("/home.jsp");
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
 
         } else if (action.equals("addUtente")) {
             String email = request.getParameter("email");
@@ -95,11 +95,11 @@ public class UserController extends HttpServlet {
                 // session
                 response = this.initializeLogin(request, response, nome, email, u.getFoto_path());
 
-                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
             } else {
                 request.setAttribute("errore", buildGson("utente_registrato"));
                 request.setAttribute("location", buildGson("home"));
-                rd = getServletContext().getRequestDispatcher("/home.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             }
 
         } else if (action.equals("profilo_utente")) {
@@ -109,7 +109,7 @@ public class UserController extends HttpServlet {
             String gsonUser = buildGson(user);
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
-            rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
 
         } else if (action.equals("login")) {
             String email = request.getParameter("email");
@@ -122,15 +122,15 @@ public class UserController extends HttpServlet {
                 request.setAttribute("location", buildGson("profilo"));
                 Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
                 if (i == null) {
-                    rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
-                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
                 }
                 // se la password è sbagliata e l'utente non esiste
             } else {
                 request.setAttribute("location", buildGson("home"));
                 request.setAttribute("errore", buildGson("errore_login"));
-                rd = getServletContext().getRequestDispatcher("/home.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             }
 
         } else if (action.equals("logout")) {
@@ -145,7 +145,7 @@ public class UserController extends HttpServlet {
                     break;
                 }
             }
-            rd = getServletContext().getRequestDispatcher("/index.jsp");
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/index.jsp");
 
         } else if (action.equals("firstRedirect")) {
             Cookie[] cookies = request.getCookies();
@@ -159,7 +159,7 @@ public class UserController extends HttpServlet {
                 }
             }
             if (!foundCookie || (userCookie != null && userCookie.getValue().equals("nd"))) {
-                rd = getServletContext().getRequestDispatcher("/home.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             } else {
                 Utente u = gestoreUserCookie.getUtenteByToken(userCookie.getValue());
                 if (u != null) {
@@ -169,22 +169,22 @@ public class UserController extends HttpServlet {
                     request.setAttribute("location", buildGson("profilo"));
                     Inquilino i = gestoreInquilino.getInquilinoByEmail(u.getEmail());
                     if (i == null) {
-                        rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                        rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                     } else {
-                        rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                        rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
                     }
                 } else {
                     /* Se il cookie è presente ma sbagliato lo si cancella */
                     userCookie.setMaxAge(0);
                     userCookie.setValue("nd");
                     response.addCookie(userCookie);
-                    rd = getServletContext().getRequestDispatcher("/home.jsp");
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
                 }
             }
 
         } else if (action.equals("registrazione")) {
             request.setAttribute("location", buildGson("registrazione"));
-            rd = getServletContext().getRequestDispatcher("/registrazione.jsp");
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/registrazione.jsp");
 
         } else if (action.equals("loginFacebook")) {
             String userData = (String) request.getParameter("userData");
@@ -244,15 +244,15 @@ public class UserController extends HttpServlet {
             // se mi sono loggato con facebook devo ancora modificare il profilo per inserire una passoword
             if (needPwd) {
                 request.setAttribute("location", buildGson("completaSocial"));
-                rd = getServletContext().getRequestDispatcher("/completaSocial.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/completaSocial.jsp");
 
             } else {
                 request.setAttribute("location", buildGson("profilo"));
                 Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
                 if (i == null) {
-                    rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
-                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
                 }
 
             }
@@ -357,15 +357,15 @@ public class UserController extends HttpServlet {
             // se mi sono loggato con g+ devo ancora modificare il profilo per inserire una passoword
             if (needPwd) {
                 request.setAttribute("location", buildGson("completaSocial"));
-                rd = getServletContext().getRequestDispatcher("/completaSocial.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/completaSocial.jsp");
 
             } else {
                 request.setAttribute("location", buildGson("profilo"));
                 Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
                 if (i == null) {
-                    rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
-                    rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
                 }
 
             }
@@ -390,9 +390,9 @@ public class UserController extends HttpServlet {
             request.setAttribute("location", buildGson("profilo"));
             Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
             if (i == null) {
-                rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             } else {
-                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
             }
 
         } else if (action.equals("editUtente")) {
@@ -427,15 +427,15 @@ public class UserController extends HttpServlet {
             request.setAttribute("location", buildGson("profilo"));
             Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
             if (i == null) {
-                rd = getServletContext().getRequestDispatcher("/entraCasa.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             } else {
-                rd = getServletContext().getRequestDispatcher("/profilo_utente.jsp");
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
             }
 
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
-            rd = getServletContext().getRequestDispatcher("/errore.jsp");
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");
         }
 
         rd.forward(request, response);

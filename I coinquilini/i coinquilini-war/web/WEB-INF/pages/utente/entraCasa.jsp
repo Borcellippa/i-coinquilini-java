@@ -4,7 +4,7 @@
     Author     : Bortignon Gianluca
 --%>
 <%@page import="borcellippa.coinquilini.users.utente.Utente"%>
-<%@include  file="topTemplateFree.jsp" %>
+<%@include  file="../templates/topTemplateFree.jsp" %>
 <%  Gson gsonUtente = new Gson();
     String utenteFromJson = ((String) request.getAttribute("utente"));
     Utente utente = gsonUtente.fromJson(utenteFromJson, Utente.class);
@@ -61,4 +61,4 @@
     </div>
 </div>
 
-<%@include  file="botTemplateSideMenu.jsp" %>
+<%@include  file="../templates/botTemplateFree.jsp" %>

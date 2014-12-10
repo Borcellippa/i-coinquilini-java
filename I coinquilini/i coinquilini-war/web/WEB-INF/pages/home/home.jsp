@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>I coinquilini</title>
-        <%@include  file="imports.html" %>
+        <%@include  file="../templates/imports.html" %>
         <script src="js/core/scrollspy.js"></script>
         <script src="js/facebookHandler.js"></script>
         <script src="js/utility.js"></script>
@@ -162,7 +162,7 @@
                 </div>
             </div>
         </div>
-        <%@include  file="footer.html" %>
+        <%@include  file="../templates/footer.html" %>
 
 
 

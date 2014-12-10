@@ -1,4 +1,4 @@
-<%@include  file="topTemplateFree.jsp" %>
+<%@include  file="../templates/topTemplateFree.jsp" %>
 <script src="js/validatePwd.js" type="text/javascript"></script>
 
 <div id="social-wizard">
@@ -67,4 +67,4 @@
         </form>
     </div>
 </div>
-<%@include  file="botTemplateFree.jsp" %>
+<%@include  file="../templates/botTemplateFree.jsp" %>
