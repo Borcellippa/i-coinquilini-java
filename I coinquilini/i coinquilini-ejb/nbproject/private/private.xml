@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mattia/Dropbox/Github/Borcellippa/i-coinquilini-java/I%20coinquilini/i%20coinquilini-ejb/src/java/borcellippa/coinquilini/casa/wishlist/WishlistFacade.java</file>
-            <file>file:/C:/Users/Mattia/Dropbox/Github/Borcellippa/i-coinquilini-java/I%20coinquilini/i%20coinquilini-ejb/src/java/borcellippa/coinquilini/casa/wishlist/wishlistentry/WishlistEntryFacade.java</file>
-            <file>file:/C:/Users/Mattia/Dropbox/Github/Borcellippa/i-coinquilini-java/I%20coinquilini/i%20coinquilini-ejb/src/java/borcellippa/coinquilini/users/inquilino/InquilinoFacade.java</file>
-            <file>file:/C:/Users/Mattia/Dropbox/Github/Borcellippa/i-coinquilini-java/I%20coinquilini/i%20coinquilini-ejb/src/java/borcellippa/coinquilini/casa/gruppocase/GruppoCaseFacade.java</file>
-            <file>file:/C:/Users/Mattia/Dropbox/Github/Borcellippa/i-coinquilini-java/I%20coinquilini/i%20coinquilini-ejb/src/java/borcellippa/coinquilini/media/MediaFacade.java</file>
+            <file>file:/C:/Users/Mattia/Dropbox/Github/Borcellippa/i-coinquilini-java/I%20coinquilini/i%20coinquilini-ejb/src/java/borcellippa/coinquilini/casa/casa/Casa.java</file>
+            <file>file:/C:/Users/Mattia/Dropbox/Github/Borcellippa/i-coinquilini-java/I%20coinquilini/i%20coinquilini-ejb/src/java/borcellippa/coinquilini/users/inquilino/Inquilino.java</file>
         </group>
     </open-files>
 </project-private>

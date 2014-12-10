@@ -59,7 +59,8 @@ public class GestoreCasa implements GestoreCasaLocal {
 
 
         casaFacade.create(c);
-
+        System.out.println("La Casa è stata Creata");
+        
         return codiceCasa;
     }
 

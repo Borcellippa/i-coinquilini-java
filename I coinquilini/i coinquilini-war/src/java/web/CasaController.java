@@ -10,6 +10,7 @@ import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.users.inquilino.GestoreInquilinoLocal;
 import borcellippa.coinquilini.users.inquilino.Inquilino;
 import borcellippa.coinquilini.users.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.users.utente.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -80,7 +81,10 @@ public class CasaController extends HttpServlet {
             
             // quando il coinquilino crea una casa ci si aggiunge automaticamente
             session = request.getSession();
-            Inquilino i = (Inquilino)gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            
+            Inquilino i = new Inquilino();
+            i = (Inquilino)gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            
             i.setCasa(c);
             gestoreInquilino.addInquilino(i);
             session.setAttribute("idCasa", c.getId());
