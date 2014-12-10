@@ -4,17 +4,12 @@
  * and open the template in the editor.
  */
 
-package borcellippa.coinquilini.casa.wishlist;
-
-import javax.ejb.Local;
+package borcellippa.coinquilini.casa.casa;
 
 /**
  *
  * @author Bortignon Gianluca
  */
-@Local
-public interface GestoreWishlistLocal {
-
-    Wishlist getWishlistByHouse(String casaId);
+public class GenerateCode {
     
 }

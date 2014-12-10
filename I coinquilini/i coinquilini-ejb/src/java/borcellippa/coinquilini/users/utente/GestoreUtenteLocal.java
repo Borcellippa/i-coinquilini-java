@@ -20,8 +20,6 @@ public interface GestoreUtenteLocal {
 
     void addUtente(Utente par0);
 
-    Utente getUtente(String email, String password);
-
     Utente getUtenteByEmail(String email);
 
     Utente verificaLogin(String email, String password);

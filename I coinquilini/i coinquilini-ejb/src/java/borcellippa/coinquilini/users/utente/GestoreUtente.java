@@ -55,12 +55,6 @@ public class GestoreUtente implements GestoreUtenteLocal {
     }
 
     @Override
-    public Utente getUtente(String email, String password) {
-        Utente u = new Utente();
-        return utenteFacade.find(u);
-    }
-
-    @Override
     public Utente getUtenteByEmail(String email) {
         return utenteFacade.getUtenteByEmail(email);
     }

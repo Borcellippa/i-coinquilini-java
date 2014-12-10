@@ -29,5 +29,7 @@ public interface WishlistFacadeLocal {
     List<Wishlist> findRange(int[] range);
 
     int count();
+
+    Wishlist getWishlistByHouse(String casaId);
     
 }

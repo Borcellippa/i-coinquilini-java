@@ -6,6 +6,7 @@
 
 package borcellippa.coinquilini.casa.wishlist;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -14,7 +15,15 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class GestoreWishlist implements GestoreWishlistLocal {
+    @EJB
+    private WishlistFacadeLocal wishlistFacade;
+
+    @Override
+    public Wishlist getWishlistByHouse(String casaId) {
+        return wishlistFacade.getWishlistByHouse(casaId);
+    }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    
 }
