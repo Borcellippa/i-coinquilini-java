@@ -1,10 +1,10 @@
 <%-- 
     Document   : utente
-    Created on : 09-dic-2014, 19.23.46
+    Created on : 10-dic-2014, 11.34.46
     Author     : Bortignon Gianluca
 --%>
 <%@page import="borcellippa.coinquilini.users.utente.Utente"%>
-<%@include  file="../templates/topTemplateFree.jsp" %>
+<%@include  file="../templates/topTemplateSideMenu.jsp" %>
 <%  Gson gsonUtente = new Gson();
     String utenteFromJson = ((String) request.getAttribute("utente"));
     Utente utente = gsonUtente.fromJson(utenteFromJson, Utente.class);
@@ -29,8 +29,11 @@
                     <form method="POST" action="UserController" role="form" style="margin-left: 20px;" onsubmit="return checkForm(this);">
                         <div class="content">
                             <div>
-                                <label style="width: 195px">Entra in una casa esistente</label>
-                                <input id="nomeCasa" type="text" name="nomeCasa" placeholder="Inserisci il nome della casa" required class="form-control inputForm" onfocus="removeError()">
+                                <label class="labelForm">Nome casa</label>
+                                <input id="nomeCasa" type="text" name="nomeCasa" required class="form-control inputForm" onfocus="removeError()">
+                            </div>
+                            <div class="uk-hidden" id="testPwd" style="text-align: center;">
+                                <span class="label label-danger"  style="text-align: center;">Inserire il nome di una casa</span>
                             </div>
                         </div>
                         <div class="form-group"  style="margin-top: 15px;text-align: center">

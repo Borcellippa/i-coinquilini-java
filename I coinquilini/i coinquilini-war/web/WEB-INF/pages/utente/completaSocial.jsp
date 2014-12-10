@@ -39,4 +39,4 @@
         </section>
     </div>
 </div>
-<%@include  file="../templates/botTemplateSideMenu.jsp" %>
+<%@include  file="../templates/botTemplateFree.jsp" %>

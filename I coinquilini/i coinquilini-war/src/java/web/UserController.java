@@ -144,7 +144,7 @@ public class UserController extends HttpServlet {
                     break;
                 }
             }
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/index.jsp");
+            rd = getServletContext().getRequestDispatcher("/index.jsp");
 
         } else if (action.equals("firstRedirect")) {
             Cookie[] cookies = request.getCookies();
