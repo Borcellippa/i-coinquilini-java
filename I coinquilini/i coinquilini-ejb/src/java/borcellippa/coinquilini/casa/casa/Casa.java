@@ -28,6 +28,7 @@ public class Casa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+    private String nomeCasa;
     private String indirizzo;
     private String ncivico;
     private List<String> imagesPath;
@@ -41,7 +42,45 @@ public class Casa implements Serializable {
     private Bacheca bacheca;
     private GruppoCase gruppo;
     private Wishlist wishlist;
+    private String codiceCasa;
 
+    /**
+     * Get the value of codiceCasa
+     *
+     * @return the value of codiceCasa
+     */
+    public String getCodiceCasa() {
+        return codiceCasa;
+    }
+
+    /**
+     * Set the value of codiceCasa
+     *
+     * @param codiceCasa new value of codiceCasa
+     */
+    public void setCodiceCasa(String codiceCasa) {
+        this.codiceCasa = codiceCasa;
+    }
+
+
+    /**
+     * Get the value of nomeCasa
+     *
+     * @return the value of nomeCasa
+     */
+    public String getNomeCasa() {
+        return nomeCasa;
+    }
+
+    /**
+     * Set the value of nomeCasa
+     *
+     * @param nomeCasa new value of nomeCasa
+     */
+    public void setNomeCasa(String nomeCasa) {
+        this.nomeCasa = nomeCasa;
+    }
+    
     /**
      * Get the value of wishlist
      *
