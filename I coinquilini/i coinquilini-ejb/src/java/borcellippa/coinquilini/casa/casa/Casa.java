@@ -31,7 +31,6 @@ public class Casa implements Serializable {
     private String nomeCasa;
     private String indirizzo;
     private String ncivico;
-    private List<String> imagesPath;
     private int postiTotali;
     private String postiOccupati;
     private String latitudine;
@@ -43,6 +42,7 @@ public class Casa implements Serializable {
     private GruppoCase gruppo;
     private Wishlist wishlist;
     private String codiceCasa;
+    private String citta;
 
     /**
      * Get the value of codiceCasa
@@ -224,8 +224,6 @@ public class Casa implements Serializable {
         this.latitudine = latitudine;
     }
 
-    private String citta;
-
     /**
      * Get the value of citta
      *
@@ -280,29 +278,6 @@ public class Casa implements Serializable {
         this.postiTotali = postiTotali;
     }
 
-    /**
-     * Get the value of imagesPath
-     *
-     * @return the value of imagesPath
-     */
-    public List<String> getImagesPath() {
-        return imagesPath;
-    }
-
-    /**
-     * Set the value of imagesPath
-     *
-     * @param imagesPath new value of imagesPath
-     */
-    public void setImagesPath(List<String> imagesPath) {
-        this.imagesPath = imagesPath;
-    }
-
-    /**
-     * Get the value of ncivico
-     *
-     * @return the value of ncivico
-     */
     public String getNcivico() {
         return ncivico;
     }

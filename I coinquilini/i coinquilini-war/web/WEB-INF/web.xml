@@ -12,6 +12,10 @@
         <servlet-name>CasaController</servlet-name>
         <servlet-class>web.CasaController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WishlistController</servlet-name>
+        <servlet-class>web.WishlistController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserController</servlet-name>
         <url-pattern>/UserController</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>CasaController</servlet-name>
         <url-pattern>/CasaController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WishlistController</servlet-name>
+        <url-pattern>/WishlistController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

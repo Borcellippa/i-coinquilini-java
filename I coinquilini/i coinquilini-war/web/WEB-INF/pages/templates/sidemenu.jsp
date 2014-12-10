@@ -23,7 +23,7 @@
        <% if (location.equals("mansioni")) out.print("active"); %>">&nbsp&nbsp Mansioni</a>
     <a href="#" class="list-group-item
        <% if (location.equals("borsellino")) out.print("active"); %>">Borsellino</a>
-    <a href="#" class="list-group-item
+    <a href="WishlistController?action=getWishlist" class="list-group-item
        <% if (location.equals("wishlist")) out.print("active"); %>">&nbsp&nbsp Wishlist</a>
     <a href="#" class="list-group-item
        <% if (location.equals("le_mie_spese")) out.print("active"); %>">&nbsp&nbsp Le mie spese</a>
