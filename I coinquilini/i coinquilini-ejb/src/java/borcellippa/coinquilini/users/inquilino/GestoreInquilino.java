@@ -25,4 +25,9 @@ public class GestoreInquilino implements GestoreInquilinoLocal {
     public Inquilino getInquilinoByEmail(String email) {
         return inquilinoFacade.getInquilinoByEmail(email); 
     }
+
+    @Override
+    public void addInquilino(Inquilino i) {
+        inquilinoFacade.create(i);
+    }
 }

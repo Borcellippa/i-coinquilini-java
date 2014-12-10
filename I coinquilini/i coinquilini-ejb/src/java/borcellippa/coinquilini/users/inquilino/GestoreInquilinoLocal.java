@@ -16,5 +16,7 @@ import javax.ejb.Local;
 public interface GestoreInquilinoLocal {
 
     Inquilino getInquilinoByEmail(String email);
+
+    void addInquilino(Inquilino i);
     
 }
