@@ -24,10 +24,8 @@ public class GestoreBacheca implements GestoreBachecaLocal {
 
     @EJB
     private BachecaFacadeLocal bachecaFacade;
-    
     @EJB
     private PostFacadeLocal postFacade;
-    
     @EJB
     private InquilinoFacadeLocal inquilinoFacade;
     
