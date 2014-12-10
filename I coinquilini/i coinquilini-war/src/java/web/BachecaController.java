@@ -59,10 +59,10 @@ public class BachecaController extends HttpServlet {
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-        } else if (action.equals("viewPosts")) {
+        } else if (action.equals("bacheca")) {
+            session = request.getSession();
             String idCasa = (String) session.getAttribute("idCasa");
-            List<Post> listaPosts;
-            listaPosts = gestoreBacheca.getPosts(idCasa);
+            List<Post> listaPosts = gestoreBacheca.getPosts(idCasa);
 
             request.setAttribute("location", buildGson("dashboard"));
             request.setAttribute("posts", buildGson(listaPosts));

@@ -6,43 +6,66 @@
 
 package web;
 
+import borcellippa.coinquilini.casa.wishlist.GestoreWishlistLocal;
+import borcellippa.coinquilini.casa.wishlist.Wishlist;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import static utility.Utility.buildGson;
 
 /**
  *
  * @author Bortignon Gianluca
  */
 public class WishlistController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
+    @EJB
+    private GestoreWishlistLocal gestoreWishlist;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet WishlistController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet WishlistController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        // creo la sessione utente o richiamo quella già creata
+        HttpSession session = request.getSession();
+
+        RequestDispatcher rd;
+        String action = request.getParameter("action");
+
+        if (action == null) {
+            request.setAttribute("location", buildGson("home"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+        } else if (action.equals("getWishlist")) {
+            //Recupero i dati della wishlist da DB
+            String idCasa = (String)session.getAttribute("idCasa");
+            
+            Wishlist w = gestoreWishlist.getWishlistByHouse(idCasa);
+
+            if (w != null) {
+                String gsonWishlist = buildGson(w);
+                request.setAttribute("wishlist", gsonWishlist);
+                request.setAttribute("location", buildGson("wishlist"));
+
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
+            } else {
+                request.setAttribute("errore", buildGson("Errore durante la creazione della wishlist"));
+                request.setAttribute("location", buildGson("home"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+            }
         }
+        else{
+            request.setAttribute("location", buildGson("error_page"));
+            request.setAttribute("errorPage", buildGson("no_action"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");
+        }
+        
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
