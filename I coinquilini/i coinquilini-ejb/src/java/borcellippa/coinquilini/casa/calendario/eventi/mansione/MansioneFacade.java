@@ -6,6 +6,7 @@
 
 package borcellippa.coinquilini.casa.calendario.eventi.mansione;
 
+import borcellippa.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

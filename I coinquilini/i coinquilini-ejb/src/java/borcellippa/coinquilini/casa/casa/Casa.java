@@ -32,7 +32,7 @@ public class Casa implements Serializable {
     private String indirizzo;
     private String ncivico;
     private int postiTotali;
-    private String postiOccupati;
+    private int postiOccupati;
     private String latitudine;
     private String longitudine;
     private int inCasa;
@@ -247,7 +247,7 @@ public class Casa implements Serializable {
      *
      * @return the value of postiOccupati
      */
-    public String getPostiOccupati() {
+    public int getPostiOccupati() {
         return postiOccupati;
     }
 
@@ -256,7 +256,7 @@ public class Casa implements Serializable {
      *
      * @param postiOccupati new value of postiOccupati
      */
-    public void setPostiOccupati(String postiOccupati) {
+    public void setPostiOccupati(int postiOccupati) {
         this.postiOccupati = postiOccupati;
     }
 

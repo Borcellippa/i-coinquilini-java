@@ -5,8 +5,7 @@
  */
 package borcellippa.coinquilini.casa.casa;
 
-import borcellippa.coinquilini.casa.AbstractFacade;
-import borcellippa.coinquilini.users.utente.Utente;
+import borcellippa.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

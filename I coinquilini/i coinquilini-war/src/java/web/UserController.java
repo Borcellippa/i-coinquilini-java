@@ -66,6 +66,7 @@ public class UserController extends HttpServlet {
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+            
         } else if (action.equals("addUtente")) {
             String email = request.getParameter("email");
             String nome = request.getParameter("nome");

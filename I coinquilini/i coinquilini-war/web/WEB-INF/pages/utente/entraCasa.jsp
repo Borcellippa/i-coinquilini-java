@@ -26,7 +26,7 @@
                     <img src="images/search.png" style="height: 100px; margin-top: 45px; margin-left: 35px">
                 </div>
                 <div id="rightPasswordDiv">
-                    <form method="POST" action="UserController" role="form" style="margin-left: 20px;" onsubmit="return checkForm(this);">
+                    <form method="POST" action="CasaController" role="form" style="margin-left: 20px;" onsubmit="return checkForm(this);">
                         <div class="content">
                             <div>
                                 <label style="width: 195px">Entra in una casa esistente</label>
@@ -45,7 +45,7 @@
                     <img src="images/house.png" style="height: 100px; margin-top: 45px; margin-left: 35px">
                 </div>
                 <div id="rightPasswordDiv">
-                    <form method="POST" action="UserController" role="form" style="margin-left: 20px;">
+                    <form method="POST" action="CasaController" role="form" style="margin-left: 20px;">
                         <div class="form-group"  style="margin-top: 15px;text-align: center">
                             <strong> Creare una casa è semplice! </strong>
                             <button type="submit" class="btn btn-lg custom-button" style="margin-top: 36px">Crea ora</button>

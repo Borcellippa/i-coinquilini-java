@@ -2,7 +2,7 @@
 <%@page import="com.google.gson.Gson"%>
 <div class="top-navbar">
     <div class="col-md-8">
-        <a href="home.jsp" style="color: white;text-decoration: none;">
+        <a href="/WEB-INF/pages/home/home.jsp" style="color: white;text-decoration: none;">
             <div class="col-md-2" style="margin-top: 2px;">
                 <img src="images/a.jpg" class="img-circle img-thumbnail" height="140px" width="140px">
             </div> 

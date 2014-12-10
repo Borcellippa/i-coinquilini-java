@@ -6,6 +6,7 @@
 
 package borcellippa.coinquilini.casa.calendario.eventi.richiestacasalibera;
 
+import borcellippa.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

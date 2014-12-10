@@ -5,8 +5,10 @@
  */
 package web;
 
+import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.users.inquilino.GestoreInquilinoLocal;
+import borcellippa.coinquilini.users.inquilino.Inquilino;
 import borcellippa.coinquilini.users.utente.GestoreUtenteLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import static utility.Utility.buildGson;
 
 /**
@@ -30,6 +33,8 @@ public class CasaController extends HttpServlet {
     private GestoreUtenteLocal gestoreUtente;
     @EJB
     private GestoreCasaLocal gestoreCasa;
+    
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,25 +54,54 @@ public class CasaController extends HttpServlet {
         RequestDispatcher rd;
         String action = request.getParameter("action");
 
+        HttpSession session = request.getSession();
+
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
 
         } else if (action.equals("creaCasa")) {
-
             request.setAttribute("location", buildGson("creaCasa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/creaCasa.jsp");
 
-        } else if (action.equals("entraInCasa")) {
+        } else if (action.equals("addCasa")) {
+
+            Casa c = new Casa();
+            c.setIndirizzo(request.getParameter("indirizzo"));
+            c.setNcivico(request.getParameter("civico"));
+            c.setCitta(request.getParameter("citta"));
+            c.setNomeCasa(request.getParameter("nome"));
+            c.setPostiTotali(Integer.parseInt(request.getParameter("postiTotali")));
+            c.setPostiOccupati(0); // i posti occupati sono attualmente zero
             
-            //String id_casa = request.getParameter("id_casa");
+            String codiceCasa = gestoreCasa.addCasa(c);
             
-            Casa c = gestoreCasa.getCasaById
+            c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
             
-            
+            // quando il coinquilino crea una casa ci si aggiunge automaticamente
+            session = request.getSession();
+            Inquilino i = (Inquilino)gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            i.setCasa(c);
+            gestoreInquilino.addInquilino(i);
+            session.setAttribute("idCasa", c.getId());
+
+            String gsonCasa = buildGson(c);
+            request.setAttribute("casa", gsonCasa);
             request.setAttribute("location", buildGson("casa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/casa.jsp");
-            
+
+        } else if (action.equals("entraInCasa")) {
+
+            String codiceCasa = request.getParameter("codiceCasa");
+
+            Casa c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
+
+            session = request.getSession();
+            session.setAttribute("idCasa", c.getId());
+
+            request.setAttribute("location", buildGson("casa"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/casa.jsp");
+
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));

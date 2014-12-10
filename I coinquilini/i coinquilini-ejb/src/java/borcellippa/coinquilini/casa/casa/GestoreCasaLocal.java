@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package borcellippa.coinquilini.casa.casa;
 
 import javax.ejb.Local;
@@ -15,6 +14,8 @@ import javax.ejb.Local;
 @Local
 public interface GestoreCasaLocal {
 
-    void getCasaById();
-    
+    Casa getCasaByCodiceCasa(String codiceCasa);
+
+    String addCasa(Casa c);
+
 }

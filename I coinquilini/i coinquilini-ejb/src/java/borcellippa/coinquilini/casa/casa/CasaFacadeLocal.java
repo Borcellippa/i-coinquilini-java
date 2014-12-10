@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package borcellippa.coinquilini.casa.casa;
 
 import java.util.List;
@@ -31,5 +30,5 @@ public interface CasaFacadeLocal {
     int count();
 
     Casa getCasaByCodiceCasa(String codiceCasa);
-    
+
 }

@@ -6,7 +6,7 @@
 
 package borcellippa.coinquilini.users.inquilino;
 
-import borcellippa.coinquilini.users.utente.Utente;
+import borcellippa.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
