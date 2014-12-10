@@ -29,5 +29,7 @@ public interface CasaFacadeLocal {
     List<Casa> findRange(int[] range);
 
     int count();
+
+    Casa getCasaByCodiceCasa(String codiceCasa);
     
 }

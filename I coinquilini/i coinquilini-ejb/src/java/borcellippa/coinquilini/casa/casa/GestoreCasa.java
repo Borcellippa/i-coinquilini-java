@@ -6,6 +6,7 @@
 
 package borcellippa.coinquilini.casa.casa;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -14,6 +15,17 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class GestoreCasa implements GestoreCasaLocal {
+    
+    @EJB
+    private CasaFacadeLocal casaFacade;
+    
+    
+    
 
+    @Override
+    public void getCasaById() {
+    }
+
+    
     
 }

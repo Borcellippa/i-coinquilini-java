@@ -60,9 +60,14 @@ public class CasaController extends HttpServlet {
 
         } else if (action.equals("entraInCasa")) {
             
+            //String id_casa = request.getParameter("id_casa");
+            
+            Casa c = gestoreCasa.getCasaById
+            
             
             request.setAttribute("location", buildGson("casa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/casa.jsp");
+            
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
