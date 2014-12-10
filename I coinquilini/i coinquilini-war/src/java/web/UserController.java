@@ -1,6 +1,5 @@
 package web;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -24,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import static utility.Utility.buildGson;
 
 public class UserController extends HttpServlet {
 
@@ -367,7 +367,6 @@ public class UserController extends HttpServlet {
                 } else {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
                 }
-
             }
             // session
             response = this.initializeLogin(request, response, nome, email, user.getFoto_path());
@@ -479,18 +478,6 @@ public class UserController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private String buildGson(Object obj) {
-        Gson gson = new Gson();
-        String json = gson.toJson(obj);
-
-        if (json == null) {
-            System.out.println("servlet buildGson: NULL");
-        } else {
-            System.out.println("servlet buildGson: " + json);
-        }
-        return json;
-    }
 
     private HttpServletResponse initializeLogin(HttpServletRequest request, HttpServletResponse response, String nome, String email, String url) {
         HttpSession session = request.getSession();
