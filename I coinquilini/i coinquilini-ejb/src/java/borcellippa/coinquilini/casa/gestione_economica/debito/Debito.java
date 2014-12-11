@@ -6,7 +6,7 @@
 
 package borcellippa.coinquilini.casa.gestione_economica.debito;
 
-import borcellippa.coinquilini.users.inquilino.Inquilino;
+import borcellippa.coinquilini.utente.Utente;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,15 +24,15 @@ public class Debito implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private float importo;
-    private Inquilino debitore;
-    private Inquilino creditore;
+    private Utente debitore;
+    private Utente creditore;
 
     /**
      * Get the value of creditore
      *
      * @return the value of creditore
      */
-    public Inquilino getCreditore() {
+    public Utente getCreditore() {
         return creditore;
     }
 
@@ -41,7 +41,7 @@ public class Debito implements Serializable {
      *
      * @param creditore new value of creditore
      */
-    public void setCreditore(Inquilino creditore) {
+    public void setCreditore(Utente creditore) {
         this.creditore = creditore;
     }
 
@@ -51,7 +51,7 @@ public class Debito implements Serializable {
      *
      * @return the value of debitore
      */
-    public Inquilino getDebitore() {
+    public Utente getDebitore() {
         return debitore;
     }
 
@@ -60,7 +60,7 @@ public class Debito implements Serializable {
      *
      * @param debitore new value of debitore
      */
-    public void setDebitore(Inquilino debitore) {
+    public void setDebitore(Utente debitore) {
         this.debitore = debitore;
     }
 

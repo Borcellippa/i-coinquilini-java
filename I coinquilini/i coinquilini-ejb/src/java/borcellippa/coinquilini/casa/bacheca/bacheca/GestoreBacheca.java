@@ -8,8 +8,8 @@ package borcellippa.coinquilini.casa.bacheca.bacheca;
 
 import borcellippa.coinquilini.casa.bacheca.post.Post;
 import borcellippa.coinquilini.casa.bacheca.post.PostFacadeLocal;
-import borcellippa.coinquilini.users.inquilino.Inquilino;
-import borcellippa.coinquilini.users.inquilino.InquilinoFacadeLocal;
+import borcellippa.coinquilini.utente.Utente;
+import borcellippa.coinquilini.utente.UtenteFacadeLocal;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
@@ -27,7 +27,7 @@ public class GestoreBacheca implements GestoreBachecaLocal {
     @EJB
     private PostFacadeLocal postFacade;
     @EJB
-    private InquilinoFacadeLocal inquilinoFacade;
+    private UtenteFacadeLocal inquilinoFacade;
     
     @Override
     public List<Post> getPosts(String casaId) {
@@ -38,7 +38,7 @@ public class GestoreBacheca implements GestoreBachecaLocal {
     @Override
     public Post addPost(String email_autore, String contenuto, String bacheca_id, String casa_id) {
         Post post = new Post();
-        Inquilino i = inquilinoFacade.getInquilinoByEmail(email_autore);
+        Utente i = inquilinoFacade.getUtenteByEmail(email_autore);
         post.setAutore(i);
         post.setContenuto(contenuto);
         Bacheca b = bachecaFacade.getBacheca(casa_id);

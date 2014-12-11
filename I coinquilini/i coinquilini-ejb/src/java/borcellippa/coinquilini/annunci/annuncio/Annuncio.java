@@ -6,7 +6,7 @@
 
 package borcellippa.coinquilini.annunci.annuncio;
 
-import borcellippa.coinquilini.users.utente.Utente;
+import borcellippa.coinquilini.utente.Utente;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

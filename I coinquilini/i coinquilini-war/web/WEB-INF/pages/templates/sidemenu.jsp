@@ -1,4 +1,4 @@
-<%@page import="borcellippa.coinquilini.users.utente.Utente"%>
+<%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@page import="com.google.gson.Gson"%>
 <div class="list-group" id="sidemenu">
     <%

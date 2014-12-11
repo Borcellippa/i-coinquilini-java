@@ -5,8 +5,8 @@
  */
 package borcellippa.coinquilini.cookies;
 
-import borcellippa.coinquilini.users.utente.Utente;
-import borcellippa.coinquilini.users.utente.UtenteFacadeLocal;
+import borcellippa.coinquilini.utente.Utente;
+import borcellippa.coinquilini.utente.UtenteFacadeLocal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;

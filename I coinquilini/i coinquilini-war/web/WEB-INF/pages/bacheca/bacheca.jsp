@@ -1,6 +1,6 @@
 <%@page import="borcellippa.coinquilini.casa.bacheca.post.Post"%>
 <%@page import="java.util.List"%>
-<%@page import="borcellippa.coinquilini.users.utente.Utente"%>
+<%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@include  file="../templates/topTemplateSideMenu.jsp" %>
 <%
     Gson gsonPosts = new Gson();

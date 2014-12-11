@@ -5,7 +5,7 @@
  */
 package borcellippa.coinquilini.cookies;
 
-import borcellippa.coinquilini.users.utente.Utente;
+import borcellippa.coinquilini.utente.Utente;
 import javax.ejb.Local;
 
 /**

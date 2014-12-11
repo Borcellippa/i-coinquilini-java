@@ -7,12 +7,9 @@ package web;
 
 import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
-import borcellippa.coinquilini.users.inquilino.GestoreInquilinoLocal;
-import borcellippa.coinquilini.users.inquilino.Inquilino;
-import borcellippa.coinquilini.users.utente.GestoreUtenteLocal;
-import borcellippa.coinquilini.users.utente.Utente;
+import borcellippa.coinquilini.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,8 +25,6 @@ import static utility.Utility.buildGson;
  */
 public class CasaController extends HttpServlet {
 
-    @EJB
-    private GestoreInquilinoLocal gestoreInquilino;
     @EJB
     private GestoreUtenteLocal gestoreUtente;
     @EJB
@@ -82,17 +77,16 @@ public class CasaController extends HttpServlet {
             // quando il coinquilino crea una casa ci si aggiunge automaticamente
             session = request.getSession();
             
-            Inquilino i = new Inquilino();
-            i = (Inquilino)gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
-            
-            i.setCasa(c);
-            gestoreInquilino.addInquilino(i);
+            Utente u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            u.setTipoUtente("I");
+            u.setCasa(c);
+            gestoreUtente.editUtente(u);
             session.setAttribute("idCasa", c.getId());
 
             String gsonCasa = buildGson(c);
             request.setAttribute("casa", gsonCasa);
             request.setAttribute("location", buildGson("casa"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/casa.jsp");
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
 
         } else if (action.equals("entraInCasa")) {
 
@@ -104,7 +98,7 @@ public class CasaController extends HttpServlet {
             session.setAttribute("idCasa", c.getId());
 
             request.setAttribute("location", buildGson("casa"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/casa.jsp");
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
 
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));

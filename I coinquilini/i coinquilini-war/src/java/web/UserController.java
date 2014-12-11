@@ -5,10 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import borcellippa.coinquilini.cookies.GestoreUserCookieLocal;
-import borcellippa.coinquilini.users.inquilino.GestoreInquilinoLocal;
-import borcellippa.coinquilini.users.inquilino.Inquilino;
-import borcellippa.coinquilini.users.utente.GestoreUtenteLocal;
-import borcellippa.coinquilini.users.utente.Utente;
+import borcellippa.coinquilini.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.utente.Utente;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,9 +24,6 @@ import javax.servlet.http.HttpSession;
 import static utility.Utility.buildGson;
 
 public class UserController extends HttpServlet {
-
-    @EJB
-    private GestoreInquilinoLocal gestoreInquilino;
 
     @EJB
     private GestoreUserCookieLocal gestoreUserCookie;
@@ -85,6 +80,7 @@ public class UserController extends HttpServlet {
                 u.setData_nascita(request.getParameter("data_nascita"));
                 u.setCitta_natale(request.getParameter("citta_natale"));
                 u.setFoto_path("images/user.png");
+                u.setTipoUtente("U");
 
                 gestoreUtente.addUtente(u);
                 user = gestoreUtente.getUtenteByEmail(email);
@@ -120,8 +116,7 @@ public class UserController extends HttpServlet {
                 String gsonUser = buildGson(user);
                 request.setAttribute("utente", gsonUser);
                 request.setAttribute("location", buildGson("profilo"));
-                Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
-                if (i == null) {
+                if (user.getTipoUtente().equals("U")) {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
@@ -167,8 +162,7 @@ public class UserController extends HttpServlet {
                     String gsonUser = buildGson(u);
                     request.setAttribute("utente", gsonUser);
                     request.setAttribute("location", buildGson("profilo"));
-                    Inquilino i = gestoreInquilino.getInquilinoByEmail(u.getEmail());
-                    if (i == null) {
+                    if (u.getTipoUtente().equals("U")) {
                         rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                     } else {
                         rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
@@ -217,6 +211,7 @@ public class UserController extends HttpServlet {
                 u.setFb_user_id(fb_id);
                 u.setEmail(email);
                 u.setFoto_path(imageUrl);
+                u.setTipoUtente("U");
 
                 gestoreUtente.addUtente(u);
                 needPwd = true;
@@ -248,8 +243,7 @@ public class UserController extends HttpServlet {
 
             } else {
                 request.setAttribute("location", buildGson("profilo"));
-                Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
-                if (i == null) {
+                if (u.getTipoUtente().equals("U")) {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
@@ -330,6 +324,7 @@ public class UserController extends HttpServlet {
                     user.setCitta_natale(location);
                 }
                 user.setFoto_path(imageUrl);
+                user.setTipoUtente("U");
 
                 gestoreUtente.addUtente(user);
                 needPwd = true;
@@ -361,8 +356,7 @@ public class UserController extends HttpServlet {
 
             } else {
                 request.setAttribute("location", buildGson("profilo"));
-                Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
-                if (i == null) {
+                if (user.getTipoUtente().equals("U")) {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
@@ -387,8 +381,7 @@ public class UserController extends HttpServlet {
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
-            Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
-            if (i == null) {
+            if (u.getTipoUtente().equals("U")) {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             } else {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
@@ -424,8 +417,7 @@ public class UserController extends HttpServlet {
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
             request.setAttribute("location", buildGson("profilo"));
-            Inquilino i = gestoreInquilino.getInquilinoByEmail(email);
-            if (i == null) {
+            if (u.getTipoUtente().equals("U")) {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             } else {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");

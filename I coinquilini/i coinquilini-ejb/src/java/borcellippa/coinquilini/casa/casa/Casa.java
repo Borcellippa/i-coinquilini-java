@@ -9,7 +9,7 @@ import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.calendario.Calendario;
 import borcellippa.coinquilini.casa.gruppocase.GruppoCase;
 import borcellippa.coinquilini.casa.wishlist.Wishlist;
-import borcellippa.coinquilini.users.inquilino.Inquilino;
+import borcellippa.coinquilini.utente.Utente;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -37,7 +37,7 @@ public class Casa implements Serializable {
     private String longitudine;
     private int inCasa;
     private Calendario calendario;
-    private List<Inquilino> inquilini;
+    private List<Utente> utenti;
     private Bacheca bacheca;
     private GruppoCase gruppo;
     private Wishlist wishlist;
@@ -135,21 +135,21 @@ public class Casa implements Serializable {
     }
 
     /**
-     * Get the value of inquilini
+     * Get the value of utenti
      *
-     * @return the value of inquilini
+     * @return the value of utenti
      */
-    public List<Inquilino> getInquilini() {
-        return inquilini;
+    public List<Utente> getUtenti() {
+        return utenti;
     }
 
     /**
-     * Set the value of inquilini
+     * Set the value of utenti
      *
-     * @param inquilini new value of inquilini
+     * @param utenti new value of utenti
      */
-    public void setInquilini(List<Inquilino> inquilini) {
-        this.inquilini = inquilini;
+    public void setUtenti(List<Utente> utenti) {
+        this.utenti = utenti;
     }
 
     /**
@@ -339,7 +339,7 @@ public class Casa implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.coinquilini.casa.Casa[ id=" + id + " ]";
+        return "ejb.coutenti.casa.Casa[ id=" + id + " ]";
     }
 
 }

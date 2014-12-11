@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package borcellippa.coinquilini.users.utente;
+package borcellippa.coinquilini.utente;
 
 import borcellippa.coinquilini.cookies.GestoreUserCookie;
 import java.security.MessageDigest;

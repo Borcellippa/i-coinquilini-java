@@ -5,7 +5,7 @@
  */
 package borcellippa.coinquilini.cookies;
 
-import borcellippa.coinquilini.users.utente.Utente;
+import borcellippa.coinquilini.utente.Utente;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -36,6 +36,6 @@ public interface UserCookieFacadeLocal {
      *
      * @param utente the value of utente
      */
-    UserCookie getCookieByUser(borcellippa.coinquilini.users.utente.Utente utente);
+    UserCookie getCookieByUser(borcellippa.coinquilini.utente.Utente utente);
     
 }

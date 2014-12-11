@@ -8,7 +8,7 @@ package borcellippa.coinquilini.casa.bacheca.post;
 
 import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.media.Media;
-import borcellippa.coinquilini.users.inquilino.Inquilino;
+import borcellippa.coinquilini.utente.Utente;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ public class Post implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataPubblicazione;
     private Media media;
-    private Inquilino autore;
+    private Utente autore;
     private Bacheca bacheca;
 
     /**
@@ -58,7 +58,7 @@ public class Post implements Serializable {
      *
      * @return the value of autore
      */
-    public Inquilino getAutore() {
+    public Utente getAutore() {
         return autore;
     }
 
@@ -67,7 +67,7 @@ public class Post implements Serializable {
      *
      * @param autore new value of autore
      */
-    public void setAutore(Inquilino autore) {
+    public void setAutore(Utente autore) {
         this.autore = autore;
     }
 

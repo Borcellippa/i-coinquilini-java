@@ -3,7 +3,7 @@
     Created on : 09-dic-2014, 19.23.46
     Author     : Bortignon Gianluca
 --%>
-<%@page import="borcellippa.coinquilini.users.utente.Utente"%>
+<%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@include  file="../templates/topTemplateFree.jsp" %>
 <%  Gson gsonUtente = new Gson();
     String utenteFromJson = ((String) request.getAttribute("utente"));

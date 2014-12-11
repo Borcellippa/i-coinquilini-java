@@ -6,7 +6,7 @@
 <%@page import="borcellippa.coinquilini.casa.wishlist.wishlistentry.WishlistEntry"%>
 <%@page import="java.util.List"%>
 <%@page import="borcellippa.coinquilini.casa.wishlist.Wishlist"%>
-<%@page import="borcellippa.coinquilini.users.utente.Utente"%>
+<%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@include  file="../templates/topTemplateSideMenu.jsp" %>
 <script src="js/wishlist.js"></script>
 <%  Gson gsonUtente = new Gson();

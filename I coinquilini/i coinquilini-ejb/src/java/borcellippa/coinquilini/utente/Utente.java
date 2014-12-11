@@ -3,29 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package borcellippa.coinquilini.users.utente;
+package borcellippa.coinquilini.utente;
 
 import borcellippa.coinquilini.annunci.annuncio.Annuncio;
+import borcellippa.coinquilini.casa.bacheca.post.Post;
+import borcellippa.coinquilini.casa.casa.Casa;
+import borcellippa.coinquilini.casa.gestione_economica.debito.Debito;
+import borcellippa.coinquilini.casa.gestione_economica.spesa.Spesa;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 /**
  *
  * @author Bortignon Gianluca
  */
 @Entity
-@Inheritance(strategy=SINGLE_TABLE)
-@DiscriminatorColumn(name="TIPO_UTENTE", discriminatorType=DiscriminatorType.STRING)
-@DiscriminatorValue("U")
 public class Utente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +43,122 @@ public class Utente implements Serializable {
     private String citta_natale;
     private String genere;
     private List<Annuncio> annunci;
+    private Casa casa;
+    private float affitto;
+    private List<Debito> debiti;
+    private List<Spesa> spese;
+    private List<Post> posts;
+    
+    private String tipoUtente;
+
+    /**
+     * Get the value of tipoUtente
+     *
+     * @return the value of tipoUtente
+     */
+    public String getTipoUtente() {
+        return tipoUtente;
+    }
+
+    /**
+     * Set the value of tipoUtente
+     *
+     * @param tipoUtente new value of tipoUtente
+     */
+    public void setTipoUtente(String tipoUtente) {
+        this.tipoUtente = tipoUtente;
+    }
+
+
+    /**
+     * Get the value of posts
+     *
+     * @return the value of posts
+     */
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    /**
+     * Set the value of posts
+     *
+     * @param posts new value of posts
+     */
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    /**
+     * Get the value of spese
+     *
+     * @return the value of spese
+     */
+    public List<Spesa> getSpese() {
+        return spese;
+    }
+
+    /**
+     * Set the value of spese
+     *
+     * @param spese new value of spese
+     */
+    public void setSpese(List<Spesa> spese) {
+        this.spese = spese;
+    }
+
+    /**
+     * Get the value of debiti
+     *
+     * @return the value of debiti
+     */
+    public List<Debito> getDebiti() {
+        return debiti;
+    }
+
+    /**
+     * Set the value of debiti
+     *
+     * @param debiti new value of debiti
+     */
+    public void setDebiti(List<Debito> debiti) {
+        this.debiti = debiti;
+    }
+
+    /**
+     * Get the value of affitto
+     *
+     * @return the value of affitto
+     */
+    public float getAffitto() {
+        return affitto;
+    }
+
+    /**
+     * Set the value of affitto
+     *
+     * @param affitto new value of affitto
+     */
+    public void setAffitto(float affitto) {
+        this.affitto = affitto;
+    }
+
+    /**
+     * Get the value of casa
+     *
+     * @return the value of casa
+     */
+    public Casa getCasa() {
+        return casa;
+    }
+
+    /**
+     * Set the value of casa
+     *
+     * @param casa new value of casa
+     */
+    public void setCasa(Casa casa) {
+        this.casa = casa;
+    }
 
     /**
      * Get the value of annunci
@@ -349,6 +462,6 @@ public class Utente implements Serializable {
     @Override
     public String toString() {
         return id + " " + nome + " " + cognome + " " + email + " " + genere + " " + password + " " + telefono + " " + data_nascita + " " + nazionalita + " " + g_access_token + " " + fb_access_token + " " + fb_user_id + " " + foto_path + " " + citta_natale;
-    }
+    }  
 
 }

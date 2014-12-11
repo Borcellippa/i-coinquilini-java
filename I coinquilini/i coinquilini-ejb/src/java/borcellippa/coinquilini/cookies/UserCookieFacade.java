@@ -6,7 +6,7 @@
 package borcellippa.coinquilini.cookies;
 
 import borcellippa.AbstractFacade;
-import borcellippa.coinquilini.users.utente.Utente;
+import borcellippa.coinquilini.utente.Utente;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

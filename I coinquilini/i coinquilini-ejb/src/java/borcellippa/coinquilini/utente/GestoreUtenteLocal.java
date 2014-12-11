@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package borcellippa.coinquilini.users.utente;
+package borcellippa.coinquilini.utente;
 
 import java.util.List;
 import javax.ejb.Local;
