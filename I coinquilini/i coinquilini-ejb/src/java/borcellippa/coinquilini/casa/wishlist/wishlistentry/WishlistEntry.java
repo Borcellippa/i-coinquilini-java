@@ -26,6 +26,25 @@ public class WishlistEntry implements Serializable {
     private String descrizione;
     private Boolean done;
     private Wishlist wishlist;
+    private int quantita;
+
+    /**
+     * Get the value of quantita
+     *
+     * @return the value of quantita
+     */
+    public int getQuantita() {
+        return quantita;
+    }
+
+    /**
+     * Set the value of quantita
+     *
+     * @param quantita new value of quantita
+     */
+    public void setQuantita(int quantita) {
+        this.quantita = quantita;
+    }
 
     /**
      * Get the value of wishlist

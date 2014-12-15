@@ -2,6 +2,33 @@ body{
     min-width: 1150px;
 }
 
+.wishlist-entry .glyphicon{
+    top: -7px;
+}
+
+.wishlist-li{
+    display: inline-block;
+    margin-left: 2% !important;
+    width: 94%;
+}
+
+.wishlist-li-left{
+    margin-top: 7px;
+}
+
+.wishlist-li-right{
+    margin-top: 5px;
+    text-align: center;
+}
+
+.entry-container{
+    width: 40%;
+    padding-top: 5px;
+    background-color: darkorange;
+    color: white;
+    border-radius: 50px; 
+}
+
 .state-icon {
     left: -5px;
 }

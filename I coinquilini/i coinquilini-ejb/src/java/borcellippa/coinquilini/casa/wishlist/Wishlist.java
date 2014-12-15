@@ -11,6 +11,7 @@ import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.gruppocase.GruppoCase;
 import borcellippa.coinquilini.casa.gestione_economica.borsellino.Borsellino;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,6 +49,15 @@ public class Wishlist implements Serializable {
      */
     public void setEntries(List<WishlistEntry> entries) {
         this.entries = entries;
+    }
+    
+    public void addEntry(WishlistEntry we){
+        if(entries != null)
+            this.entries.add(we);
+        else{
+            entries = new ArrayList<WishlistEntry>();
+            this.entries.add(we);
+        }
     }
 
 

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web;
 
 import borcellippa.coinquilini.casa.wishlist.GestoreWishlistLocal;
@@ -23,10 +22,10 @@ import static utility.Utility.buildGson;
  * @author Bortignon Gianluca
  */
 public class WishlistController extends HttpServlet {
-    
+
     @EJB
     private GestoreWishlistLocal gestoreWishlist;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
@@ -43,8 +42,8 @@ public class WishlistController extends HttpServlet {
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
         } else if (action.equals("getWishlist")) {
             //Recupero i dati della wishlist da DB
-            String idCasa = (String)session.getAttribute("idCasa");
-            
+            String idCasa = (String) session.getAttribute("idCasa");
+
             Wishlist w = gestoreWishlist.getWishlistByHouse(idCasa);
 
             if (w != null) {
@@ -58,13 +57,28 @@ public class WishlistController extends HttpServlet {
                 request.setAttribute("location", buildGson("home"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             }
-        }
-        else{
+        } else if (action.equals("creaEntryWishlist")) {
+            String idCasa = (String) session.getAttribute("idCasa");
+            Wishlist w = gestoreWishlist.getWishlistByHouse(idCasa);
+            if (w != null) {
+                String descrizione = request.getParameter("descrizione");
+                int quantita = Integer.parseInt(request.getParameter("quantita"));
+                w = gestoreWishlist.addEntry(w, descrizione, quantita);
+                String gsonWishlist = buildGson(w);
+                request.setAttribute("wishlist", gsonWishlist);
+                request.setAttribute("location", buildGson("wishlist"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
+            } else {
+                request.setAttribute("errore", buildGson("Errore durante la creazione della wishlist"));
+                request.setAttribute("location", buildGson("home"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+            }
+        } else {
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");
         }
-        
+
         rd.forward(request, response);
     }
 
