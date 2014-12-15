@@ -19,17 +19,29 @@ public class GestoreToken implements GestoreTokenLocal {
     private UniqueTokenFacadeLocal uniqueTokenFacade;
 
     @Override
-    public void createToken(String token) {
+    public String createToken() {
         UniqueToken t = uniqueTokenFacade.getToken();
-        
-        t.setToken(token);
-        uniqueTokenFacade.create(t);
+        if(t == null){
+            t = new UniqueToken();
+            t.setToken("AAAAAA");
+            uniqueTokenFacade.create(t);
+        }
+        else{
+            String token = t.getToken();
+            StringBuilder newToken = new StringBuilder();
+            for(int i=token.length()-1;i>=0;i--){
+                if(token.charAt(i) != 'Z'){
+                    newToken = new StringBuilder(token);
+                    char newChar = token.charAt(i);
+                    newChar++;
+                    newToken.setCharAt(i, newChar);
+                }
+            }
+            t.setToken(newToken.toString());
+            uniqueTokenFacade.edit(t);
+        }
+        return t.getToken();
     }
-    
-    
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     @Override
     public String getToken() {

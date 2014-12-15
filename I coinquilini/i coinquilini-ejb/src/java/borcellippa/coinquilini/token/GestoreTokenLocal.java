@@ -15,7 +15,7 @@ import javax.ejb.Local;
 @Local
 public interface GestoreTokenLocal {
 
-    void createToken(String token);
+    String createToken();
 
     String getToken();
     

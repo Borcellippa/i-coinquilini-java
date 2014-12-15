@@ -6,6 +6,8 @@
 
 package borcellippa.coinquilini.casa.wishlist;
 
+import borcellippa.coinquilini.casa.wishlist.wishlistentry.GestoreWishlistEntryLocal;
+import borcellippa.coinquilini.casa.wishlist.wishlistentry.WishlistEntry;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -16,6 +18,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class GestoreWishlist implements GestoreWishlistLocal {
     @EJB
+    private GestoreWishlistEntryLocal gestoreWishlistEntry;
+    @EJB
     private WishlistFacadeLocal wishlistFacade;
 
     @Override
@@ -25,5 +29,15 @@ public class GestoreWishlist implements GestoreWishlistLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public Wishlist addEntry(Wishlist w, String descrizione, int quantita) {
+        WishlistEntry we = gestoreWishlistEntry.createEntry(w,descrizione,quantita);
+        if(we != null){
+            w.addEntry(we);
+            wishlistFacade.edit(w);
+        }
+        return wishlistFacade.find(w.getId());
+    }
     
 }

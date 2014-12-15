@@ -18,4 +18,6 @@ public interface GestoreCasaLocal {
 
     String addCasa(Casa c);
 
+    Casa getCasaById(String idCasa);
+
 }

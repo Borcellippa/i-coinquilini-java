@@ -508,6 +508,10 @@ public class UserController extends HttpServlet {
         session.setAttribute("nome", nome);
         session.setAttribute("tipoAccount", "utente");
         session.setAttribute("url", url);
+        Utente u = gestoreUtente.getUtenteByEmail(email);
+        Casa c = u.getCasa();
+        if(c != null)
+            session.setAttribute("idCasa", c.getId());
         String token = gestoreUserCookie.createUserCookie(email);
         Cookie cookie1 = new Cookie("login", token);
         cookie1.setMaxAge(365 * 24 * 60 * 60);

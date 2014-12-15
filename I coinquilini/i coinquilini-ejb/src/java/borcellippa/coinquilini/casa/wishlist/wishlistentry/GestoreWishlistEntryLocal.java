@@ -6,6 +6,7 @@
 
 package borcellippa.coinquilini.casa.wishlist.wishlistentry;
 
+import borcellippa.coinquilini.casa.wishlist.Wishlist;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +15,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface GestoreWishlistEntryLocal {
+
+    WishlistEntry createEntry(Wishlist w, String descrizione, int quantita);
     
 }

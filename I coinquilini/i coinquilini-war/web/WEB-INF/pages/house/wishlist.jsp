@@ -10,9 +10,6 @@
 <%@include  file="../templates/topTemplateSideMenu.jsp" %>
 <script src="js/wishlist.js"></script>
 <%  Gson gsonUtente = new Gson();
-    String utenteFromJson = ((String) request.getAttribute("utente"));
-    Utente utente = gsonUtente.fromJson(utenteFromJson, Utente.class);
-    String pictureUrl = (String) session.getAttribute("url");
     String wFromJson = ((String) request.getAttribute("wishlist"));
     Wishlist w = gsonUtente.fromJson(wFromJson, Wishlist.class);
     List<WishlistEntry> we = w.getEntries();
@@ -33,16 +30,32 @@
             <div class="row">
                 <div class="col-xs-6">
                     <div class="well">
-                        <ul id="check-list-box" class="list-group checked-list-box">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item" data-color="success">Dapibus ac facilisis in</li>
-                            <li class="list-group-item" data-color="info">Morbi leo risus</li>
-                            <li class="list-group-item" data-color="warning">Porta ac consectetur ac</li>
-                            <li class="list-group-item" data-color="danger">Vestibulum at eros</li>
+                        <ul id="check-list-box" class="list-group checked-list-box wishlist-entry">
+                            <% if (we != null) {
+                                    for (WishlistEntry entry : we) {%>
+                                        <li class="list-group-item">
+                                            <div class="uk-grid wishlist-li">
+                                                <div class="uk-width-8-10 wishlist-li-left">
+                                                    <%= entry.getDescrizione()%>
+                                                </div>
+                                                <div class="uk-width-2-10 wishlist-li-right">
+                                                    <div class="entry-container">
+                                                        <label class="wishlist-entry-label"><%= entry.getQuantita()%></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                            <%      }
+                                }
+                            else{ %>
+                            <p style="margin-bottom: 45px;"> Sembra che la lista della spesa sia vuota...Crea ora una nuova voce! </p>
+                            <% } %>
                         </ul>
-                        <button class="btn btn-primary col-xs-12" id="get-checked-data">Get Checked Data</button>
+
+                        <button type="button" class="btn btn-lg custom-button" data-toggle="modal" data-target="#wishlistEntryModal">
+                            Crea nuova voce
+                        </button>
                     </div>
-                    <pre id="display-json"></pre>
                 </div>
             </div>
         </div>
@@ -50,3 +63,35 @@
 </div>
 
 <%@include  file="../templates/botTemplateFree.jsp" %>
+
+
+<!-- MODAL -->
+<div class="modal fade" id="wishlistEntryModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"><b>Crea nuova voce</b></h4>
+            </div>
+            <div class="modal-body">
+                <div id="loginDiv">
+                    <form action="WishlistController" id="wishlistEntryForm" method="POST" role="form">
+                        <div class="form-group">
+                            <label for="descrizione" style="margin-top: 15px;">Descrizione</label>
+                            <input class="form-control" type="text" name="descrizione" id="descrizione" placeholder="Inserire la descrizione..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantita">Quantità</label>
+                            <input class="form-control" type="number" min="0.1" step="0.1" name="quantita" id="quantita" required>
+                        </div>
+                        <input type="hidden" name="action" value="creaEntryWishlist">
+                    </form>
+                </div>
+
+                <div id="submitDiv" style="margin-top: 30px">
+                    <button class="btn btn-lg custom-button" onclick="$('#wishlistEntryForm').submit();">Crea voce</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

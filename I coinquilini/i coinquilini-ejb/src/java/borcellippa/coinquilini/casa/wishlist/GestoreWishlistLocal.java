@@ -16,5 +16,7 @@ import javax.ejb.Local;
 public interface GestoreWishlistLocal {
 
     Wishlist getWishlistByHouse(String casaId);
+
+    Wishlist addEntry(Wishlist w, String descrizione, int quantita);
     
 }
