@@ -111,6 +111,9 @@ public class UserController extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             Utente user = gestoreUtente.verificaLogin(email, password);
+            
+                        // session
+            response = this.initializeLogin(request, response, user.getNome(), email, user.getFoto_path());
 
             if (user != null) {
                 String gsonUser = buildGson(user);
