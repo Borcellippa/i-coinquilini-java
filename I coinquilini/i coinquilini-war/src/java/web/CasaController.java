@@ -86,7 +86,7 @@ public class CasaController extends HttpServlet {
 
                 String gsonCasa = buildGson(c);
                 request.setAttribute("casa", gsonCasa);
-                request.setAttribute("location", buildGson("casa"));
+                request.setAttribute("location", buildGson("bacheca"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
             } else {
                 request.setAttribute("errore", buildGson("casa_presente"));
