@@ -105,8 +105,16 @@ public class UserController extends HttpServlet {
             Utente user = gestoreUtente.getUtenteByEmail(email);
             String gsonUser = buildGson(user);
             request.setAttribute("utente", gsonUser);
-            request.setAttribute("location", buildGson("profilo"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
+            if (user.getTipoUtente().equals("U")) {
+                request.setAttribute("location", buildGson("entraCasa"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
+            } else {
+                Casa c = user.getCasa();
+                String gsonCasa = buildGson(c);
+                request.setAttribute("casa", gsonCasa);
+                request.setAttribute("location", buildGson("bacheca"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+            }
 
         } else if (action.equals("login")) {
             String email = request.getParameter("email");
@@ -441,7 +449,11 @@ public class UserController extends HttpServlet {
             } else {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
             }
-
+        
+        } else if (action.equals("home")) {
+            request.setAttribute("location", buildGson("home"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+        
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));

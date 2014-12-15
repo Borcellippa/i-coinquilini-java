@@ -9,8 +9,9 @@
             location = gsonLocation.fromJson(loc, String.class);
         }
     %>
-    <a href="home.jsp" class="list-group-item">Home</a>
-    <a href="DashboardController?action=viewPosts" class="list-group-item">&nbsp&nbsp Dashboard</a>
+    <a href="UserController?action=home" class="list-group-item">Home</a>
+    <a href="#" class="list-group-item<% if (location.equals("bacheca")) out.print("active"); %>
+       ">&nbsp&nbsp Bacheca</a>
     <a href="#" class="list-group-item<% if (location.equals("coinquilini")) out.print("active"); %>
        ">&nbsp&nbsp Coinquilini</a>
     <a href="#" class="list-group-item
