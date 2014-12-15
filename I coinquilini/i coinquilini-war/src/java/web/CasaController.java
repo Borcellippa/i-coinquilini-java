@@ -29,8 +29,6 @@ public class CasaController extends HttpServlet {
     private GestoreUtenteLocal gestoreUtente;
     @EJB
     private GestoreCasaLocal gestoreCasa;
-    
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,31 +60,40 @@ public class CasaController extends HttpServlet {
 
         } else if (action.equals("addCasa")) {
 
-            Casa c = new Casa();
-            c.setIndirizzo(request.getParameter("indirizzo"));
-            c.setNcivico(request.getParameter("civico"));
-            c.setCitta(request.getParameter("citta"));
-            c.setNomeCasa(request.getParameter("nome"));
-            c.setPostiTotali(Integer.parseInt(request.getParameter("postiTotali")));
-            c.setPostiOccupati(0); // i posti occupati sono attualmente zero
-            
-            String codiceCasa = gestoreCasa.addCasa(c);
-            
-            c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
-            
-            // quando il coinquilino crea una casa ci si aggiunge automaticamente
-            session = request.getSession();
-            
-            Utente u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
-            u.setTipoUtente("I");
-            u.setCasa(c);
-            gestoreUtente.editUtente(u);
-            session.setAttribute("idCasa", c.getId());
+            Utente u = gestoreUtente.getUtenteByEmail((String) session.getAttribute("email"));
 
-            String gsonCasa = buildGson(c);
-            request.setAttribute("casa", gsonCasa);
-            request.setAttribute("location", buildGson("casa"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+            if (u.getTipoUtente().equals("U")) { // non ancora inquilino
+
+                Casa c = new Casa();
+                c.setIndirizzo(request.getParameter("indirizzo"));
+                c.setNcivico(request.getParameter("civico"));
+                c.setCitta(request.getParameter("citta"));
+                c.setNomeCasa(request.getParameter("nome"));
+                c.setPostiTotali(Integer.parseInt(request.getParameter("postiTotali")));
+                c.setPostiOccupati(0); // i posti occupati sono attualmente zero
+
+                String codiceCasa = gestoreCasa.addCasa(c);
+
+                c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
+
+                // quando il coinquilino crea una casa ci si aggiunge automaticamente
+                session = request.getSession();
+
+                u.setTipoUtente("I");
+                u.setCasa(c);
+                gestoreUtente.editUtente(u);
+                session.setAttribute("idCasa", c.getId());
+
+                String gsonCasa = buildGson(c);
+                request.setAttribute("casa", gsonCasa);
+                request.setAttribute("location", buildGson("bacheca"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+            } else {
+                request.setAttribute("errore", buildGson("casa_presente"));
+                request.setAttribute("location", buildGson("home"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+
+            }
 
         } else if (action.equals("entraInCasa")) {
 
@@ -97,7 +104,7 @@ public class CasaController extends HttpServlet {
             session = request.getSession();
             session.setAttribute("idCasa", c.getId());
 
-            request.setAttribute("location", buildGson("casa"));
+            request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
 
         } else { // caso in cui non ci sia nessuna action da eseguire

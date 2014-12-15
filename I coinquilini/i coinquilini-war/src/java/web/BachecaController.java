@@ -44,34 +44,40 @@ public class BachecaController extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        // creo la sessione utente o richiamo quella già creata
-        HttpSession session = request.getSession();
-
-        if (session.getAttribute("email") == null) {
-            session.setAttribute("email", "ospite");
-            session.setAttribute("tipoAccount", "ospite");
-            session.setAttribute("nome_utente", "ospite");
-        }
-
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/errore.jsp");
+        RequestDispatcher rd;
         String action = request.getParameter("action");
+
+        HttpSession session = request.getSession();
 
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-        } else if (action.equals("bacheca")) {
-            session = request.getSession();
-            String idCasa = (String) session.getAttribute("idCasa");
-            List<Post> listaPosts = gestoreBacheca.getPosts(idCasa);
 
-            request.setAttribute("location", buildGson("dashboard"));
-            request.setAttribute("posts", buildGson(listaPosts));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/dashboard.jsp");
+        } /*else if (action.equals("bacheca")) {
+         session = request.getSession();
+         String idCasa = (String) session.getAttribute("idCasa");
+         List<Post> listaPosts = gestoreBacheca.getPosts(idCasa);
+
+         request.setAttribute("location", buildGson("dashboard"));
+         request.setAttribute("posts", buildGson(listaPosts));
+         rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/dashboard.jsp");
+        
+        }*/ else if (action.equals("addPost")) {
+            Post p = new Post();
+            
+            request.setAttribute("location", buildGson("bacheca"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+
+        } else { // caso in cui non ci sia nessuna action da eseguire
+            request.setAttribute("location", buildGson("error_page"));
+            request.setAttribute("errorPage", buildGson("no_action"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");
         }
+
         rd.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

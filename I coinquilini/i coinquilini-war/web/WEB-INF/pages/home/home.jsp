@@ -85,6 +85,9 @@
                                 if (err.equals("utente_registrato")) {
                                     errore = "L'email è già presente nel sistema";
                                 }
+                                if (err.equals("casa_presente")) {
+                                    errore = "Sei già inquilino di una casa!";
+                                }
                             }
 
                             if (errore != null) {
@@ -217,7 +220,7 @@
                                 <input type="hidden" name="action" value="registrazione">
                             </form>
                         </div>
-                        
+
                         <div id="submitDiv" style="margin-top: 30px">
                             <button class="btn btn-primary" onclick="$('#loginForm').submit();">Login</button>
                             <button type="submit" class="btn btn-default" onclick="$('#registrazioneForm').submit();">Registrazione</button>
