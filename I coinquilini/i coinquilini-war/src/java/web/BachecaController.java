@@ -69,10 +69,20 @@ public class BachecaController extends HttpServlet {
             Casa c = casaFacade.find(idCasa);
             Bacheca b = c.getBacheca();
             gestoreBacheca.addPost((String) session.getAttribute("email"), request.getParameter("contenuto"), b.getId(), (String) session.getAttribute("idCasa"));
-            
+
             String gsonCasa = buildGson(c);
             request.setAttribute("casa", gsonCasa);
             request.setAttribute("location", buildGson("bacheca"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+        } else if (action.equals("getBacheca")) {
+            //Recupero i dati della wishlist da DB
+            String idCasa = (String) session.getAttribute("idCasa");
+            Casa c = gestoreCasa.getCasaById(idCasa);
+
+            String gsonCasa = buildGson(c);
+            request.setAttribute("casa", gsonCasa);
+            request.setAttribute("location", buildGson("casa"));
+
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
         } else {
             request.setAttribute("location", buildGson("error_page"));
