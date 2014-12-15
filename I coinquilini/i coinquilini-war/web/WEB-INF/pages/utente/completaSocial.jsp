@@ -13,7 +13,7 @@
 
         <section id="account-password">
             <div id="leftPasswordDiv">
-                <img src="images/lock.png" style="height: 100px; margin-top: 45px; margin-left: 11px">
+                <img src="images/lock.png" style="height: 100px; margin-top: 45px; margin-left: 50px">
             </div>
             <div id="rightPasswordDiv">
                 <form method="POST" action="UserController" role="form" style="margin-left: 20px;" onsubmit="return checkForm(this);">
