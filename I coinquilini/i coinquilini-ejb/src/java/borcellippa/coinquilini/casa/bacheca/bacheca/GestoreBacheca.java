@@ -8,6 +8,8 @@ package borcellippa.coinquilini.casa.bacheca.bacheca;
 
 import borcellippa.coinquilini.casa.bacheca.post.Post;
 import borcellippa.coinquilini.casa.bacheca.post.PostFacadeLocal;
+import borcellippa.coinquilini.casa.casa.Casa;
+import borcellippa.coinquilini.casa.casa.CasaFacadeLocal;
 import borcellippa.coinquilini.utente.Utente;
 import borcellippa.coinquilini.utente.UtenteFacadeLocal;
 import java.util.Calendar;
@@ -23,36 +25,49 @@ import javax.ejb.Stateless;
 public class GestoreBacheca implements GestoreBachecaLocal {
 
     @EJB
+    private GestoreBachecaLocal gestoreBacheca;
+    @EJB
     private BachecaFacadeLocal bachecaFacade;
     @EJB
     private PostFacadeLocal postFacade;
+    @EJB
+    private CasaFacadeLocal casaFacade;
     @EJB
     private UtenteFacadeLocal inquilinoFacade;
     
     @Override
     public List<Post> getPosts(String casaId) {
-        List<Post> listaPosts = bachecaFacade.getPosts(casaId);
+        Casa c = casaFacade.find(casaId);
+        Bacheca b = c.getBacheca();
+        List<Post> listaPosts = bachecaFacade.getPosts(b.getId());
         return listaPosts;
     }
 
     @Override
-    public Post addPost(String email_autore, String contenuto, String bacheca_id, String casa_id) {
+    public Post addPost(String email_autore, String contenuto, Long bacheca_id, String casa_id) {
+        Casa c = casaFacade.find(casa_id);
         Post post = new Post();
         Utente i = inquilinoFacade.getUtenteByEmail(email_autore);
         post.setAutore(i);
         post.setContenuto(contenuto);
-        Bacheca b = bachecaFacade.getBacheca(casa_id);
-        post.setBacheca(b);
+        Bacheca b = c.getBacheca();
         Calendar cal = Calendar.getInstance();
         post.setDataPubblicazione(cal.getTime());
         postFacade.create(post);
+        
+        List<Post> list = b.getPosts();
+        list.add(post);
+        
+        // aggiorno la lista di post
+        b.setPosts(list);
+        
         return post;
     }
 
     @Override
     public Bacheca getBacheca(String casaId) {
-        Bacheca bacheca = bachecaFacade.getBacheca(casaId);
-        return bacheca;
+        Casa c = casaFacade.find(casaId);
+        return c.getBacheca();
     }
 
     @Override

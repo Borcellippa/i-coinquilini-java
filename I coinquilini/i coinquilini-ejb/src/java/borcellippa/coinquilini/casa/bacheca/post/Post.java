@@ -32,26 +32,6 @@ public class Post implements Serializable {
     private Date dataPubblicazione;
     private Media media;
     private Utente autore;
-    private Bacheca bacheca;
-
-    /**
-     * Get the value of bacheca
-     *
-     * @return the value of bacheca
-     */
-    public Bacheca getBacheca() {
-        return bacheca;
-    }
-
-    /**
-     * Set the value of bacheca
-     *
-     * @param bacheca new value of bacheca
-     */
-    public void setBacheca(Bacheca bacheca) {
-        this.bacheca = bacheca;
-    }
-
 
     /**
      * Get the value of autore

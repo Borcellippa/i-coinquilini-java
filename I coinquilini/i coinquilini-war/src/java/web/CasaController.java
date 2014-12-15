@@ -47,6 +47,7 @@ public class CasaController extends HttpServlet {
 
         RequestDispatcher rd;
         String action = request.getParameter("action");
+        System.out.println("CasaController_action: "+action);
 
         HttpSession session = request.getSession();
 
@@ -96,17 +97,12 @@ public class CasaController extends HttpServlet {
             }
 
         } else if (action.equals("entraInCasa")) {
-
             String codiceCasa = request.getParameter("codiceCasa");
-
             Casa c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
-
             session = request.getSession();
             session.setAttribute("idCasa", c.getId());
-
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
-
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));

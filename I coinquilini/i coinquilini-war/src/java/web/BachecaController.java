@@ -5,11 +5,15 @@
  */
 package web;
 
-import borcellippa.coinquilini.casa.bacheca.bacheca.GestoreBacheca;
+import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.bacheca.bacheca.GestoreBachecaLocal;
 import borcellippa.coinquilini.casa.bacheca.post.Post;
+import borcellippa.coinquilini.casa.casa.Casa;
+import borcellippa.coinquilini.casa.casa.CasaFacadeLocal;
+import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
+import borcellippa.coinquilini.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,6 +33,12 @@ public class BachecaController extends HttpServlet {
 
     @EJB
     private GestoreBachecaLocal gestoreBacheca;
+    @EJB
+    private CasaFacadeLocal casaFacade;
+    @EJB
+    private GestoreCasaLocal gestoreCasa;
+    @EJB
+    private GestoreUtenteLocal gestoreUtente;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,29 +56,25 @@ public class BachecaController extends HttpServlet {
 
         RequestDispatcher rd;
         String action = request.getParameter("action");
+        System.out.println("BachecaController_action: " + action);
 
         HttpSession session = request.getSession();
 
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-
-        } /*else if (action.equals("bacheca")) {
-         session = request.getSession();
-         String idCasa = (String) session.getAttribute("idCasa");
-         List<Post> listaPosts = gestoreBacheca.getPosts(idCasa);
-
-         request.setAttribute("location", buildGson("dashboard"));
-         request.setAttribute("posts", buildGson(listaPosts));
-         rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/dashboard.jsp");
-        
-        }*/ else if (action.equals("addPost")) {
-            Post p = new Post();
+        } else if (action.equals("addPost")) {
+            session = request.getSession();
+            String idCasa = (String) session.getAttribute("idCasa");
+            Casa c = casaFacade.find(idCasa);
+            Bacheca b = c.getBacheca();
+            gestoreBacheca.addPost((String) session.getAttribute("email"), request.getParameter("contenuto"), b.getId(), (String) session.getAttribute("idCasa"));
             
+            String gsonCasa = buildGson(c);
+            request.setAttribute("casa", gsonCasa);
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
-
-        } else { // caso in cui non ci sia nessuna action da eseguire
+        } else {
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");

@@ -34,28 +34,15 @@ public class BachecaFacade extends AbstractFacade<Bacheca> implements BachecaFac
     }
 
     @Override
-    public List<Post> getPosts(String casa_id) {
+    public List<Post> getPosts(Long bacheca_id) {
         try {
-            TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p, Bacheca b "
-                    + "WHERE p.BACHECA_ID = b.ID AND b.CASA_ID = '" + casa_id + "'", Post.class
+            TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p"
+                    + "WHERE p.BACHECA_ID = '" + bacheca_id + "'", Post.class
             );
             return query.getResultList();
         } catch (NoResultException e) {
             System.out.println("##### Nessun risultato");
             return null;
         }
-    }
-
-    @Override
-    public Bacheca getBacheca(String casaId) {
-        try {
-            TypedQuery<Bacheca> query = em.createQuery("SELECT b FROM Bacheca b WHERE b.CASA_ID = '" + casaId + "'", Bacheca.class
-            );
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            System.out.println("##### Nessun risultato");
-            return null;
-        }
-    }
-    
+    }    
 }
