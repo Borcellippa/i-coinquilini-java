@@ -1,5 +1,6 @@
 package web;
 
+import borcellippa.coinquilini.casa.casa.Casa;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -115,13 +116,20 @@ public class UserController extends HttpServlet {
             if (user != null) {
                 String gsonUser = buildGson(user);
                 request.setAttribute("utente", gsonUser);
-                request.setAttribute("location", buildGson("profilo"));
+
                 // session
                 response = this.initializeLogin(request, response, user.getNome(), email, user.getFoto_path());
+
                 if (user.getTipoUtente().equals("U")) {
+                    request.setAttribute("location", buildGson("entraCasa"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
-                } else {
-                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
+                } else { // l'utente è un inquilino quindi entra nella sua casa
+                    Casa c = user.getCasa();
+                    String gsonCasa = buildGson(c);
+                    request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
+
+                    request.setAttribute("location", buildGson("bachecaCasa"));
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
                 // se la password è sbagliata e l'utente non esiste
             } else {
@@ -248,9 +256,13 @@ public class UserController extends HttpServlet {
                 if (u.getTipoUtente().equals("U")) {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
-                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
-                }
+                    Casa c = u.getCasa();
+                    String gsonCasa = buildGson(c);
+                    request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
 
+                    request.setAttribute("location", buildGson("bachecaCasa"));
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+                }
             }
             // session
             response = this.initializeLogin(request, response, nome, email, u.getFoto_path());
@@ -361,7 +373,12 @@ public class UserController extends HttpServlet {
                 if (user.getTipoUtente().equals("U")) {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
-                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
+                    Casa c = user.getCasa();
+                    String gsonCasa = buildGson(c);
+                    request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
+
+                    request.setAttribute("location", buildGson("bachecaCasa"));
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
             }
             // session
