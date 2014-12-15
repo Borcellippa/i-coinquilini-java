@@ -10,10 +10,8 @@
         }
     %>
     <a href="UserController?action=home" class="list-group-item">Home</a>
-    <a href="#" class="list-group-item<% if (location.equals("bacheca")) out.print("active"); %>
-       ">&nbsp&nbsp Bacheca</a>
-    <a href="#" class="list-group-item<% if (location.equals("coinquilini")) out.print("active"); %>
-       ">&nbsp&nbsp Coinquilini</a>
+    <a href="#" class="list-group-item <% if (location.equals("bacheca")) out.print("active"); %>">&nbsp&nbsp Bacheca</a>
+    <a href="#" class="list-group-item <% if (location.equals("coinquilini")) out.print("active"); %>">&nbsp&nbsp Coinquilini</a>
     <a href="#" class="list-group-item
        <% if (location.equals("eventi")) out.print("active"); %>">Eventi</a>
     <a href="#" class="list-group-item
