@@ -6,7 +6,6 @@
 
 package borcellippa.coinquilini.casa.wishlist.wishlistentry;
 
-import borcellippa.coinquilini.casa.wishlist.Wishlist;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,6 @@ public class WishlistEntry implements Serializable {
     private Long id;
     private String descrizione;
     private Boolean done;
-    private Wishlist wishlist;
     private int quantita;
 
     /**
@@ -45,25 +43,6 @@ public class WishlistEntry implements Serializable {
     public void setQuantita(int quantita) {
         this.quantita = quantita;
     }
-
-    /**
-     * Get the value of wishlist
-     *
-     * @return the value of wishlist
-     */
-    public Wishlist getWishlist() {
-        return wishlist;
-    }
-
-    /**
-     * Set the value of wishlist
-     *
-     * @param wishlist new value of wishlist
-     */
-    public void setWishlist(Wishlist wishlist) {
-        this.wishlist = wishlist;
-    }
-
 
     /**
      * Get the value of done

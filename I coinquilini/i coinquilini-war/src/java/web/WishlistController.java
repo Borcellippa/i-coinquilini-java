@@ -5,6 +5,8 @@
  */
 package web;
 
+import borcellippa.coinquilini.casa.casa.Casa;
+import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.casa.wishlist.GestoreWishlistLocal;
 import borcellippa.coinquilini.casa.wishlist.Wishlist;
 import java.io.IOException;
@@ -22,6 +24,8 @@ import static utility.Utility.buildGson;
  * @author Bortignon Gianluca
  */
 public class WishlistController extends HttpServlet {
+    @EJB
+    private GestoreCasaLocal gestoreCasa;
 
     @EJB
     private GestoreWishlistLocal gestoreWishlist;
@@ -43,8 +47,8 @@ public class WishlistController extends HttpServlet {
         } else if (action.equals("getWishlist")) {
             //Recupero i dati della wishlist da DB
             String idCasa = (String) session.getAttribute("idCasa");
-
-            Wishlist w = gestoreWishlist.getWishlistByHouse(idCasa);
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            Wishlist w = c.getWishlist();
 
             if (w != null) {
                 String gsonWishlist = buildGson(w);
@@ -59,7 +63,8 @@ public class WishlistController extends HttpServlet {
             }
         } else if (action.equals("creaEntryWishlist")) {
             String idCasa = (String) session.getAttribute("idCasa");
-            Wishlist w = gestoreWishlist.getWishlistByHouse(idCasa);
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            Wishlist w = c.getWishlist();
             if (w != null) {
                 String descrizione = request.getParameter("descrizione");
                 int quantita = Integer.parseInt(request.getParameter("quantita"));

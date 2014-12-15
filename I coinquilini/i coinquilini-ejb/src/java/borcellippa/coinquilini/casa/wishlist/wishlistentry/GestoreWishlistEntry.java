@@ -27,7 +27,6 @@ public class GestoreWishlistEntry implements GestoreWishlistEntryLocal {
         we.setDescrizione(descrizione);
         we.setQuantita(quantita);
         we.setDone(false);
-        we.setWishlist(w);
         wishlistEntryFacade.create(we);
         return wishlistEntryFacade.find(we.getId());
     }

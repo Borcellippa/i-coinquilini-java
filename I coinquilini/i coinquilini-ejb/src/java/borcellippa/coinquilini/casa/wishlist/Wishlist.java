@@ -7,8 +7,6 @@
 package borcellippa.coinquilini.casa.wishlist;
 
 import borcellippa.coinquilini.casa.wishlist.wishlistentry.WishlistEntry;
-import borcellippa.coinquilini.casa.casa.Casa;
-import borcellippa.coinquilini.casa.gruppocase.GruppoCase;
 import borcellippa.coinquilini.casa.gestione_economica.borsellino.Borsellino;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,8 +26,6 @@ public class Wishlist implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private GruppoCase gruppo;
-    private Casa casa;
     private Borsellino borsellino;
     private List<WishlistEntry> entries;
 
@@ -78,45 +74,6 @@ public class Wishlist implements Serializable {
     public void setBorsellino(Borsellino borsellino) {
         this.borsellino = borsellino;
     }
-
-
-    /**
-     * Get the value of casa
-     *
-     * @return the value of casa
-     */
-    public Casa getCasa() {
-        return casa;
-    }
-
-    /**
-     * Set the value of casa
-     *
-     * @param casa new value of casa
-     */
-    public void setCasa(Casa casa) {
-        this.casa = casa;
-    }
-
-
-    /**
-     * Get the value of gruppo
-     *
-     * @return the value of gruppo
-     */
-    public GruppoCase getGruppo() {
-        return gruppo;
-    }
-
-    /**
-     * Set the value of gruppo
-     *
-     * @param gruppo new value of gruppo
-     */
-    public void setGruppo(GruppoCase gruppo) {
-        this.gruppo = gruppo;
-    }
-
 
     public Long getId() {
         return id;
