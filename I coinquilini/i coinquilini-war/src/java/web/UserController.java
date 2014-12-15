@@ -61,7 +61,7 @@ public class UserController extends HttpServlet {
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-            
+
         } else if (action.equals("addUtente")) {
             String email = request.getParameter("email");
             String nome = request.getParameter("nome");
@@ -111,14 +111,13 @@ public class UserController extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             Utente user = gestoreUtente.verificaLogin(email, password);
-            
-                        // session
-            response = this.initializeLogin(request, response, user.getNome(), email, user.getFoto_path());
 
             if (user != null) {
                 String gsonUser = buildGson(user);
                 request.setAttribute("utente", gsonUser);
                 request.setAttribute("location", buildGson("profilo"));
+                // session
+                response = this.initializeLogin(request, response, user.getNome(), email, user.getFoto_path());
                 if (user.getTipoUtente().equals("U")) {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
