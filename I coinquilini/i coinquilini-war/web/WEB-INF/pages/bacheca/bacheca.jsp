@@ -3,21 +3,21 @@
 <%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@include  file="../templates/topTemplateSideMenu.jsp" %>
 <%
-    Gson gsonPosts = new Gson();
+    /*Gson gsonPosts = new Gson();
     String postsFromJson = ((String) request.getAttribute("listaPosts"));
-    List<Post> listaPost = gsonPosts.fromJson(postsFromJson, List.class);
+    List<Post> listaPost = gsonPosts.fromJson(postsFromJson, List.class);*/
 %>
 
 <div class="row">
-    <% if (listaPost == null) { %>
+    <% /*if (listaPost == null) {*/ %>
     <h1>Scrivi il tuo primo post!</h1> 
-    <% } else {%>
+    <% /*} else {*/ %>
 
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-md-3">
                 <div class="row">
-                    <img src="<%=%>"
+                    <img src=""
                          alt="immagine profilo"
                          class="img-circle">
                 </div>
@@ -30,6 +30,7 @@
             </div>
         </div>
     </div>
+    <% } %>
 
 
 
