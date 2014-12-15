@@ -136,7 +136,7 @@ public class UserController extends HttpServlet {
                     String gsonCasa = buildGson(c);
                     request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
 
-                    request.setAttribute("location", buildGson("bachecaCasa"));
+                    request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
                 // se la password è sbagliata e l'utente non esiste
@@ -268,7 +268,7 @@ public class UserController extends HttpServlet {
                     String gsonCasa = buildGson(c);
                     request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
 
-                    request.setAttribute("location", buildGson("bachecaCasa"));
+                    request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
             }
@@ -385,7 +385,7 @@ public class UserController extends HttpServlet {
                     String gsonCasa = buildGson(c);
                     request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
 
-                    request.setAttribute("location", buildGson("bachecaCasa"));
+                    request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
             }
