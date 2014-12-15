@@ -31,8 +31,5 @@ public interface BachecaFacadeLocal {
 
     int count();
 
-    List<Post> getPosts(String casa_id);
-
-    Bacheca getBacheca(String casaId);
-    
+    List<Post> getPosts(Long bacheca_id);    
 }

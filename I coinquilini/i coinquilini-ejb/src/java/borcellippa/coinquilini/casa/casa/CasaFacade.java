@@ -37,7 +37,7 @@ public class CasaFacade extends AbstractFacade<Casa> implements CasaFacadeLocal 
             TypedQuery<Casa> query = em.createQuery("SELECT c FROM Casa c WHERE c.codiceCasa ='" + codiceCasa + "'", Casa.class);
             return query.getSingleResult();
         } catch (NoResultException e) {
-            System.out.println("##### Nessun risultato");
+            System.out.println("##### Casa non trovata");
             return null;
         } catch (Exception e) {
             System.out.println("##### Eccezione generica: " + e.getMessage());

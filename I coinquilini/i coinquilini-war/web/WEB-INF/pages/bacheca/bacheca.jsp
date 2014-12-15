@@ -41,7 +41,7 @@
         <form action="BachecaController" role="form" method="POST">
             <div class="row">
                 <div class="col-md-12">
-                    <textarea class="form-control" rows="3" placeholder="Scrivi qui il tuo messaggio..."></textarea>
+                    <textarea name="contenuto" class="form-control" rows="3" placeholder="Scrivi qui il tuo messaggio..."></textarea>
                 </div>
             </div>
             <br/>
