@@ -67,6 +67,7 @@ public class WishlistController extends HttpServlet {
             Wishlist w = c.getWishlist();
             if (w != null) {
                 String descrizione = request.getParameter("descrizione");
+                descrizione = Character.toUpperCase(descrizione.charAt(0)) + descrizione.substring(1);
                 int quantita = Integer.parseInt(request.getParameter("quantita"));
                 w = gestoreWishlist.addEntry(w, descrizione, quantita);
                 String gsonWishlist = buildGson(w);
