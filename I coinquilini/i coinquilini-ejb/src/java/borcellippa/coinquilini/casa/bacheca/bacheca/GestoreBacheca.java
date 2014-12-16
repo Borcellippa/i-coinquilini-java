@@ -57,9 +57,10 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         
         List<Post> list = b.getPosts();
         list.add(post);
-        
         // aggiorno la lista di post
         b.setPosts(list);
+        
+        bachecaFacade.edit(b);
         
         return post;
     }

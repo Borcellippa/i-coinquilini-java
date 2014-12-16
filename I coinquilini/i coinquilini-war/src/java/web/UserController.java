@@ -164,11 +164,13 @@ public class UserController extends HttpServlet {
             Cookie[] cookies = request.getCookies();
             boolean foundCookie = false;
             Cookie userCookie = null;
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("login")) {
-                    foundCookie = true;
-                    userCookie = cookie;
-                    break;
+            if(cookies != null){
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("login")) {
+                        foundCookie = true;
+                        userCookie = cookie;
+                        break;
+                    }
                 }
             }
             if (!foundCookie || (userCookie != null && userCookie.getValue().equals("nd"))) {
