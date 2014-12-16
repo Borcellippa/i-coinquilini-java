@@ -30,7 +30,7 @@
                         <div class="content">
                             <div>
                                 <label style="width: 195px">Entra in una casa esistente</label>
-                                <input id="nomeCasa" type="text" name="nomeCasa" placeholder="Inserisci il nome della casa" required class="form-control inputForm" onfocus="removeError()">
+                                <input id="nomeCasa" type="text" name="codiceCasa" placeholder="Inserisci il codice della casa" required class="form-control inputForm" onfocus="removeError()">
                             </div>
                         </div>
                         <div class="form-group"  style="margin-top: 15px;text-align: center">
@@ -55,6 +55,26 @@
                 </div>
             </div>
         </section>
+        <%  // Gestione della stampa in caso di inserimento di un codice casa inesistente
+            Gson gsonErrore = new Gson();
+            String erroreFromJson = (String) request.getAttribute("errore");
+            String errore = null;
+            if (erroreFromJson != null) {
+                String err = gsonErrore.fromJson(erroreFromJson, String.class);
+                if (err.equals("casa_assente")) {
+                    errore = "Il codice della casa è inesistente";
+                }
+                if (err.equals("utente_inquilino")) {
+                    errore = "Vivi già in una casa!";
+                }
+            }
+
+            if (errore != null) {
+        %>
+        <div class="alert alert-danger" role="alert"> <%=errore%> </div>
+
+        <%
+            }%>
     </div>
 </div>
 

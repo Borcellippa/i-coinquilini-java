@@ -42,7 +42,6 @@ public class GestoreCasa implements GestoreCasaLocal {
     public Casa getCasaByCodiceCasa(String codiceCasa) {
         System.out.println("###### getCasaByCodiceCasa ");
         Casa c = casaFacade.getCasaByCodiceCasa(codiceCasa);
-        System.out.println("###### return: " + c.getCodiceCasa());
         return c;
     }
     
@@ -74,6 +73,11 @@ public class GestoreCasa implements GestoreCasaLocal {
     @Override
     public Casa getCasaById(String idCasa) {
         return casaFacade.find(idCasa);
+    }
+
+    @Override
+    public void editCasa(Casa c) {
+        casaFacade.edit(c);
     }
 
 }

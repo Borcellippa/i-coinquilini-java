@@ -45,7 +45,6 @@ public class GestoreUtente implements GestoreUtenteLocal {
     @Override
     public void editUtente(Utente u) {
         utenteFacade.edit(u);
-
     }
 
     @Override

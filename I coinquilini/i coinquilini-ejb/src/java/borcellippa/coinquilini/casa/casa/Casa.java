@@ -51,6 +51,7 @@ public class Casa implements Serializable {
             utenti = new ArrayList<>();
             this.utenti.add(u.getId());
         }
+        this.postiOccupati++;
     }
     
     /**

@@ -60,6 +60,12 @@ public class UserController extends HttpServlet {
         RequestDispatcher rd;
         String action = request.getParameter("action");
 
+        if (session.getAttribute("email") == null) {
+            request.setAttribute("location", buildGson("home"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+            rd.forward(request, response);
+        }
+
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
@@ -99,14 +105,14 @@ public class UserController extends HttpServlet {
 
                 // session
                 response = this.initializeLogin(request, response, nome, email, u.getFoto_path());
-                
+
             } else {
                 request.setAttribute("errore", buildGson("utente_registrato"));
                 request.setAttribute("location", buildGson("home"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             }
 
-        } else if (action.equals("profilo_utente")) {
+        } else if (action.equals("bacheca")) {
             session = request.getSession();
             String email = (String) session.getAttribute("email");
             Utente user = gestoreUtente.getUtenteByEmail(email);
@@ -117,10 +123,15 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             } else {
                 Casa c = user.getCasa();
-                String gsonCasa = buildGson(c);
-                request.setAttribute("casa", gsonCasa);
-                request.setAttribute("location", buildGson("bacheca"));
-                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+                if (c != null) {
+                    String gsonCasa = buildGson(c);
+                    request.setAttribute("casa", gsonCasa);
+                    request.setAttribute("location", buildGson("bacheca"));
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+                } else {
+                    request.setAttribute("location", buildGson("entraCasa"));
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
+                }
             }
 
         } else if (action.equals("login")) {

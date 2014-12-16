@@ -5,7 +5,6 @@
  */
 package web;
 
-import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
@@ -51,6 +50,12 @@ public class CasaController extends HttpServlet {
         System.out.println("CasaController_action: " + action);
 
         HttpSession session = request.getSession();
+
+        if (session.getAttribute("email") == null) {
+            request.setAttribute("location", buildGson("home"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+            rd.forward(request, response);
+        }
 
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
@@ -103,10 +108,29 @@ public class CasaController extends HttpServlet {
         } else if (action.equals("entraInCasa")) {
             String codiceCasa = request.getParameter("codiceCasa");
             Casa c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
-            String gsonCasa = buildGson(c);
-            request.setAttribute("casa", gsonCasa);
-            request.setAttribute("location", buildGson("bacheca"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+            if (c != null) {
+                String email = (String) session.getAttribute("email");
+                Utente u = gestoreUtente.getUtenteByEmail(email);
+                if (u.getTipoUtente().equals("U")) {
+                    c.addInquilino(u);
+                    gestoreCasa.editCasa(c);
+                    u.setTipoUtente("I");
+                    u.setCasa(c);
+                    gestoreUtente.editUtente(u);
+                    String gsonCasa = buildGson(c);
+                    request.setAttribute("casa", gsonCasa);
+                    request.setAttribute("location", buildGson("bacheca"));
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+                } else {
+                    request.setAttribute("location", buildGson("entraCasa"));
+                    request.setAttribute("errore", buildGson("utente_inquilino"));
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
+                }
+            } else {
+                request.setAttribute("location", buildGson("entraCasa"));
+                request.setAttribute("errore", buildGson("casa_assente"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
+            }
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));

@@ -42,7 +42,7 @@
                                     <button id="modalLogin" type="submit" class="btn btn-primary btn-lg custom-button">
                                         Entra
                                     </button>
-                                    <input type="hidden" name="action" value="profilo_utente">
+                                    <input type="hidden" name="action" value="bacheca">
                                 </form>
                                 <% } else { %>
                                 <button type="button" class="btn btn-lg custom-button" data-toggle="modal" data-target="#loginModal">

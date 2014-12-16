@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import static utility.Utility.buildGson;
 
 /**
  *
@@ -46,6 +47,12 @@ public class AnnunciController extends HttpServlet {
         RequestDispatcher rd = null;
         String action = request.getParameter("action");
 
+        if(session.getAttribute("email") == null){
+            request.setAttribute("location", buildGson("home"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+            rd.forward(request, response);
+        }
+        
         if (action.equals("visualizza_annunci")) {
             // TODO
         }
