@@ -4,11 +4,11 @@
 <%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@include  file="../templates/topTemplateSideMenu.jsp" %>
 <%
-    Gson gsonBacheca = new Gson();
-    String bachecaFromJson = ((String) request.getAttribute("bacheca"));
-    System.out.println("###1 " + bachecaFromJson);
-    Bacheca b = gsonBacheca.fromJson(bachecaFromJson, Bacheca.class);
-    System.out.println("### Bacheca in bacheca.jsp "+b.toString());
+    Gson gsonCasa = new Gson();
+    String casaFromJson = ((String) request.getAttribute("casa"));
+    Casa casa = gsonCasa.fromJson(casaFromJson, Casa.class);
+    Bacheca b = casa.getBacheca();
+    System.out.println("### Bacheca in bacheca.jsp " + b.toString());
 %>
 
 <div class="container-fluid">
