@@ -19,7 +19,7 @@ public interface GestoreBachecaLocal {
 
     List<Post> getPosts(String casaId);
 
-    Post addPost(String email_autore, String contenuto, Long bacheca_id, String casa_id);
+    Post addPost(String email_autore, String contenuto, String casa_id);
 
     Bacheca getBacheca(String casa_id);
 

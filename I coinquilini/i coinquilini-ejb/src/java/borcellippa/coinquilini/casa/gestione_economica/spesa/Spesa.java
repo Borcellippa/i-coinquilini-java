@@ -25,8 +25,7 @@ public class Spesa implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String descrizione;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date data;
+    private String data;
     private float importo;
     private Boolean pagato;
 
@@ -73,7 +72,7 @@ public class Spesa implements Serializable {
      *
      * @return the value of data
      */
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
@@ -82,7 +81,7 @@ public class Spesa implements Serializable {
      *
      * @param data new value of data
      */
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

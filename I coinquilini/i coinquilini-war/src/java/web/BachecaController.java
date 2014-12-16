@@ -5,7 +5,6 @@
  */
 package web;
 
-import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.bacheca.bacheca.GestoreBachecaLocal;
 import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.CasaFacadeLocal;
@@ -65,14 +64,11 @@ public class BachecaController extends HttpServlet {
             session = request.getSession();
             String idCasa = (String) session.getAttribute("idCasa");
             System.out.println("### idCasa per post: "+idCasa);
-            Casa c = casaFacade.find(idCasa);
-            Bacheca b = c.getBacheca();
             gestoreBacheca.addPost(
                     (String)session.getAttribute("email"),
                     request.getParameter("contenuto"),
-                    b.getId(),
                     (String) session.getAttribute("idCasa"));
-
+            Casa c = casaFacade.find(idCasa);
             request.setAttribute("casa", buildGson(c));
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");

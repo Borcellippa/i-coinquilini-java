@@ -27,25 +27,6 @@ public class Bacheca implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private List<Post> posts;
-    private GruppoCase gruppo;
-
-    /**
-     * Get the value of gruppo
-     *
-     * @return the value of gruppo
-     */
-    public GruppoCase getGruppo() {
-        return gruppo;
-    }
-
-    /**
-     * Set the value of gruppo
-     *
-     * @param gruppo new value of gruppo
-     */
-    public void setGruppo(GruppoCase gruppo) {
-        this.gruppo = gruppo;
-    }
 
 
     /**

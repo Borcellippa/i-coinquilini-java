@@ -86,14 +86,20 @@ public class UserController extends HttpServlet {
 
                 gestoreUtente.addUtente(u);
                 user = gestoreUtente.getUtenteByEmail(email);
-                String gsonUser = buildGson(user);
-                request.setAttribute("utente", gsonUser);
-                request.setAttribute("location", buildGson("profilo"));
+                if (user.getTipoUtente().equals("U")) {
+                    request.setAttribute("location", buildGson("entraCasa"));
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
+                } else {
+                    Casa c = user.getCasa();
+                    String gsonCasa = buildGson(c);
+                    request.setAttribute("casa", gsonCasa);
+                    request.setAttribute("location", buildGson("bacheca"));
+                    rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+                }
 
                 // session
                 response = this.initializeLogin(request, response, nome, email, u.getFoto_path());
-
-                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
+                
             } else {
                 request.setAttribute("errore", buildGson("utente_registrato"));
                 request.setAttribute("location", buildGson("home"));
@@ -111,9 +117,8 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             } else {
                 Casa c = user.getCasa();
-                Bacheca b = c.getBacheca();
-                String gsonBacheca = buildGson(b);
-                request.setAttribute("bacheca", gsonBacheca);
+                String gsonCasa = buildGson(c);
+                request.setAttribute("casa", gsonCasa);
                 request.setAttribute("location", buildGson("bacheca"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
             }
@@ -135,10 +140,8 @@ public class UserController extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else { // l'utente è un inquilino quindi entra nella sua casa
                     Casa c = user.getCasa();
-                    Bacheca b = c.getBacheca();
-                    String gsonBacheca = buildGson(b);
-
-                    request.setAttribute("bacheca", gsonBacheca); // carico la pagina con tutte le informazioni della casa
+                    String gsonCasa = buildGson(c);
+                    request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
@@ -267,14 +270,13 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/completaSocial.jsp");
 
             } else {
-                request.setAttribute("location", buildGson("profilo"));
                 if (u.getTipoUtente().equals("U")) {
+                    request.setAttribute("location", buildGson("entraCasa"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
                     Casa c = u.getCasa();
-                    Bacheca b = c.getBacheca();
-                    String gsonBacheca = buildGson(b);
-                    request.setAttribute("bacheca", gsonBacheca);
+                    String gsonCasa = buildGson(c);
+                    request.setAttribute("casa", gsonCasa);
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
@@ -384,14 +386,13 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/completaSocial.jsp");
 
             } else {
-                request.setAttribute("location", buildGson("profilo"));
                 if (user.getTipoUtente().equals("U")) {
+                    request.setAttribute("location", buildGson("entraCasa"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
                     Casa c = user.getCasa();
-                    Bacheca b = c.getBacheca();
-                    String gsonBacheca = buildGson(b);
-                    request.setAttribute("bacheca", gsonBacheca);
+                    String gsonCasa = buildGson(c);
+                    request.setAttribute("casa", gsonCasa);
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }

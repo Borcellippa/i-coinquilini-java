@@ -25,7 +25,6 @@ public class Calendario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Casa casa;
     private List<Evento> eventi;
 
     /**
@@ -46,24 +45,6 @@ public class Calendario implements Serializable {
         this.eventi = eventi;
     }
 
-
-    /**
-     * Get the value of casa
-     *
-     * @return the value of casa
-     */
-    public Casa getCasa() {
-        return casa;
-    }
-
-    /**
-     * Set the value of casa
-     *
-     * @param casa new value of casa
-     */
-    public void setCasa(Casa casa) {
-        this.casa = casa;
-    }
 
     public Long getId() {
         return id;

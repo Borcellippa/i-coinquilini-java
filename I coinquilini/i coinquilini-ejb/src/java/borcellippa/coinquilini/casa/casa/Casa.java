@@ -40,7 +40,6 @@ public class Casa implements Serializable {
     private Calendario calendario;
     private List<Long> utenti;
     private Bacheca bacheca;
-    private GruppoCase gruppo;
     private Wishlist wishlist;
     private String codiceCasa;
     private String citta;
@@ -106,24 +105,6 @@ public class Casa implements Serializable {
      */
     public void setWishlist(Wishlist wishlist) {
         this.wishlist = wishlist;
-    }
-
-    /**
-     * Get the value of gruppo
-     *
-     * @return the value of gruppo
-     */
-    public GruppoCase getGruppo() {
-        return gruppo;
-    }
-
-    /**
-     * Set the value of gruppo
-     *
-     * @param gruppo new value of gruppo
-     */
-    public void setGruppo(GruppoCase gruppo) {
-        this.gruppo = gruppo;
     }
 
     /**

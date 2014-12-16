@@ -8,13 +8,13 @@
     String casaFromJson = ((String) request.getAttribute("casa"));
     Casa casa = gsonCasa.fromJson(casaFromJson, Casa.class);
     Bacheca b = casa.getBacheca();
-    System.out.println("### Bacheca in bacheca.jsp " + b.toString());
 %>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <h1>Scrivi il tuo primo post!</h1> 
+            <%= b.getPosts().get(0).getDataPubblicazione() %>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-3">

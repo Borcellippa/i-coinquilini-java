@@ -2,6 +2,18 @@ body{
     min-width: 1150px;
 }
 
+#header-central{
+    margin-top: 10px;
+    color: lightgray;
+    text-align: center;
+}
+
+#nome-casa-header{
+    font-weight: bold;
+    color: white;
+    margin-bottom: -6px;
+}
+
 .wishlist-entry .glyphicon{
     top: -7px;
 }

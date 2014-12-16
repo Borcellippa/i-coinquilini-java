@@ -70,7 +70,9 @@ public class CasaController extends HttpServlet {
                 c.setIndirizzo(request.getParameter("indirizzo"));
                 c.setNcivico(request.getParameter("civico"));
                 c.setCitta(request.getParameter("citta"));
-                c.setNomeCasa(request.getParameter("nome"));
+                String nomeCasa = request.getParameter("nome");
+                nomeCasa = Character.toUpperCase(nomeCasa.charAt(0)) + nomeCasa.substring(1);
+                c.setNomeCasa(nomeCasa);
                 c.setPostiTotali(Integer.parseInt(request.getParameter("postiTotali")));
                 c.addInquilino(u);
                 c.setPostiOccupati(1); // chi crea la casa occupa un posto
@@ -87,9 +89,8 @@ public class CasaController extends HttpServlet {
                 gestoreUtente.editUtente(u);
                 session.setAttribute("idCasa", c.getId());
 
-                Bacheca b = c.getBacheca();
-                String gsonBacheca = buildGson(b);
-                request.setAttribute("bacheca", gsonBacheca);
+                String gsonCasa = buildGson(c);
+                request.setAttribute("casa", gsonCasa);
                 request.setAttribute("location", buildGson("bacheca"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
             } else {
@@ -102,9 +103,8 @@ public class CasaController extends HttpServlet {
         } else if (action.equals("entraInCasa")) {
             String codiceCasa = request.getParameter("codiceCasa");
             Casa c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
-            Bacheca b = c.getBacheca();
-            String gsonBacheca = buildGson(b);
-            request.setAttribute("bacheca", gsonBacheca);
+            String gsonCasa = buildGson(c);
+            request.setAttribute("casa", gsonCasa);
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
         } else { // caso in cui non ci sia nessuna action da eseguire

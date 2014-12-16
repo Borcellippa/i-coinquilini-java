@@ -30,14 +30,14 @@ public class Post implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataPubblicazione;
     private Media media;
-    private Utente autore;
+    private Long autore;
 
     /**
      * Get the value of autore
      *
      * @return the value of autore
      */
-    public Utente getAutore() {
+    public Long getAutore() {
         return autore;
     }
 
@@ -46,7 +46,7 @@ public class Post implements Serializable {
      *
      * @param autore new value of autore
      */
-    public void setAutore(Utente autore) {
+    public void setAutore(Long autore) {
         this.autore = autore;
     }
 

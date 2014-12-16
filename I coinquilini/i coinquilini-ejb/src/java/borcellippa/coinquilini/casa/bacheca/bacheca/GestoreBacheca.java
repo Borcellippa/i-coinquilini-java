@@ -12,6 +12,7 @@ import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.CasaFacadeLocal;
 import borcellippa.coinquilini.utente.Utente;
 import borcellippa.coinquilini.utente.UtenteFacadeLocal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
@@ -33,7 +34,7 @@ public class GestoreBacheca implements GestoreBachecaLocal {
     @EJB
     private CasaFacadeLocal casaFacade;
     @EJB
-    private UtenteFacadeLocal inquilinoFacade;
+    private UtenteFacadeLocal utenteFacade;
     
     @Override
     public List<Post> getPosts(String casaId) {
@@ -44,11 +45,11 @@ public class GestoreBacheca implements GestoreBachecaLocal {
     }
 
     @Override
-    public Post addPost(String email_autore, String contenuto, Long bacheca_id, String casa_id) {
-        /*Casa c = casaFacade.find(casa_id);
+    public Post addPost(String email_autore, String contenuto, String casa_id) {
+        Casa c = casaFacade.find(casa_id);
         Post post = new Post();
-        Utente i = inquilinoFacade.getUtenteByEmail(email_autore);
-        post.setAutore(i);
+        Utente i = utenteFacade.getUtenteByEmail(email_autore);
+        post.setAutore(i.getId());
         post.setContenuto(contenuto);
         Bacheca b = c.getBacheca();
         Calendar cal = Calendar.getInstance();
@@ -56,14 +57,15 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         postFacade.create(post);
         
         List<Post> list = b.getPosts();
+        if(list == null)
+            list = new ArrayList<>();
         list.add(post);
         b.setPosts(list);
         
         bachecaFacade.edit(b);
         
         System.out.println("### "+list.get(0));
-        */
-        Post post = new Post();
+        
         return post;
     }
 

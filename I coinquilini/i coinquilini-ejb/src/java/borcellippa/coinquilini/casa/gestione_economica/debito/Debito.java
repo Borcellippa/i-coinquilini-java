@@ -24,15 +24,15 @@ public class Debito implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private float importo;
-    private Utente debitore;
-    private Utente creditore;
+    private Long debitore;
+    private Long creditore;
 
     /**
      * Get the value of creditore
      *
      * @return the value of creditore
      */
-    public Utente getCreditore() {
+    public Long getCreditore() {
         return creditore;
     }
 
@@ -41,7 +41,7 @@ public class Debito implements Serializable {
      *
      * @param creditore new value of creditore
      */
-    public void setCreditore(Utente creditore) {
+    public void setCreditore(Long creditore) {
         this.creditore = creditore;
     }
 
@@ -51,7 +51,7 @@ public class Debito implements Serializable {
      *
      * @return the value of debitore
      */
-    public Utente getDebitore() {
+    public Long getDebitore() {
         return debitore;
     }
 
@@ -60,7 +60,7 @@ public class Debito implements Serializable {
      *
      * @param debitore new value of debitore
      */
-    public void setDebitore(Utente debitore) {
+    public void setDebitore(Long debitore) {
         this.debitore = debitore;
     }
 

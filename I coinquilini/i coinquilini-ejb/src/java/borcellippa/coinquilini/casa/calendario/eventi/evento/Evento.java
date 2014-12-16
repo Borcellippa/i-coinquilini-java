@@ -33,31 +33,11 @@ public class Evento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dataInizio;
+    private String dataInizio;
     private String descrizione;
     private Boolean synced;
     private String colore;
     private String ricorrenza;
-    private Calendario calendario;
-
-    /**
-     * Get the value of calendario
-     *
-     * @return the value of calendario
-     */
-    public Calendario getCalendario() {
-        return calendario;
-    }
-
-    /**
-     * Set the value of calendario
-     *
-     * @param calendario new value of calendario
-     */
-    public void setCalendario(Calendario calendario) {
-        this.calendario = calendario;
-    }
 
 
     /**
@@ -140,7 +120,7 @@ public class Evento implements Serializable {
      *
      * @return the value of dataInizio
      */
-    public Date getDataInizio() {
+    public String getDataInizio() {
         return dataInizio;
     }
 
@@ -149,7 +129,7 @@ public class Evento implements Serializable {
      *
      * @param dataInizio new value of dataInizio
      */
-    public void setDataInizio(Date dataInizio) {
+    public void setDataInizio(String dataInizio) {
         this.dataInizio = dataInizio;
     }
 
