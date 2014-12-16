@@ -17,7 +17,7 @@
         <div class="container-fluid">
             <div class="row">
                 <%@include  file="header.jsp" %>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <%@include  file="sidemenu.jsp" %>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-9">
