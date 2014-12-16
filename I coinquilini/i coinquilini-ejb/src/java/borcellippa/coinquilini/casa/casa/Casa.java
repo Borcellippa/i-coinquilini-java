@@ -11,6 +11,7 @@ import borcellippa.coinquilini.casa.gruppocase.GruppoCase;
 import borcellippa.coinquilini.casa.wishlist.Wishlist;
 import borcellippa.coinquilini.utente.Utente;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,13 +38,22 @@ public class Casa implements Serializable {
     private String longitudine;
     private int inCasa;
     private Calendario calendario;
-    private List<Utente> utenti;
+    private List<Long> utenti;
     private Bacheca bacheca;
     private GruppoCase gruppo;
     private Wishlist wishlist;
     private String codiceCasa;
     private String citta;
 
+    public void addInquilino(Utente u){
+        if(utenti != null)
+            this.utenti.add(u.getId());
+        else{
+            utenti = new ArrayList<>();
+            this.utenti.add(u.getId());
+        }
+    }
+    
     /**
      * Get the value of codiceCasa
      *
@@ -139,7 +149,7 @@ public class Casa implements Serializable {
      *
      * @return the value of utenti
      */
-    public List<Utente> getUtenti() {
+    public List<Long> getUtenti() {
         return utenti;
     }
 
@@ -148,7 +158,7 @@ public class Casa implements Serializable {
      *
      * @param utenti new value of utenti
      */
-    public void setUtenti(List<Utente> utenti) {
+    public void setUtenti(List<Long> utenti) {
         this.utenti = utenti;
     }
 

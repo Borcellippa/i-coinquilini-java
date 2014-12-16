@@ -24,6 +24,7 @@ import static utility.Utility.buildGson;
  * @author Bortignon Gianluca
  */
 public class WishlistController extends HttpServlet {
+
     @EJB
     private GestoreCasaLocal gestoreCasa;
 
@@ -53,8 +54,8 @@ public class WishlistController extends HttpServlet {
             if (w != null) {
                 String gsonWishlist = buildGson(w);
                 request.setAttribute("wishlist", gsonWishlist);
+                request.setAttribute("casa", buildGson(c));
                 request.setAttribute("location", buildGson("wishlist"));
-
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
             } else {
                 request.setAttribute("errore", buildGson("Errore durante la creazione della wishlist"));

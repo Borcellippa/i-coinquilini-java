@@ -1,13 +1,29 @@
+<%@page import="borcellippa.coinquilini.casa.casa.Casa"%>
 <%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@page import="com.google.gson.Gson"%>
 <div class="top-navbar">
     <div class="col-md-8">
-        <a href="/WEB-INF/pages/home/home.jsp" style="color: white;text-decoration: none;">
-            <div class="col-md-2" style="margin-top: 2px;">
-                <img src="images/a.jpg" class="img-circle img-thumbnail" height="140px" width="140px">
-            </div> 
-            <h1 style="color: white">Roommates</h1>
-        </a>
+        <div class="col-md-9">
+            <a href="UserController?action=home" style="color: white;text-decoration: none;">
+                <div class="col-md-2" style="margin-top: 2px;">
+                    <img src="images/a.jpg" class="img-circle img-thumbnail" height="140px" width="140px">
+                </div> 
+                <h1 style="color: white">Roommates</h1>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <%
+                Gson gsonCasaHeader = new Gson();
+                String casaFromJsonHeader = ((String) request.getAttribute("casa"));
+                Casa casaHeader = gsonCasaHeader.fromJson(casaFromJsonHeader, Casa.class);
+                if (casaHeader != null) {
+            %>
+            <div>
+                <label><%= casaHeader.getNomeCasa()%></label>
+                <p><%= casaHeader.getCodiceCasa()%></p>
+            </div>
+            <% } %>
+        </div>
     </div>
     <div class="col-md-4">
         <div class="col-md-3"></div>
@@ -17,7 +33,7 @@
             if (nomeAccount != null) {
         %>
         <div class="col-md-4">
-            <img src="<%= url %>" class="img-thumbnail" id="userPicture" height="70px" width="70px" style="margin-top: 10px; float: right">
+            <img src="<%= url%>" class="img-thumbnail" id="userPicture" height="70px" width="70px" style="margin-top: 10px; float: right">
         </div>
         <div class="col-md-5" style="overflow-x: hidden">
             <p style="color: white; font-weight: bold; margin-top: 12px; font-size: large;">

@@ -40,7 +40,10 @@ public class GestoreCasa implements GestoreCasaLocal {
     
     @Override
     public Casa getCasaByCodiceCasa(String codiceCasa) {
-        return casaFacade.getCasaByCodiceCasa(codiceCasa);
+        System.out.println("###### getCasaByCodiceCasa ");
+        Casa c = casaFacade.getCasaByCodiceCasa(codiceCasa);
+        System.out.println("###### return: " + c.getCodiceCasa());
+        return c;
     }
     
 

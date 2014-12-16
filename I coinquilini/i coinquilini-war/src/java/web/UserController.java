@@ -164,11 +164,13 @@ public class UserController extends HttpServlet {
             Cookie[] cookies = request.getCookies();
             boolean foundCookie = false;
             Cookie userCookie = null;
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("login")) {
-                    foundCookie = true;
-                    userCookie = cookie;
-                    break;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("login")) {
+                        foundCookie = true;
+                        userCookie = cookie;
+                        break;
+                    }
                 }
             }
             if (!foundCookie || (userCookie != null && userCookie.getValue().equals("nd"))) {
@@ -179,11 +181,13 @@ public class UserController extends HttpServlet {
                     response = this.initializeLogin(request, response, u.getNome(), u.getEmail(), u.getFoto_path());
                     String gsonUser = buildGson(u);
                     request.setAttribute("utente", gsonUser);
-                    request.setAttribute("location", buildGson("profilo"));
                     if (u.getTipoUtente().equals("U")) {
                         rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                     } else {
-                        rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
+                        Casa c = u.getCasa();
+                        request.setAttribute("location", buildGson("bacheca"));
+                        request.setAttribute("casa", buildGson(c));
+                        rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                     }
                 } else {
                     /* Se il cookie è presente ma sbagliato lo si cancella */
@@ -449,11 +453,11 @@ public class UserController extends HttpServlet {
             } else {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
             }
-        
+
         } else if (action.equals("home")) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-        
+
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
@@ -510,8 +514,9 @@ public class UserController extends HttpServlet {
         session.setAttribute("url", url);
         Utente u = gestoreUtente.getUtenteByEmail(email);
         Casa c = u.getCasa();
-        if(c != null)
+        if (c != null) {
             session.setAttribute("idCasa", c.getId());
+        }
         String token = gestoreUserCookie.createUserCookie(email);
         Cookie cookie1 = new Cookie("login", token);
         cookie1.setMaxAge(365 * 24 * 60 * 60);

@@ -71,7 +71,8 @@ public class CasaController extends HttpServlet {
                 c.setCitta(request.getParameter("citta"));
                 c.setNomeCasa(request.getParameter("nome"));
                 c.setPostiTotali(Integer.parseInt(request.getParameter("postiTotali")));
-                c.setPostiOccupati(0); // i posti occupati sono attualmente zero
+                c.addInquilino(u);
+                c.setPostiOccupati(1); // chi crea la casa occupa un posto
 
                 String codiceCasa = gestoreCasa.addCasa(c);
 

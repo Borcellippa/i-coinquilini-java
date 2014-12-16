@@ -7,12 +7,10 @@ package web;
 
 import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.bacheca.bacheca.GestoreBachecaLocal;
-import borcellippa.coinquilini.casa.bacheca.post.Post;
 import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.CasaFacadeLocal;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
-import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
