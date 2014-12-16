@@ -7,12 +7,10 @@ package web;
 
 import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.bacheca.bacheca.GestoreBachecaLocal;
-import borcellippa.coinquilini.casa.bacheca.post.Post;
 import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.CasaFacadeLocal;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
-import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -66,12 +64,16 @@ public class BachecaController extends HttpServlet {
         } else if (action.equals("addPost")) {
             session = request.getSession();
             String idCasa = (String) session.getAttribute("idCasa");
+            System.out.println("### idCasa per post: "+idCasa);
             Casa c = casaFacade.find(idCasa);
             Bacheca b = c.getBacheca();
-            gestoreBacheca.addPost((String) session.getAttribute("email"), request.getParameter("contenuto"), b.getId(), (String) session.getAttribute("idCasa"));
+            gestoreBacheca.addPost(
+                    (String)session.getAttribute("email"),
+                    request.getParameter("contenuto"),
+                    b.getId(),
+                    (String) session.getAttribute("idCasa"));
 
-            String gsonCasa = buildGson(c);
-            request.setAttribute("casa", gsonCasa);
+            request.setAttribute("casa", buildGson(c));
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
         } else if (action.equals("getBacheca")) {

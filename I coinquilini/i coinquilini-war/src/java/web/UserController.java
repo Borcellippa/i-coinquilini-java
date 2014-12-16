@@ -1,13 +1,14 @@
 package web;
 
+import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.casa.Casa;
+import borcellippa.coinquilini.cookies.GestoreUserCookieLocal;
+import borcellippa.coinquilini.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.utente.Utente;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import borcellippa.coinquilini.cookies.GestoreUserCookieLocal;
-import borcellippa.coinquilini.utente.GestoreUtenteLocal;
-import borcellippa.coinquilini.utente.Utente;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -110,8 +111,9 @@ public class UserController extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             } else {
                 Casa c = user.getCasa();
-                String gsonCasa = buildGson(c);
-                request.setAttribute("casa", gsonCasa);
+                Bacheca b = c.getBacheca();
+                String gsonBacheca = buildGson(b);
+                request.setAttribute("bacheca", gsonBacheca);
                 request.setAttribute("location", buildGson("bacheca"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
             }
@@ -133,9 +135,10 @@ public class UserController extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else { // l'utente è un inquilino quindi entra nella sua casa
                     Casa c = user.getCasa();
-                    String gsonCasa = buildGson(c);
-                    request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
+                    Bacheca b = c.getBacheca();
+                    String gsonBacheca = buildGson(b);
 
+                    request.setAttribute("bacheca", gsonBacheca); // carico la pagina con tutte le informazioni della casa
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
@@ -164,7 +167,7 @@ public class UserController extends HttpServlet {
             Cookie[] cookies = request.getCookies();
             boolean foundCookie = false;
             Cookie userCookie = null;
-            if(cookies != null){
+            if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals("login")) {
                         foundCookie = true;
@@ -267,9 +270,9 @@ public class UserController extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
                     Casa c = u.getCasa();
-                    String gsonCasa = buildGson(c);
-                    request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
-
+                    Bacheca b = c.getBacheca();
+                    String gsonBacheca = buildGson(b);
+                    request.setAttribute("bacheca", gsonBacheca);
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
@@ -384,9 +387,9 @@ public class UserController extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
                     Casa c = user.getCasa();
-                    String gsonCasa = buildGson(c);
-                    request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
-
+                    Bacheca b = c.getBacheca();
+                    String gsonBacheca = buildGson(b);
+                    request.setAttribute("bacheca", gsonBacheca);
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
@@ -451,11 +454,11 @@ public class UserController extends HttpServlet {
             } else {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
             }
-        
+
         } else if (action.equals("home")) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-        
+
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
@@ -512,8 +515,9 @@ public class UserController extends HttpServlet {
         session.setAttribute("url", url);
         Utente u = gestoreUtente.getUtenteByEmail(email);
         Casa c = u.getCasa();
-        if(c != null)
+        if (c != null) {
             session.setAttribute("idCasa", c.getId());
+        }
         String token = gestoreUserCookie.createUserCookie(email);
         Cookie cookie1 = new Cookie("login", token);
         cookie1.setMaxAge(365 * 24 * 60 * 60);

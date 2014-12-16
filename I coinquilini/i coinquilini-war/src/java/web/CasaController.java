@@ -5,6 +5,7 @@
  */
 package web;
 
+import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
@@ -47,7 +48,7 @@ public class CasaController extends HttpServlet {
 
         RequestDispatcher rd;
         String action = request.getParameter("action");
-        System.out.println("CasaController_action: "+action);
+        System.out.println("CasaController_action: " + action);
 
         HttpSession session = request.getSession();
 
@@ -85,8 +86,9 @@ public class CasaController extends HttpServlet {
                 gestoreUtente.editUtente(u);
                 session.setAttribute("idCasa", c.getId());
 
-                String gsonCasa = buildGson(c);
-                request.setAttribute("casa", gsonCasa);
+                Bacheca b = c.getBacheca();
+                String gsonBacheca = buildGson(b);
+                request.setAttribute("bacheca", gsonBacheca);
                 request.setAttribute("location", buildGson("bacheca"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
             } else {
@@ -99,8 +101,9 @@ public class CasaController extends HttpServlet {
         } else if (action.equals("entraInCasa")) {
             String codiceCasa = request.getParameter("codiceCasa");
             Casa c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
-            session = request.getSession();
-            session.setAttribute("idCasa", c.getId());
+            Bacheca b = c.getBacheca();
+            String gsonBacheca = buildGson(b);
+            request.setAttribute("bacheca", gsonBacheca);
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
         } else { // caso in cui non ci sia nessuna action da eseguire
