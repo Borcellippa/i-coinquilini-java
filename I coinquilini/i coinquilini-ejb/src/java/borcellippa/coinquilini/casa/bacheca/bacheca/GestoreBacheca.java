@@ -45,7 +45,7 @@ public class GestoreBacheca implements GestoreBachecaLocal {
 
     @Override
     public Post addPost(String email_autore, String contenuto, Long bacheca_id, String casa_id) {
-        Casa c = casaFacade.find(casa_id);
+        /*Casa c = casaFacade.find(casa_id);
         Post post = new Post();
         Utente i = inquilinoFacade.getUtenteByEmail(email_autore);
         post.setAutore(i);
@@ -57,10 +57,13 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         
         List<Post> list = b.getPosts();
         list.add(post);
-        
-        // aggiorno la lista di post
         b.setPosts(list);
         
+        bachecaFacade.edit(b);
+        
+        System.out.println("### "+list.get(0));
+        */
+        Post post = new Post();
         return post;
     }
 

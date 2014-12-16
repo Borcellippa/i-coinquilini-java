@@ -6,7 +6,6 @@
 
 package borcellippa.coinquilini.casa.bacheca.post;
 
-import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.media.Media;
 import borcellippa.coinquilini.utente.Utente;
 import java.io.Serializable;
