@@ -30,14 +30,34 @@ public class Post implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataPubblicazione;
     private Media media;
-    private Long autore;
+    private String autore;
+    private String autore_img;
+
+    /**
+     * Get the value of autore_img
+     *
+     * @return the value of autore_img
+     */
+    public String getAutore_img() {
+        return autore_img;
+    }
+
+    /**
+     * Set the value of autore_img
+     *
+     * @param autore_img new value of autore_img
+     */
+    public void setAutore_img(String autore_img) {
+        this.autore_img = autore_img;
+    }
+
 
     /**
      * Get the value of autore
      *
      * @return the value of autore
      */
-    public Long getAutore() {
+    public String getAutore() {
         return autore;
     }
 
@@ -46,7 +66,7 @@ public class Post implements Serializable {
      *
      * @param autore new value of autore
      */
-    public void setAutore(Long autore) {
+    public void setAutore(String autore) {
         this.autore = autore;
     }
 

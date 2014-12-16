@@ -49,7 +49,8 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         Casa c = casaFacade.find(casa_id);
         Post post = new Post();
         Utente i = utenteFacade.getUtenteByEmail(email_autore);
-        post.setAutore(i.getId());
+        post.setAutore(i.getNome()+" "+i.getCognome());
+        post.setAutore_img(i.getFoto_path());
         post.setContenuto(contenuto);
         Bacheca b = c.getBacheca();
         Calendar cal = Calendar.getInstance();

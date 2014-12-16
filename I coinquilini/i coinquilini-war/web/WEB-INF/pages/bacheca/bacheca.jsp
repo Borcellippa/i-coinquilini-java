@@ -24,7 +24,7 @@
                     <div class="col-md-1" style="text-align:center;">
                         <div class="row">
                             <% String imageUrl = (String) session.getAttribute("url"); %>
-                            <img style="width:50px;" src="<%= imageUrl %>" alt="immagine profilo" class="img-circle">
+                            <img style="width:50px;" src="<%= imageUrl %>" alt="immagine profilo" class="img-thumbnail">
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10" style="margin-top:3%;">
-                    <textarea name="contenuto" class="form-control" rows="3" placeholder="Scrivi qui il tuo messaggio..."></textarea>
+                    <textarea style="resize:none;" name="contenuto" class="form-control" rows="3" placeholder="Scrivi qui il tuo messaggio..."></textarea>
                 </div>
                 <div class="col-md-1"></div>
             </div>
