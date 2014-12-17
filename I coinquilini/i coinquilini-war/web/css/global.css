@@ -2,6 +2,15 @@ body{
     min-width: 1150px;
 }
 
+.ticked{
+    cursor: auto !important;
+    background-color: gray;
+}
+
+.ticked .wishlistentry-label{
+    text-decoration: line-through;
+}
+
 .responsive-container {
     position: relative;
     width: 100%;

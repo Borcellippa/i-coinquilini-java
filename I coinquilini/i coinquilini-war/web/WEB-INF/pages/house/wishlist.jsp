@@ -32,11 +32,16 @@
                     <div id="result"></div>
                     <ul id="check-list-box" class="list-group checked-list-box wishlist-entry">
                         <% if (we != null) {
-                                for (WishlistEntry entry : we) {%>
-                        <li class="list-group-item <% if (entry.getDone()) {out.print("ticked");}%>" id="<%= entry.getId()%>" onclick="tickEntry(<%= entry.getId()%>);">
+                                for (WishlistEntry entry : we) {
+                                    if (!entry.getDone()) {%>
+                        <li class="list-group-item <% if (entry.getDone()) {
+                                out.print("ticked");
+                            }%>" id="<%= entry.getId()%>" onclick="tickEntry(<%= entry.getId()%>);">
                             <div class="uk-grid wishlist-li">
                                 <div class="uk-width-7-10 wishlist-li-left">
-                                    <%= entry.getDescrizione()%>
+                                    <label class="wishlistentry-label">
+                                        <%= entry.getDescrizione()%>
+                                    </label>
                                 </div>
                                 <div class="uk-width-2-10 wishlist-li-right">
                                     <div class="entry-container">
@@ -48,7 +53,8 @@
                                 </div>
                             </div>
                         </li>
-                        <%      }
+                        <%  }
+                            }
                         } else { %>
                         <p style="margin-bottom: 45px;"> Sembra che la lista della spesa sia vuota...Crea ora una nuova voce! </p>
                         <% }%>
@@ -105,7 +111,7 @@
 <script>
     var tickedEntries = new Array();
     var numTicked = 0;
-    
+
     function tickEntry(entry) {
         if ($("#" + entry + "").hasClass("active")) {
             numTicked--;
@@ -117,27 +123,31 @@
         }
         showButton();
     }
-    
+
     function showButton() {
         if (numTicked > 0)
             $("#acquistaEntries").removeClass("uk-hidden");
         else
             $("#acquistaEntries").addClass("uk-hidden");
     }
-    
+
     function sendTickedElements() {
-        
+
         $.post('WishlistController',
-                {action: "acquista_entries",entries: JSON.stringify(tickedEntries)},
-                function(data) {
-                    console.log(data);
-                    $("#result").html("Modifica effettuata con successo!");
-                    $("#result").addClass("alert alert-success");
-                    tickedEntries.forEach(function(entry) {
-                        if (entry != null)
-                            $("#" + entry).addClass("ticked");
-                    })
+                {action: "acquista_entries", entries: JSON.stringify(tickedEntries)},
+        function(data) {
+            console.log(data);
+            $("#result").html("Modifica effettuata con successo!");
+            $("#result").addClass("alert alert-success");
+            tickedEntries.forEach(function(entry) {
+                if (entry != null){
+                    $("#" + entry).addClass("ticked");
+                    $("#" + entry).removeClass("active");
+                    $("#acquistaEntries").addClass("uk-hidden");
+                    $("#" + entry).removeClass("list-group-item-primary");
                 }
+            })
+        }
         );
     }
 </script>
