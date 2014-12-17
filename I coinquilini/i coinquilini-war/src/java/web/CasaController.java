@@ -10,6 +10,8 @@ import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
 import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -50,12 +52,6 @@ public class CasaController extends HttpServlet {
         System.out.println("CasaController_action: " + action);
 
         HttpSession session = request.getSession();
-
-        if (session.getAttribute("email") == null) {
-            request.setAttribute("location", buildGson("home"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-            rd.forward(request, response);
-        }
 
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
@@ -131,6 +127,30 @@ public class CasaController extends HttpServlet {
                 request.setAttribute("errore", buildGson("casa_assente"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             }
+        } else if (action.equals("profilo_casa")) {
+            session = request.getSession();
+            String idCasa = (String) session.getAttribute("idCasa"); // carico l'id della casa
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            String gsonCasa = buildGson(c);
+            request.setAttribute("casa", gsonCasa);
+            request.setAttribute("location", buildGson("profilo_casa"));
+
+            // carico le info sugli utenti in modo da stamparli tra le informazioni
+            List<Long> listUtentiId = c.getUtenti();
+
+            List<Utente> listUtenti = new LinkedList();
+            for (Long ut : listUtentiId) {
+                Utente u = gestoreUtente.getUtenteById(ut);
+                if (u != null) {
+                    listUtenti.add(u);
+                }
+            }
+
+            String gsonCoinqulini = buildGson(listUtenti);
+            request.setAttribute("coinquilini", gsonCoinqulini);
+
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/profilo_casa.jsp");
+
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));

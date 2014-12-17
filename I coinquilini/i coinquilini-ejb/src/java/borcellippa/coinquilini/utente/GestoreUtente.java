@@ -57,7 +57,13 @@ public class GestoreUtente implements GestoreUtenteLocal {
     public Utente getUtenteByEmail(String email) {
         return utenteFacade.getUtenteByEmail(email);
     }
+    
+        @Override
+    public Utente getUtenteById(Long id) {
+        return utenteFacade.find(id);
+    }
 
+    
     /**
      * Funzione che effettua l'hash della password
      *
@@ -91,5 +97,7 @@ public class GestoreUtente implements GestoreUtenteLocal {
         }
         return null;
     }
+
+
 
 }
