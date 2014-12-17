@@ -12,7 +12,6 @@
 
 
 <div class="container" id="sidemenu">
-    <div class="row">
         <div class="col-sm-3 col-md-3">
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
@@ -36,13 +35,13 @@
                                         <span class="badge">42</span>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <tr class="<% if (location.equals("profilo_casa")) out.print("active"); %>">
+                                <tr class="<% if (location.equals("profilo_casa")) out.print("active"); %>">
+                                    <td>
                                         <span class="glyphicon glyphicon-pencil"></span><a href=#Profilo_casa">Profilo casa</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <tr class="<% if (location.equals("wishlist")) out.print("active"); %>">
+                                <tr class="<% if (location.equals("wishlist")) out.print("active"); %>">
+                                    <td>
                                         <span class="glyphicon glyphicon-list-alt text-primary"></span><a href="WishlistController?action=getWishlist">Lista della spesa</a>
                                     </td>
                                 </tr>
@@ -93,7 +92,10 @@
                             </h4>
                         </a>
                     </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
+                    <div id="collapseThree" class="panel-collapse collapse
+                         <% if (location.equals("debiti") || location.equals("borsellino")) {
+                                 out.print("in");
+                             }%>">
                         <div class="panel-body">
                             <table class="table">
                                 <tr class="<% if (location.equals("debiti")) out.print("active"); %>">
@@ -119,12 +121,15 @@
                             </h4>
                         </a>
                     </div>
-                    <div id="collapseFour" class="panel-collapse collapse">
+                    <div id="collapseFour" class="panel-collapse collapse
+                         <% if (location.equals("profilo_utente")) {
+                                 out.print("in");
+                             }%>">
                         <div class="panel-body">
                             <table class="table">
                                 <tr class="<% if (location.equals("profilo_utente")) out.print("active"); %>">
                                     <td>
-                                        <span class="glyphicon glyphicon-cog"></span><a href="profilo_utente.jsp">Il mio profilo</a>
+                                        <span class="glyphicon glyphicon-cog"></span><a href="UserController?action=profilo_utente">Il mio profilo</a>
                                     </td>
                                 </tr>
                             </table>
@@ -133,5 +138,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>

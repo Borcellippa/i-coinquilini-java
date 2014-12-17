@@ -2,28 +2,26 @@
 <%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@page import="com.google.gson.Gson"%>
 <div class="top-navbar">
-    <div class="col-md-8">
-        <div class="col-md-9">
-            <a href="UserController?action=home" style="color: white;text-decoration: none;">
-                <div class="col-md-3" style="margin-top: 2px;">
-                    <img src="images/a.jpg" class="img-circle img-thumbnail" height="140px" width="140px">
-                </div> 
-                <h1 style="color: white">Roommates</h1>
-            </a>
+    <div class="col-md-4">
+        <a href="UserController?action=home" style="color: white;text-decoration: none;">
+            <div class="col-md-3" style="margin-top: 2px;">
+                <img src="images/a.jpg" class="img-circle img-thumbnail" height="140px" width="140px">
+            </div> 
+            <h1 style="color: white">Roommates</h1>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <%
+            Gson gsonCasaHeader = new Gson();
+            String casaFromJsonHeader = ((String) request.getAttribute("casa"));
+            Casa casaHeader = gsonCasaHeader.fromJson(casaFromJsonHeader, Casa.class);
+            if (casaHeader != null) {
+        %>
+        <div id="header-central">
+            <h2 id="nome-casa-header"><%= casaHeader.getNomeCasa()%></h2>
+            <p id="codice-casa-header">Cod: <%= casaHeader.getCodiceCasa()%></p>
         </div>
-        <div class="col-md-3">
-            <%
-                Gson gsonCasaHeader = new Gson();
-                String casaFromJsonHeader = ((String) request.getAttribute("casa"));
-                Casa casaHeader = gsonCasaHeader.fromJson(casaFromJsonHeader, Casa.class);
-                if (casaHeader != null) {
-            %>
-            <div id="header-central">
-                <h2 id="nome-casa-header"><%= casaHeader.getNomeCasa()%></h2>
-                <p id="codice-casa-header">Cod: <%= casaHeader.getCodiceCasa()%></p>
-            </div>
-            <% } %>
-        </div>
+        <% } %>
     </div>
     <div class="col-md-4">
         <div class="col-md-3"></div>

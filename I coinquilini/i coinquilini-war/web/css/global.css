@@ -3,6 +3,14 @@ body{
 }
 
 
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
 .sidebar-panel a{
     text-decoration: none;
     color: black;
@@ -12,7 +20,9 @@ body{
     color: #3572b0;
 }
 
-
+#codice-casa-header{
+    margin-top: 5px;
+}
 
 .glyphicon { margin-right:10px; }
 .panel-body { padding:0px; }
