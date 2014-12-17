@@ -9,9 +9,11 @@
 <%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@include  file="../templates/topTemplateSideMenu.jsp" %>
 <script src="js/wishlist.js"></script>
-<%  Gson gsonUtente = new Gson();
-    String wFromJson = ((String) request.getAttribute("wishlist"));
-    Wishlist w = gsonUtente.fromJson(wFromJson, Wishlist.class);
+<%  Gson gsonCasa2 = new Gson();
+    String casaFromJson2 = ((String) request.getAttribute("casa"));
+    Casa c2 = gsonCasa2.fromJson(casaFromJson2, Casa.class);
+    Wishlist w = c2.getWishlist();
+
     List<WishlistEntry> we = w.getEntries();
 %>
 

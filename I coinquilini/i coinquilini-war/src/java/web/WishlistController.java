@@ -59,11 +59,9 @@ public class WishlistController extends HttpServlet {
             //Recupero i dati della wishlist da DB
             String idCasa = (String) session.getAttribute("idCasa");
             Casa c = gestoreCasa.getCasaById(idCasa);
-            Wishlist w = c.getWishlist();
+            
+            if (c != null) {
 
-            if (w != null) {
-                String gsonWishlist = buildGson(w);
-                request.setAttribute("wishlist", gsonWishlist);
                 request.setAttribute("casa", buildGson(c));
                 request.setAttribute("location", buildGson("wishlist"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
@@ -109,9 +107,10 @@ public class WishlistController extends HttpServlet {
                 descrizione = Character.toUpperCase(descrizione.charAt(0)) + descrizione.substring(1);
                 int quantita = Integer.parseInt(request.getParameter("quantita"));
                 w = gestoreWishlist.addEntry(w, descrizione, quantita);
-                String gsonWishlist = buildGson(w);
-                request.setAttribute("wishlist", gsonWishlist);
-                request.setAttribute("location", buildGson("wishlist"));
+                c = gestoreCasa.getCasaById(idCasa);
+                String gsonCasa = buildGson(c);
+                request.setAttribute("casa", gsonCasa);
+                request.setAttribute("location", buildGson("casa"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
             } else {
                 request.setAttribute("errore", buildGson("Errore durante la creazione della wishlist"));
@@ -125,8 +124,9 @@ public class WishlistController extends HttpServlet {
             if (w != null) {
                 Long idEntry = Long.parseLong(request.getParameter("EID"));
                 w = gestoreWishlist.deleteEntry(w, idEntry);
-                String gsonWishlist = buildGson(w);
-                request.setAttribute("wishlist", gsonWishlist);
+                c = gestoreCasa.getCasaById(idCasa);
+                String gsonCasa = buildGson(c);
+                request.setAttribute("casa", gsonCasa);
                 request.setAttribute("location", buildGson("wishlist"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
             } else {

@@ -5,13 +5,13 @@
     Gson gsonLocation = new Gson();
     String location = "";
     if (request.getAttribute("location") != null) {
-        String loc = request.getAttribute("location").toString();
+        String loc = (String)request.getAttribute("location");
         location = gsonLocation.fromJson(loc, String.class);
     }
     
     Utente u = new Utente();
     if (request.getAttribute("utente") != null) {
-        String ut = request.getAttribute("utente").toString();
+        String ut = (String)request.getAttribute("utente");
         u = gsonLocation.fromJson(ut, Utente.class);
     }
 %>
