@@ -9,8 +9,13 @@ import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.casa.wishlist.GestoreWishlistLocal;
 import borcellippa.coinquilini.casa.wishlist.Wishlist;
+import borcellippa.coinquilini.casa.wishlist.wishlistentry.GestoreWishlistEntryLocal;
+import borcellippa.coinquilini.casa.wishlist.wishlistentry.WishlistEntry;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,6 +30,9 @@ import static utility.Utility.*;
  * @author Bortignon Gianluca
  */
 public class WishlistController extends HttpServlet {
+
+    @EJB
+    private GestoreWishlistEntryLocal gestoreWishlistEntry;
 
     @EJB
     private GestoreCasaLocal gestoreCasa;
@@ -64,6 +72,34 @@ public class WishlistController extends HttpServlet {
                 request.setAttribute("location", buildGson("home"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             }
+        } else if (action.equals("acquista_entries")) {
+            String entriesJson = request.getParameter("entries");
+            Type type = new TypeToken<Long[]>(){}.getType();
+            Long[] entriesIDs = new Gson().fromJson(entriesJson, type);
+            
+            for (Long entryID : entriesIDs) {
+                if (entryID != null) {
+                    WishlistEntry we = gestoreWishlistEntry.getWishlistEntry(entryID);
+                    we.setDone(true);
+                    gestoreWishlistEntry.edit(we);
+                }
+            }
+            
+            int totale = Integer.parseInt(request.getParameter("totale"));
+            System.out.println("***************** TOTALE: "+totale);
+            
+            /**************** TODO ****************/
+            /** ADD BUSINESS LOGIC PER BORSELLINO */
+            /**************************************/
+            
+            
+            /* Tanto la richiesta è ajax, non tornerà mai */
+            rd = null;
+            response.setContentType("text/plain");  // Set content type of the response so that            jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write("OK");
+            return;
+
         } else if (action.equals("creaEntryWishlist")) {
             String idCasa = (String) session.getAttribute("idCasa");
             Casa c = gestoreCasa.getCasaById(idCasa);

@@ -44,16 +44,23 @@ public class Casa implements Serializable {
     private String codiceCasa;
     private String citta;
 
-    public void addInquilino(Utente u){
-        if(utenti != null)
+    public void addInquilino(Utente u) {
+        if (utenti != null) {
             this.utenti.add(u.getId());
-        else{
+        } else {
             utenti = new ArrayList<>();
             this.utenti.add(u.getId());
         }
         this.postiOccupati++;
     }
-    
+
+    public void removeInquilino(Utente u) {
+        if (utenti != null) {
+            this.utenti.remove(u.getId());
+            this.postiOccupati--;
+        }
+    }
+
     /**
      * Get the value of codiceCasa
      *

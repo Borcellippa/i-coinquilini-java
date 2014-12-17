@@ -27,37 +27,49 @@
             </p>
         </strong>
         <div class="container" style="margin-top:20px;">
-            <div class="row">
-                <div class="col-xs-6">
-                    <div class="well">
-                        <ul id="check-list-box" class="list-group checked-list-box wishlist-entry">
-                            <% if (we != null) {
-                                    for (WishlistEntry entry : we) {%>
-                            <li class="list-group-item">
-                                <div class="uk-grid wishlist-li">
-                                    <div class="uk-width-7-10 wishlist-li-left">
+            <div class="col-xs-6">
+                <div class="well">
+                    <div id="result"></div>
+                    <ul id="check-list-box" class="list-group checked-list-box wishlist-entry">
+                        <% if (we != null) {
+                                for (WishlistEntry entry : we) {
+                                    if (!entry.getDone()) {%>
+                        <li class="list-group-item <% if (entry.getDone()) {
+                                out.print("ticked");
+                            }%>" id="<%= entry.getId()%>" onclick="tickEntry(<%= entry.getId()%>);">
+                            <div class="uk-grid wishlist-li">
+                                <div class="uk-width-6-10 wishlist-li-left">
+                                    <label class="wishlistentry-label">
                                         <%= entry.getDescrizione()%>
-                                    </div>
-                                    <div class="uk-width-2-10 wishlist-li-right">
-                                        <div class="entry-container">
-                                            <label class="wishlist-entry-label"><%= entry.getQuantita()%></label>
-                                        </div>
-                                    </div>
-                                    <div class="uk-width-1-10 wishlist-li-left">
-                                        <a href="WishlistController?action=deleteEntry&EID=<%= entry.getId()%>" style="color: black;float: right" data-uk-tooltip title="Elimina voce"><i class="uk-icon-times"></i></a>
+                                    </label>
+                                </div>
+                                <div class="uk-width-2-10 wishlist-li-right">
+                                    <div class="entry-container">
+                                        <label class="wishlist-entry-label"><%= entry.getQuantita()%></label>
                                     </div>
                                 </div>
-                            </li>
-                            <%      }
-                            } else { %>
-                            <p style="margin-bottom: 45px;"> Sembra che la lista della spesa sia vuota...Crea ora una nuova voce! </p>
-                            <% }%>
-                        </ul>
+                                <div class="uk-width-1-10 wishlist-li-left delete" style="float:right">
+                                    <a href="WishlistController?action=deleteEntry&EID=<%= entry.getId()%>" style="color: black;float: right" data-uk-tooltip title="Elimina voce"><i class="uk-icon-times"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                        <%  }
+                            }
+                        } else { %>
+                        <p style="margin-bottom: 45px;"> Sembra che la lista della spesa sia vuota...Crea ora una nuova voce! </p>
+                        <% }%>
+                        <li class="uk-hidden" id="prezzo-totale" style="text-align: right;list-style-type: none;">
+                            <input type="number" class="form-control input-prezzo-totale" id="prezzo-totale-input" placeholder="Prezzo totale di quanto speso" style="margin-right: 5%">
+                        </li>
+                    </ul>
 
-                        <button type="button" class="btn btn-lg custom-button" data-toggle="modal" data-target="#wishlistEntryModal">
-                            Crea nuova voce
-                        </button>
-                    </div>
+                    <button type="button" class="btn btn-lg custom-button" data-toggle="modal" data-target="#wishlistEntryModal">
+                        Crea nuova voce
+                    </button>
+
+                    <button type="button" id="acquistaEntries" class="btn btn-lg custom-button uk-hidden" onclick="sendTickedElements();">
+                        Marca come acquistati
+                    </button>
                 </div>
             </div>
         </div>
@@ -97,3 +109,58 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+<script>
+    var tickedEntries = new Array();
+    var numTicked = 0;
+
+    function tickEntry(entry) {
+        if ($("#" + entry + "").hasClass("active")) {
+            numTicked--;
+            tickedEntries[entry] = null;
+            
+        }
+        else {
+            numTicked++;
+            tickedEntries[entry] = entry;
+            
+        }
+        showButton();
+    }
+
+    function showButton() {
+        if (numTicked > 0){
+            $("#acquistaEntries").removeClass("uk-hidden");
+            $("#prezzo-totale").removeClass("uk-hidden");
+        }
+        else{
+            $("#acquistaEntries").addClass("uk-hidden");
+            $("#prezzo-totale").addClass("uk-hidden");
+        }
+    }
+
+    function sendTickedElements() {
+        var totale = $("#prezzo-totale-input").val();
+        console.log(totale);
+        $.post('WishlistController',
+                {action: "acquista_entries",
+                 entries: JSON.stringify(tickedEntries),
+                 totale: totale},
+        function(data) {
+            console.log(data);
+            $("#result").html("Modifica effettuata con successo!");
+            $("#result").addClass("alert alert-success");
+            tickedEntries.forEach(function(entry) {
+                if (entry != null) {
+                    $("#" + entry).addClass("ticked");
+                    $("#" + entry).removeClass("active");
+                    $("#acquistaEntries").addClass("uk-hidden");
+                    $("#" + entry).removeClass("list-group-item-primary");
+                    $("#prezzo-totale").addClass("uk-hidden");
+                }
+            })
+        }
+        );
+    }
+</script>

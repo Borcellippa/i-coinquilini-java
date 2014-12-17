@@ -21,5 +21,9 @@ public interface GestoreWishlistEntryLocal {
     WishlistEntry getEntry(Long entryID);
 
     void deleteEntry(Long idEntry);
+
+    WishlistEntry getWishlistEntry(Long id);
+
+    void edit(WishlistEntry w);
     
 }

@@ -2,6 +2,55 @@ body{
     min-width: 1150px;
 }
 
+.input-prezzo-totale{
+    background: url(../images/euro.png) no-repeat scroll 7px 7px;
+    padding-left:40px;
+    background-color: white !important;
+}
+
+.ticked{
+    cursor: auto !important;
+    background-color: gray;
+}
+
+.ticked .wishlistentry-label{
+    text-decoration: line-through;
+}
+
+.responsive-container {
+    position: relative;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.dummy {
+    padding-top: 100%; /* forces 1:1 aspect ratio */
+}
+
+.img-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    text-align:center; /* Align center inline elements */
+    font: 0/0 a;
+}
+
+.img-container:before {
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.img-container img {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+
 .sidebar-panel a{
     text-decoration: none;
     color: black;
@@ -9,6 +58,12 @@ body{
 
 .sidebar-panel a:hover{
     color: #3572b0;
+}
+
+#scroolUtenti{
+    overflow-x: hidden; 
+    overflow-y: scroll; 
+    height: 400px;
 }
 
 #codice-casa-header{
