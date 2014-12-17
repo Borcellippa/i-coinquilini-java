@@ -20,7 +20,9 @@ body{
     color: #3572b0;
 }
 
-
+#codice-casa-header{
+    margin-top: 5px;
+}
 
 .glyphicon { margin-right:10px; }
 .panel-body { padding:0px; }
