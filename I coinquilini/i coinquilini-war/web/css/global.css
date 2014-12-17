@@ -2,6 +2,12 @@ body{
     min-width: 1150px;
 }
 
+.input-prezzo-totale{
+    background: url(../images/euro.png) no-repeat scroll 7px 7px;
+    padding-left:40px;
+    background-color: white !important;
+}
+
 .ticked{
     cursor: auto !important;
     background-color: gray;

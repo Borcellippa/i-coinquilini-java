@@ -38,7 +38,7 @@
                                 out.print("ticked");
                             }%>" id="<%= entry.getId()%>" onclick="tickEntry(<%= entry.getId()%>);">
                             <div class="uk-grid wishlist-li">
-                                <div class="uk-width-7-10 wishlist-li-left">
+                                <div class="uk-width-6-10 wishlist-li-left">
                                     <label class="wishlistentry-label">
                                         <%= entry.getDescrizione()%>
                                     </label>
@@ -48,7 +48,7 @@
                                         <label class="wishlist-entry-label"><%= entry.getQuantita()%></label>
                                     </div>
                                 </div>
-                                <div class="uk-width-1-10 wishlist-li-left">
+                                <div class="uk-width-1-10 wishlist-li-left delete" style="float:right">
                                     <a href="WishlistController?action=deleteEntry&EID=<%= entry.getId()%>" style="color: black;float: right" data-uk-tooltip title="Elimina voce"><i class="uk-icon-times"></i></a>
                                 </div>
                             </div>
@@ -58,6 +58,9 @@
                         } else { %>
                         <p style="margin-bottom: 45px;"> Sembra che la lista della spesa sia vuota...Crea ora una nuova voce! </p>
                         <% }%>
+                        <li class="uk-hidden" id="prezzo-totale" style="text-align: right;list-style-type: none;">
+                            <input type="number" class="form-control input-prezzo-totale" placeholder="Prezzo totale di quanto speso" style="margin-right: 5%">
+                        </li>
                     </ul>
 
                     <button type="button" class="btn btn-lg custom-button" data-toggle="modal" data-target="#wishlistEntryModal">
@@ -116,35 +119,44 @@
         if ($("#" + entry + "").hasClass("active")) {
             numTicked--;
             tickedEntries[entry] = null;
+            
         }
         else {
             numTicked++;
             tickedEntries[entry] = entry;
+            
         }
         showButton();
     }
 
     function showButton() {
-        if (numTicked > 0)
+        if (numTicked > 0){
             $("#acquistaEntries").removeClass("uk-hidden");
-        else
+            $("#prezzo-totale").removeClass("uk-hidden");
+        }
+        else{
             $("#acquistaEntries").addClass("uk-hidden");
+            $("#prezzo-totale").addClass("uk-hidden");
+        }
     }
 
     function sendTickedElements() {
-
+        var totale = $("#prezzo-totale").val();
         $.post('WishlistController',
-                {action: "acquista_entries", entries: JSON.stringify(tickedEntries)},
+                {action: "acquista_entries",
+                 entries: JSON.stringify(tickedEntries),
+                 totale: totale},
         function(data) {
             console.log(data);
             $("#result").html("Modifica effettuata con successo!");
             $("#result").addClass("alert alert-success");
             tickedEntries.forEach(function(entry) {
-                if (entry != null){
+                if (entry != null) {
                     $("#" + entry).addClass("ticked");
                     $("#" + entry).removeClass("active");
                     $("#acquistaEntries").addClass("uk-hidden");
                     $("#" + entry).removeClass("list-group-item-primary");
+                    $("#prezzo-totale").addClass("uk-hidden");
                 }
             })
         }
