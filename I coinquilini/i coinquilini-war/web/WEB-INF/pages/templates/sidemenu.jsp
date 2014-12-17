@@ -37,7 +37,7 @@
                                 </tr>
                                 <tr class="<% if (location.equals("profilo_casa")) out.print("active"); %>">
                                     <td>
-                                        <span class="glyphicon glyphicon-pencil"></span><a href=#Profilo_casa">Profilo casa</a>
+                                        <span class="glyphicon glyphicon-pencil"></span><a href="CasaController?action=profilo_casa">Profilo casa</a>
                                     </td>
                                 </tr>
                                 <tr class="<% if (location.equals("wishlist")) out.print("active"); %>">
