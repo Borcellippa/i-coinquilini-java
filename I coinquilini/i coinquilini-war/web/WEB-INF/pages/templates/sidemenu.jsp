@@ -129,7 +129,7 @@
                             <table class="table">
                                 <tr class="<% if (location.equals("profilo_utente")) out.print("active"); %>">
                                     <td>
-                                        <span class="glyphicon glyphicon-cog"></span><a href="profilo_utente.jsp">Il mio profilo</a>
+                                        <span class="glyphicon glyphicon-cog"></span><a href="UserController?action=profilo_utente">Il mio profilo</a>
                                     </td>
                                 </tr>
                             </table>

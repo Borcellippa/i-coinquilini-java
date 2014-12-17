@@ -434,7 +434,7 @@ public class UserController extends HttpServlet {
             Utente u = gestoreUtente.getUtenteByEmail(email);
             String gsonUser = buildGson(u);
             request.setAttribute("utente", gsonUser);
-            request.setAttribute("location", buildGson("profilo"));
+            request.setAttribute("location", buildGson("profilo_utente"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
                     
         } else if (action.equals("editUtente")) {
