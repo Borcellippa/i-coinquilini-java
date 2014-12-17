@@ -11,7 +11,6 @@ import borcellippa.coinquilini.utente.GestoreUtenteLocal;
 import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -102,6 +101,39 @@ public class CasaController extends HttpServlet {
 
             }
 
+        } else if (action.equals("editCasa")) {
+            // carico la casa da modificare
+            session = request.getSession();
+            String idCasa = (String) session.getAttribute("idCasa"); // carico l'id della casa
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            // modifico i valori
+            c.setIndirizzo(request.getParameter("indirizzo"));
+            c.setNcivico(request.getParameter("civico"));
+            c.setCitta(request.getParameter("citta"));
+            String nomeCasa = request.getParameter("nome");
+            nomeCasa = Character.toUpperCase(nomeCasa.charAt(0)) + nomeCasa.substring(1);
+            c.setNomeCasa(nomeCasa);
+            gestoreCasa.editCasa(c);
+
+            String gsonCasa = buildGson(c);
+            request.setAttribute("casa", gsonCasa);
+            request.setAttribute("location", buildGson("profilo_casa"));
+
+            // carico le info sugli utenti in modo da stamparli tra le informazioni
+            List<Long> listUtentiId = c.getUtenti();
+
+            ArrayList<Utente> listUtenti = new ArrayList();
+            for (Long ut : listUtentiId) {
+                Utente u = gestoreUtente.getUtenteById(ut);
+                if (u != null) {
+                    listUtenti.add(u);
+                }
+            }
+            String gsonCoinqulini = buildGson(listUtenti);
+            request.setAttribute("coinquilini", gsonCoinqulini);
+
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/profilo_casa.jsp");
+
         } else if (action.equals("entraInCasa")) {
             String codiceCasa = request.getParameter("codiceCasa");
             Casa c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
@@ -110,6 +142,7 @@ public class CasaController extends HttpServlet {
                 Utente u = gestoreUtente.getUtenteByEmail(email);
                 if (u.getTipoUtente().equals("U")) {
                     c.addInquilino(u);
+                    session.setAttribute("idCasa", c.getId());
                     gestoreCasa.editCasa(c);
                     u.setTipoUtente("I");
                     u.setCasa(c);
@@ -128,6 +161,22 @@ public class CasaController extends HttpServlet {
                 request.setAttribute("errore", buildGson("casa_assente"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             }
+
+        } else if (action.equals("abbandonaCasa")) {
+            String email = (String) session.getAttribute("email");
+            Utente u = gestoreUtente.getUtenteByEmail(email);
+            Casa c = u.getCasa();
+
+            u.setTipoUtente("U");
+            u.setCasa(null);
+            gestoreUtente.editUtente(u);
+
+            c.removeInquilino(u);
+            gestoreCasa.editCasa(c);
+
+            request.setAttribute("location", buildGson("home"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+
         } else if (action.equals("profilo_casa")) {
             session = request.getSession();
             String idCasa = (String) session.getAttribute("idCasa"); // carico l'id della casa
