@@ -1,6 +1,5 @@
 package web;
 
-import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.cookies.GestoreUserCookieLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;

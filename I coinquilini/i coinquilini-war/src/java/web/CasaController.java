@@ -131,6 +131,15 @@ public class CasaController extends HttpServlet {
                 request.setAttribute("errore", buildGson("casa_assente"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             }
+        } else if (action.equals("profilo_casa")) {
+            session = request.getSession();
+            String idCasa = (String) session.getAttribute("idCasa"); // carico l'id della casa
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            String gsonCasa = buildGson(c);
+            request.setAttribute("casa", gsonCasa);
+            request.setAttribute("location", buildGson("profilo_casa"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_casa.jsp");
+
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
