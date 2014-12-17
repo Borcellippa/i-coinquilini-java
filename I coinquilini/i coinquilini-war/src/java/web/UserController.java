@@ -150,6 +150,7 @@ public class UserController extends HttpServlet {
                 }
                 // se la password è sbagliata e l'utente non esiste
             } else {
+                request.setAttribute("utente", buildGson(user));
                 request.setAttribute("location", buildGson("home"));
                 request.setAttribute("errore", buildGson("errore_login"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
@@ -395,6 +396,7 @@ public class UserController extends HttpServlet {
                     request.setAttribute("location", buildGson("entraCasa"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
+                    gestoreUtente.resetNotifications("post", user.getId());
                     Casa c = user.getCasa();
                     String gsonCasa = buildGson(c);
                     request.setAttribute("casa", gsonCasa);

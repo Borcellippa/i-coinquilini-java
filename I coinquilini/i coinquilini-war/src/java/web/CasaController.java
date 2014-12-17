@@ -64,9 +64,7 @@ public class CasaController extends HttpServlet {
         } else if (action.equals("addCasa")) {
 
             Utente u = gestoreUtente.getUtenteByEmail((String) session.getAttribute("email"));
-
             if (u.getTipoUtente().equals("U")) { // non ancora inquilino
-
                 Casa c = new Casa();
                 c.setIndirizzo(request.getParameter("indirizzo"));
                 c.setNcivico(request.getParameter("civico"));
@@ -79,7 +77,6 @@ public class CasaController extends HttpServlet {
                 c.setPostiOccupati(1); // chi crea la casa occupa un posto
 
                 String codiceCasa = gestoreCasa.addCasa(c);
-
                 c = gestoreCasa.getCasaByCodiceCasa(codiceCasa);
 
                 // quando il coinquilino crea una casa ci si aggiunge automaticamente
@@ -90,6 +87,7 @@ public class CasaController extends HttpServlet {
                 gestoreUtente.editUtente(u);
                 session.setAttribute("idCasa", c.getId());
                 
+                gestoreUtente.resetNotifications("post", u.getId());
                 String gsonCasa = buildGson(c);
                 request.setAttribute("casa", gsonCasa);
                 request.setAttribute("location", buildGson("bacheca"));
@@ -149,6 +147,7 @@ public class CasaController extends HttpServlet {
                     u.setPostUnread(0);
                     gestoreUtente.editUtente(u);
                     String gsonCasa = buildGson(c);
+                    gestoreUtente.resetNotifications("post", u.getId());
                     session.setAttribute("idCasa", c.getId());
                     request.setAttribute("casa", gsonCasa);
                     request.setAttribute("location", buildGson("bacheca"));

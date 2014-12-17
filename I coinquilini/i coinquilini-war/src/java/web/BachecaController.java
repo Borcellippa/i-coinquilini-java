@@ -68,7 +68,8 @@ public class BachecaController extends HttpServlet {
                     (String)session.getAttribute("email"),
                     request.getParameter("contenuto"),
                     idCasa);
-            
+            Utente u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            gestoreUtente.resetNotifications("post", u.getId());
             c = gestoreCasa.getCasaById(idCasa);
             request.setAttribute("casa", buildGson(c));
             request.setAttribute("location", buildGson("bacheca"));
@@ -80,7 +81,8 @@ public class BachecaController extends HttpServlet {
             Casa c = gestoreCasa.getCasaById(idCasa);
             Utente u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
             gestoreUtente.resetNotifications("post", u.getId());
-            
+            // necessario per l'aggiornamento dell'oggetto utente e relative notifiche
+            u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
             String gsonCasa = buildGson(c);
             request.setAttribute("casa", gsonCasa);
             request.setAttribute("location", buildGson("bacheca"));
@@ -93,7 +95,8 @@ public class BachecaController extends HttpServlet {
             gestoreBacheca.eliminaPost(c.getBacheca(), Long.parseLong(idPost));
             c = gestoreCasa.getCasaById(idCasa);
             String gsonCasa = buildGson(c);
-            
+            Utente u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            gestoreUtente.resetNotifications("post", u.getId());
             request.setAttribute("casa", gsonCasa);
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
