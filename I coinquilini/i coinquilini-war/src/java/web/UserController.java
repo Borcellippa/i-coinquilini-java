@@ -60,12 +60,6 @@ public class UserController extends HttpServlet {
         RequestDispatcher rd;
         String action = request.getParameter("action");
 
-        if (session.getAttribute("email") == null) {
-            request.setAttribute("location", buildGson("home"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-            rd.forward(request, response);
-        }
-
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
@@ -424,15 +418,25 @@ public class UserController extends HttpServlet {
 
             gestoreUtente.editUtentePassword(pwd, u); // aggiorno l'utente e hasho la pwd
 
-            String gsonUser = buildGson(u);
-            request.setAttribute("utente", gsonUser);
-            request.setAttribute("location", buildGson("profilo"));
             if (u.getTipoUtente().equals("U")) {
+                request.setAttribute("location", buildGson("entraCasa"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             } else {
+                String gsonUser = buildGson(u);
+                request.setAttribute("utente", gsonUser);
+                request.setAttribute("location", buildGson("profilo"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
             }
 
+        } else if (action.equals("profilo_utente")) {
+            session = request.getSession(); // prendo l'utente dalla sessione
+            String email = (String) session.getAttribute("email");
+            Utente u = gestoreUtente.getUtenteByEmail(email);
+            String gsonUser = buildGson(u);
+            request.setAttribute("utente", gsonUser);
+            request.setAttribute("location", buildGson("profilo"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
+                    
         } else if (action.equals("editUtente")) {
             // aggiorno le info dell'utente dalla sua pagina profilo
             String email = request.getParameter("email");
