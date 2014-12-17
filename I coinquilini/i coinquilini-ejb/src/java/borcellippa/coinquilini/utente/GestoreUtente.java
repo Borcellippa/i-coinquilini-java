@@ -57,13 +57,12 @@ public class GestoreUtente implements GestoreUtenteLocal {
     public Utente getUtenteByEmail(String email) {
         return utenteFacade.getUtenteByEmail(email);
     }
-    
+
     @Override
     public Utente getUtenteById(Long id) {
         return utenteFacade.find(id);
     }
 
-    
     /**
      * Funzione che effettua l'hash della password
      *
@@ -98,6 +97,29 @@ public class GestoreUtente implements GestoreUtenteLocal {
         return null;
     }
 
+    @Override
+    public void notifyUser(String notifica, Long idUser) {
+        switch (notifica) {
+            case "post":
+                Utente u = this.getUtenteById(idUser);
+                u.setPostUnread(u.getPostUnread() + 1);
+                utenteFacade.edit(u);
+                break;
+            default:
+                break;
+        }
+    }
 
-
+    @Override
+    public void resetNotifications(String notifica, Long idUser) {
+        switch (notifica) {
+            case "post":
+                Utente u = this.getUtenteById(idUser);
+                u.setPostUnread(0);
+                utenteFacade.edit(u);
+                break;
+            default:
+                break;
+        }
+    }
 }

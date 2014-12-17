@@ -34,21 +34,10 @@ public class BachecaController extends HttpServlet {
     @EJB
     private GestoreBachecaLocal gestoreBacheca;
     @EJB
-    private CasaFacadeLocal casaFacade;
-    @EJB
     private GestoreCasaLocal gestoreCasa;
     @EJB
     private GestoreUtenteLocal gestoreUtente;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
@@ -68,10 +57,11 @@ public class BachecaController extends HttpServlet {
             String idCasa = (String) session.getAttribute("idCasa");
             Casa c = gestoreCasa.getCasaById(idCasa);
             // notifico il post nuovo ai coinquilini
-            List<Long> listLong = c.getUtenti();
-            for(int i=0; i<listLong.size(); i++){
-                Utente coinquilino = gestoreUtente.getUtenteById(listLong.get(i));
-                coinquilino.setPostUnread(coinquilino.getPostUnread()+1);
+            List<Long> usersList = c.getUtenti();
+            for (Long i : usersList) {
+                Utente coinquilino = gestoreUtente.getUtenteById(i);
+                if(!coinquilino.getEmail().equals(session.getAttribute("email")))
+                    gestoreUtente.notifyUser("post", coinquilino.getId());
             }
             // aggiungo il post alla bacheca
             gestoreBacheca.addPost(
@@ -88,6 +78,8 @@ public class BachecaController extends HttpServlet {
             //Recupero i dati della wishlist da DB
             String idCasa = (String) session.getAttribute("idCasa");
             Casa c = gestoreCasa.getCasaById(idCasa);
+            Utente u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            gestoreUtente.resetNotifications("post", u.getId());
             
             String gsonCasa = buildGson(c);
             request.setAttribute("casa", gsonCasa);

@@ -277,6 +277,8 @@ public class UserController extends HttpServlet {
                     request.setAttribute("location", buildGson("entraCasa"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
+                    // reset delle notifiche sui post
+                    gestoreUtente.resetNotifications("post", u.getId());
                     Casa c = u.getCasa();
                     String gsonCasa = buildGson(c);
                     request.setAttribute("casa", gsonCasa);

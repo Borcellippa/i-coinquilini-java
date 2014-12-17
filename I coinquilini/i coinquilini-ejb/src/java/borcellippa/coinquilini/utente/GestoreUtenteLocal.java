@@ -29,5 +29,9 @@ public interface GestoreUtenteLocal {
     void editUtentePassword(String pwd, Utente u);
 
     Utente getUtenteById(Long id);
+
+    void notifyUser(String notifica, Long idUser);
+
+    void resetNotifications(String notifica, Long idUser);
     
 }
