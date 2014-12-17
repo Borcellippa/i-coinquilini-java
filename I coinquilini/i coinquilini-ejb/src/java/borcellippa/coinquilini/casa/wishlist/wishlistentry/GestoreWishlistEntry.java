@@ -46,5 +46,15 @@ public class GestoreWishlistEntry implements GestoreWishlistEntryLocal {
         WishlistEntry we = wishlistEntryFacade.find(idEntry);
         wishlistEntryFacade.remove(we);
     }
+
+    @Override
+    public WishlistEntry getWishlistEntry(Long id) {
+        return wishlistEntryFacade.find(id);
+    }
+
+    @Override
+    public void edit(WishlistEntry w) {
+        wishlistEntryFacade.edit(w);
+    }
     
 }
