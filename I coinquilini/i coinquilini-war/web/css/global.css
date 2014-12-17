@@ -2,6 +2,18 @@ body{
     min-width: 1150px;
 }
 
+
+.sidebar-panel a{
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar-panel a:hover{
+    color: #3572b0;
+}
+
+
+
 .glyphicon { margin-right:10px; }
 .panel-body { padding:0px; }
 .panel-body table tr td { padding-left: 15px }

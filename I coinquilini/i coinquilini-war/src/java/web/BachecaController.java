@@ -56,11 +56,11 @@ public class BachecaController extends HttpServlet {
         System.out.println("BachecaController_action: " + action);
 
         HttpSession session = request.getSession();
-        if(session.getAttribute("email") == null){
+        /*if(session.getAttribute("email") == null){
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             rd.forward(request, response);
-        }
+        }*/
             
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
