@@ -10,6 +10,7 @@ import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
 import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -138,7 +139,7 @@ public class CasaController extends HttpServlet {
             // carico le info sugli utenti in modo da stamparli tra le informazioni
             List<Long> listUtentiId = c.getUtenti();
 
-            List<Utente> listUtenti = new LinkedList();
+            ArrayList<Utente> listUtenti = new ArrayList();
             for (Long ut : listUtentiId) {
                 Utente u = gestoreUtente.getUtenteById(ut);
                 if (u != null) {
