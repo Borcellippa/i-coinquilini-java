@@ -1,7 +1,6 @@
             </div>
-                <%@include  file="footer.html" %>
-            </div>
+            <div class="push"></div>
+        <%@include  file="footer.html" %>
         </div>
-    </div>
 </body>
 </html>
