@@ -41,12 +41,6 @@ public class WishlistController extends HttpServlet {
 
         RequestDispatcher rd;
         String action = request.getParameter("action");
-
-        if(session.getAttribute("email") == null){
-            request.setAttribute("location", buildGson("home"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-            rd.forward(request, response);
-        }
         
         if (action == null) {
             request.setAttribute("location", buildGson("home"));

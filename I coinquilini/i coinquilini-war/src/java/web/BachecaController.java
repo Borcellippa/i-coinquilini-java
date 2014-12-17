@@ -56,11 +56,6 @@ public class BachecaController extends HttpServlet {
         System.out.println("BachecaController_action: " + action);
 
         HttpSession session = request.getSession();
-        /*if(session.getAttribute("email") == null){
-            request.setAttribute("location", buildGson("home"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-            rd.forward(request, response);
-        }*/
             
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
@@ -84,7 +79,7 @@ public class BachecaController extends HttpServlet {
 
             String gsonCasa = buildGson(c);
             request.setAttribute("casa", gsonCasa);
-            request.setAttribute("location", buildGson("casa"));
+            request.setAttribute("location", buildGson("bacheca"));
 
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
         } else {
