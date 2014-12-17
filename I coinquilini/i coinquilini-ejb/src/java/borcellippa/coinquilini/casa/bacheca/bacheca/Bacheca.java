@@ -6,9 +6,7 @@
 
 package borcellippa.coinquilini.casa.bacheca.bacheca;
 
-import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.bacheca.post.Post;
-import borcellippa.coinquilini.casa.gruppocase.GruppoCase;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;

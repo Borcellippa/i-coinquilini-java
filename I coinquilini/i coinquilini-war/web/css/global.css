@@ -332,6 +332,12 @@ span.buttonText {
 
 .postContent{
     padding: 10px;
+    padding-left: 30px;
+}
+
+.userCommentImage{
+    width:100px;
+    margin-left: 10px;
 }
 
 .postOpt{
@@ -340,12 +346,9 @@ span.buttonText {
     text-align: right;
 }
 
-.commentBlock{
-    margin-top:3%;
-}
-
 .commentButton{
-    text-align: right;
+    text-align: center;
+    padding-top: 18px;
 }
 
 iframe[src^="https://apis.google.com/u/0/_/widget/oauthflow/toast"] {display: none;}

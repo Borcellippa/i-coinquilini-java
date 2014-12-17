@@ -12,8 +12,10 @@ import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.CasaFacadeLocal;
 import borcellippa.coinquilini.utente.Utente;
 import borcellippa.coinquilini.utente.UtenteFacadeLocal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -25,8 +27,6 @@ import javax.ejb.Stateless;
 @Stateless
 public class GestoreBacheca implements GestoreBachecaLocal {
 
-    @EJB
-    private GestoreBachecaLocal gestoreBacheca;
     @EJB
     private BachecaFacadeLocal bachecaFacade;
     @EJB
@@ -53,21 +53,18 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         post.setAutore_img(i.getFoto_path());
         post.setContenuto(contenuto);
         Bacheca b = c.getBacheca();
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = new GregorianCalendar();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd/MM/yyyy HH:mm");
         post.setDataPubblicazione(cal.getTime());
         post.setAutore_email(email_autore);
         postFacade.create(post);
-        
         List<Post> list = b.getPosts();
         if(list == null)
             list = new ArrayList<>();
         list.add(post);
         b.setPosts(list);
-        
         bachecaFacade.edit(b);
-        
-        System.out.println("### "+list.get(0));
-        
         return post;
     }
 
@@ -78,8 +75,12 @@ public class GestoreBacheca implements GestoreBachecaLocal {
     }
 
     @Override
-    public void eliminaPost(String idPost) {
-        Post post = postFacade.find(idPost);
-        postFacade.remove(post);
+    public void eliminaPost(Bacheca b, Long idPost) {
+        Post p = postFacade.find(idPost);
+        postFacade.remove(p);
+        List<Post> list = b.getPosts();
+        list.remove(p);
+        b.setPosts(list);
+        bachecaFacade.edit(b);
     }
 }

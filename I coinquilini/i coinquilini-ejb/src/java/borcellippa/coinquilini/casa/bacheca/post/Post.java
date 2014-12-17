@@ -7,13 +7,13 @@
 package borcellippa.coinquilini.casa.bacheca.post;
 
 import borcellippa.coinquilini.media.Media;
-import borcellippa.coinquilini.utente.Utente;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 
 /**
@@ -26,6 +26,7 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Lob
     private String contenuto;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataPubblicazione;

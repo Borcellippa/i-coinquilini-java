@@ -60,28 +60,41 @@ public class BachecaController extends HttpServlet {
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+            
         } else if (action.equals("addPost")) {
-            session = request.getSession();
             String idCasa = (String) session.getAttribute("idCasa");
-            System.out.println("### idCasa per post: "+idCasa);
             gestoreBacheca.addPost(
                     (String)session.getAttribute("email"),
                     request.getParameter("contenuto"),
                     idCasa);
             Casa c = casaFacade.find(idCasa);
+            
             request.setAttribute("casa", buildGson(c));
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+            
         } else if (action.equals("getBacheca")) {
             //Recupero i dati della wishlist da DB
             String idCasa = (String) session.getAttribute("idCasa");
             Casa c = gestoreCasa.getCasaById(idCasa);
-
+            
             String gsonCasa = buildGson(c);
             request.setAttribute("casa", gsonCasa);
             request.setAttribute("location", buildGson("bacheca"));
-
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+            
+        } else if (action.equals("eliminaPost")) {
+            String idCasa = (String) session.getAttribute("idCasa");
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            String idPost = request.getParameter("idPost");
+            gestoreBacheca.eliminaPost(c.getBacheca(), Long.parseLong(idPost));
+            c = gestoreCasa.getCasaById(idCasa);
+            String gsonCasa = buildGson(c);
+            
+            request.setAttribute("casa", gsonCasa);
+            request.setAttribute("location", buildGson("bacheca"));
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
+            
         } else {
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));

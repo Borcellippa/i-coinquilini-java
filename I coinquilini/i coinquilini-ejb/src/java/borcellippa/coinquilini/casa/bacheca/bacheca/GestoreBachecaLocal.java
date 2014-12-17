@@ -23,5 +23,5 @@ public interface GestoreBachecaLocal {
 
     Bacheca getBacheca(String casa_id);
 
-    void eliminaPost(String idPost);
+    void eliminaPost(Bacheca b, Long idPost);
 }
