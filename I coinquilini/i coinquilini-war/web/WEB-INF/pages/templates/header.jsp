@@ -4,7 +4,7 @@
 <div class="top-navbar">
     <div class="col-md-4">
         <a href="UserController?action=home" style="color: white;text-decoration: none;">
-            <div class="col-md-3" style="margin-top: 2px;">
+            <div class="col-md-4" style="margin-top: 2px;">
                 <img src="images/a.jpg" class="img-circle img-thumbnail" height="140px" width="140px">
             </div> 
             <h1 style="color: white">Roommates</h1>
