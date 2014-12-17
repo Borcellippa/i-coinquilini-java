@@ -80,6 +80,22 @@ public class WishlistController extends HttpServlet {
                 request.setAttribute("location", buildGson("home"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             }
+        } else if (action.equals("deleteEntry")) {
+            String idCasa = (String) session.getAttribute("idCasa");
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            Wishlist w = c.getWishlist();
+            if (w != null) {
+                Long idEntry = Long.parseLong(request.getParameter("EID"));
+                w = gestoreWishlist.deleteEntry(w, idEntry);
+                String gsonWishlist = buildGson(w);
+                request.setAttribute("wishlist", gsonWishlist);
+                request.setAttribute("location", buildGson("wishlist"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
+            } else {
+                request.setAttribute("errore", buildGson("Errore durante la creazione della wishlist"));
+                request.setAttribute("location", buildGson("home"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+            }
         } else {
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));

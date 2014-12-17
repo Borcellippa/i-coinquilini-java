@@ -8,6 +8,7 @@ package borcellippa.coinquilini.casa.wishlist;
 
 import borcellippa.coinquilini.casa.wishlist.wishlistentry.GestoreWishlistEntryLocal;
 import borcellippa.coinquilini.casa.wishlist.wishlistentry.WishlistEntry;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -38,6 +39,17 @@ public class GestoreWishlist implements GestoreWishlistLocal {
             wishlistFacade.edit(w);
         }
         return wishlistFacade.find(w.getId());
+    }
+
+    @Override
+    public Wishlist deleteEntry(Wishlist w, Long idEntry) {
+        List<WishlistEntry> we = w.getEntries();
+        WishlistEntry weOld = gestoreWishlistEntry.getEntry(idEntry);
+        we.remove(weOld);
+        w.setEntries(we);
+        gestoreWishlistEntry.deleteEntry(idEntry);
+        wishlistFacade.edit(w);
+        return w;
     }
     
 }

@@ -39,11 +39,11 @@ body{
 .wishlist-li{
     display: inline-block;
     margin-left: 2% !important;
-    width: 94%;
+    width: 92%;
 }
 
 .wishlist-li-left{
-    margin-top: 7px;
+    margin-top: 10px;
 }
 
 .wishlist-li-right{

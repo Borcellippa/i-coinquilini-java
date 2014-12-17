@@ -33,23 +33,25 @@
                         <ul id="check-list-box" class="list-group checked-list-box wishlist-entry">
                             <% if (we != null) {
                                     for (WishlistEntry entry : we) {%>
-                                        <li class="list-group-item">
-                                            <div class="uk-grid wishlist-li">
-                                                <div class="uk-width-8-10 wishlist-li-left">
-                                                    <%= entry.getDescrizione()%>
-                                                </div>
-                                                <div class="uk-width-2-10 wishlist-li-right">
-                                                    <div class="entry-container">
-                                                        <label class="wishlist-entry-label"><%= entry.getQuantita()%></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
+                            <li class="list-group-item">
+                                <div class="uk-grid wishlist-li">
+                                    <div class="uk-width-7-10 wishlist-li-left">
+                                        <%= entry.getDescrizione()%>
+                                    </div>
+                                    <div class="uk-width-2-10 wishlist-li-right">
+                                        <div class="entry-container">
+                                            <label class="wishlist-entry-label"><%= entry.getQuantita()%></label>
+                                        </div>
+                                    </div>
+                                    <div class="uk-width-1-10 wishlist-li-left">
+                                        <a href="WishlistController?action=deleteEntry&EID=<%= entry.getId()%>" style="color: black;float: right" data-uk-tooltip title="Elimina voce"><i class="uk-icon-times"></i></a>
+                                    </div>
+                                </div>
+                            </li>
                             <%      }
-                                }
-                            else{ %>
+                            } else { %>
                             <p style="margin-bottom: 45px;"> Sembra che la lista della spesa sia vuota...Crea ora una nuova voce! </p>
-                            <% } %>
+                            <% }%>
                         </ul>
 
                         <button type="button" class="btn btn-lg custom-button" data-toggle="modal" data-target="#wishlistEntryModal">

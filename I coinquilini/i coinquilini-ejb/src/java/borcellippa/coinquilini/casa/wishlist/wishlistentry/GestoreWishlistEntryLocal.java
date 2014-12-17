@@ -17,5 +17,9 @@ import javax.ejb.Local;
 public interface GestoreWishlistEntryLocal {
 
     WishlistEntry createEntry(Wishlist w, String descrizione, int quantita);
+
+    WishlistEntry getEntry(Long entryID);
+
+    void deleteEntry(Long idEntry);
     
 }
