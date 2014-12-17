@@ -59,7 +59,7 @@
                         <p style="margin-bottom: 45px;"> Sembra che la lista della spesa sia vuota...Crea ora una nuova voce! </p>
                         <% }%>
                         <li class="uk-hidden" id="prezzo-totale" style="text-align: right;list-style-type: none;">
-                            <input type="number" class="form-control input-prezzo-totale" placeholder="Prezzo totale di quanto speso" style="margin-right: 5%">
+                            <input type="number" class="form-control input-prezzo-totale" id="prezzo-totale-input" placeholder="Prezzo totale di quanto speso" style="margin-right: 5%">
                         </li>
                     </ul>
 
@@ -141,7 +141,8 @@
     }
 
     function sendTickedElements() {
-        var totale = $("#prezzo-totale").val();
+        var totale = $("#prezzo-totale-input").val();
+        console.log(totale);
         $.post('WishlistController',
                 {action: "acquista_entries",
                  entries: JSON.stringify(tickedEntries),

@@ -84,7 +84,7 @@ public class WishlistController extends HttpServlet {
             }
             
             int totale = Integer.parseInt(request.getParameter("totale"));
-            
+            System.out.println("***************** TOTALE: "+totale);
             
             /**************** TODO ****************/
             /** ADD BUSINESS LOGIC PER BORSELLINO */
