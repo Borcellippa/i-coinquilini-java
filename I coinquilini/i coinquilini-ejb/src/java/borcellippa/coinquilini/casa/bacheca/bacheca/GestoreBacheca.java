@@ -55,6 +55,7 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         Bacheca b = c.getBacheca();
         Calendar cal = Calendar.getInstance();
         post.setDataPubblicazione(cal.getTime());
+        post.setAutore_email(email_autore);
         postFacade.create(post);
         
         List<Post> list = b.getPosts();

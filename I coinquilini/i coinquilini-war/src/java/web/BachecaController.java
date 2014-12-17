@@ -67,7 +67,7 @@ public class BachecaController extends HttpServlet {
             gestoreBacheca.addPost(
                     (String)session.getAttribute("email"),
                     request.getParameter("contenuto"),
-                    (String) session.getAttribute("idCasa"));
+                    idCasa);
             Casa c = casaFacade.find(idCasa);
             request.setAttribute("casa", buildGson(c));
             request.setAttribute("location", buildGson("bacheca"));

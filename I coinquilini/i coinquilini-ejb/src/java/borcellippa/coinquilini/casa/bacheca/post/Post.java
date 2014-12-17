@@ -32,6 +32,26 @@ public class Post implements Serializable {
     private Media media;
     private String autore;
     private String autore_img;
+    private String autore_email;
+
+    /**
+     * Get the value of autore_email
+     *
+     * @return the value of autore_email
+     */
+    public String getAutore_email() {
+        return autore_email;
+    }
+
+    /**
+     * Set the value of autore_email
+     *
+     * @param autore_email new value of autore_email
+     */
+    public void setAutore_email(String autore_email) {
+        this.autore_email = autore_email;
+    }
+
 
     /**
      * Get the value of autore_img

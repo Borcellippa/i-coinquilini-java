@@ -333,4 +333,28 @@ span.buttonText {
     text-align: center;
 }
 
+.postAuthor{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.postContent{
+    padding: 10px;
+}
+
+.postOpt{
+    padding-top: 10px;
+    padding-right: 10px;
+    text-align: right;
+}
+
+.commentBlock{
+    margin-top:3%;
+}
+
+.commentButton{
+    text-align: right;
+}
+
 iframe[src^="https://apis.google.com/u/0/_/widget/oauthflow/toast"] {display: none;}
