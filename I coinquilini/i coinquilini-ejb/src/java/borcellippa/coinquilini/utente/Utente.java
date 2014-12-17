@@ -12,7 +12,6 @@ import borcellippa.coinquilini.casa.gestione_economica.debito.Debito;
 import borcellippa.coinquilini.casa.gestione_economica.spesa.Spesa;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,6 +47,26 @@ public class Utente implements Serializable {
     private List<Debito> debiti;
     private List<Spesa> spese;
     private List<Post> posts;
+    private int postUnread;
+
+    /**
+     * Get the value of notifiche
+     *
+     * @return the value of notifiche
+     */
+    public int getPostUnread() {
+        return postUnread;
+    }
+
+    /**
+     * Set the value of notifiche
+     *
+     * @param notifiche new value of notifiche
+     */
+    public void setPostUnread(int postUnread) {
+        this.postUnread = postUnread;
+    }
+
     
     private String tipoUtente;
 

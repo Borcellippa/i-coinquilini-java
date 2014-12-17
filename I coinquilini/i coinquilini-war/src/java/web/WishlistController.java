@@ -9,6 +9,7 @@ import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.casa.wishlist.GestoreWishlistLocal;
 import borcellippa.coinquilini.casa.wishlist.Wishlist;
+import borcellippa.coinquilini.utente.GestoreUtenteLocal;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static utility.Utility.buildGson;
+import static utility.Utility.*;
 
 /**
  *
@@ -27,9 +28,10 @@ public class WishlistController extends HttpServlet {
 
     @EJB
     private GestoreCasaLocal gestoreCasa;
-
     @EJB
     private GestoreWishlistLocal gestoreWishlist;
+    @EJB
+    private GestoreUtenteLocal gestoreUtente;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,7 +43,7 @@ public class WishlistController extends HttpServlet {
 
         RequestDispatcher rd;
         String action = request.getParameter("action");
-        
+
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
@@ -80,12 +82,27 @@ public class WishlistController extends HttpServlet {
                 request.setAttribute("location", buildGson("home"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             }
+        } else if (action.equals("deleteEntry")) {
+            String idCasa = (String) session.getAttribute("idCasa");
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            Wishlist w = c.getWishlist();
+            if (w != null) {
+                Long idEntry = Long.parseLong(request.getParameter("EID"));
+                w = gestoreWishlist.deleteEntry(w, idEntry);
+                String gsonWishlist = buildGson(w);
+                request.setAttribute("wishlist", gsonWishlist);
+                request.setAttribute("location", buildGson("wishlist"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
+            } else {
+                request.setAttribute("errore", buildGson("Errore durante la creazione della wishlist"));
+                request.setAttribute("location", buildGson("home"));
+                rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
+            }
         } else {
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");
         }
-
         rd.forward(request, response);
     }
 

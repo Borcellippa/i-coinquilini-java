@@ -5,7 +5,11 @@
  */
 package utility;
 
+import borcellippa.coinquilini.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.utente.Utente;
 import com.google.gson.Gson;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -14,9 +18,9 @@ import com.google.gson.Gson;
 public class Utility {
 
     /**
-     * 
+     *
      * @param obj
-     * @return 
+     * @return
      */
     public static String buildGson(Object obj) {
         Gson gson = new Gson();
@@ -29,5 +33,4 @@ public class Utility {
         }
         return json;
     }
-
 }

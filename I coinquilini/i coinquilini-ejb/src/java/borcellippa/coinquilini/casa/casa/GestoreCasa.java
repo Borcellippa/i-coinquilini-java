@@ -12,7 +12,6 @@ import borcellippa.coinquilini.casa.calendario.CalendarioFacadeLocal;
 import borcellippa.coinquilini.casa.wishlist.Wishlist;
 import borcellippa.coinquilini.casa.wishlist.WishlistFacadeLocal;
 import borcellippa.coinquilini.token.GestoreTokenLocal;
-import borcellippa.coinquilini.token.UniqueToken;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -40,7 +39,6 @@ public class GestoreCasa implements GestoreCasaLocal {
     
     @Override
     public Casa getCasaByCodiceCasa(String codiceCasa) {
-        System.out.println("###### getCasaByCodiceCasa ");
         Casa c = casaFacade.getCasaByCodiceCasa(codiceCasa);
         return c;
     }
@@ -63,9 +61,7 @@ public class GestoreCasa implements GestoreCasaLocal {
         String codiceCasa = gestoreToken.createToken();
         c.setCodiceCasa(codiceCasa);
 
-
         casaFacade.create(c);
-        System.out.println("La Casa è stata Creata");
         
         return codiceCasa;
     }

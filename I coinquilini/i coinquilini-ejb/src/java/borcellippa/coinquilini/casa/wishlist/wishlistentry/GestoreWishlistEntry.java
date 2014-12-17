@@ -30,8 +30,21 @@ public class GestoreWishlistEntry implements GestoreWishlistEntryLocal {
         wishlistEntryFacade.create(we);
         return wishlistEntryFacade.find(we.getId());
     }
+    
+    
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public WishlistEntry getEntry(Long entryID) {
+        return wishlistEntryFacade.find(entryID);
+    }
+
+    @Override
+    public void deleteEntry(Long idEntry) {
+        WishlistEntry we = wishlistEntryFacade.find(idEntry);
+        wishlistEntryFacade.remove(we);
+    }
     
 }

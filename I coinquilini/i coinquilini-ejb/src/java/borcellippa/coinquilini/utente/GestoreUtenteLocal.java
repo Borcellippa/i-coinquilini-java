@@ -27,5 +27,7 @@ public interface GestoreUtenteLocal {
     void editUtente(Utente u);
 
     void editUtentePassword(String pwd, Utente u);
+
+    Utente getUtenteById(Long id);
     
 }

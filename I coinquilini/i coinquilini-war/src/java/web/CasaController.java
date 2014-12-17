@@ -10,6 +10,8 @@ import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
 import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static utility.Utility.buildGson;
+import static utility.Utility.*;
 
 /**
  *
@@ -29,7 +31,7 @@ public class CasaController extends HttpServlet {
     private GestoreUtenteLocal gestoreUtente;
     @EJB
     private GestoreCasaLocal gestoreCasa;
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,16 +53,10 @@ public class CasaController extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        if (session.getAttribute("email") == null) {
-            request.setAttribute("location", buildGson("home"));
-            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-            rd.forward(request, response);
-        }
-
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-
+            
         } else if (action.equals("creaCasa")) {
             request.setAttribute("location", buildGson("creaCasa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/creaCasa.jsp");
@@ -93,7 +89,7 @@ public class CasaController extends HttpServlet {
                 u.setCasa(c);
                 gestoreUtente.editUtente(u);
                 session.setAttribute("idCasa", c.getId());
-
+                
                 String gsonCasa = buildGson(c);
                 request.setAttribute("casa", gsonCasa);
                 request.setAttribute("location", buildGson("bacheca"));
@@ -116,6 +112,7 @@ public class CasaController extends HttpServlet {
                     gestoreCasa.editCasa(c);
                     u.setTipoUtente("I");
                     u.setCasa(c);
+                    u.setPostUnread(0);
                     gestoreUtente.editUtente(u);
                     String gsonCasa = buildGson(c);
                     session.setAttribute("idCasa", c.getId());
@@ -128,18 +125,42 @@ public class CasaController extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 }
             } else {
+                Utente u = gestoreUtente.getUtenteByEmail((String) session.getAttribute("email"));
                 request.setAttribute("location", buildGson("entraCasa"));
                 request.setAttribute("errore", buildGson("casa_assente"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             }
+        } else if (action.equals("profilo_casa")) {
+            session = request.getSession();
+            String idCasa = (String) session.getAttribute("idCasa"); // carico l'id della casa
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            String gsonCasa = buildGson(c);
+            request.setAttribute("casa", gsonCasa);
+            request.setAttribute("location", buildGson("profilo_casa"));
+
+            // carico le info sugli utenti in modo da stamparli tra le informazioni
+            List<Long> listUtentiId = c.getUtenti();
+
+            ArrayList<Utente> listUtenti = new ArrayList();
+            for (Long ut : listUtentiId) {
+                Utente u = gestoreUtente.getUtenteById(ut);
+                if (u != null) {
+                    listUtenti.add(u);
+                }
+            }
+
+            String gsonCoinqulini = buildGson(listUtenti);
+            request.setAttribute("coinquilini", gsonCoinqulini);
+
+            rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/profilo_casa.jsp");
+
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");
         }
-
+        
         rd.forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

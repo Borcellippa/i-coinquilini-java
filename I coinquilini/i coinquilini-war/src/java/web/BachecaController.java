@@ -10,7 +10,10 @@ import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.casa.casa.CasaFacadeLocal;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,7 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static utility.Utility.buildGson;
+import static utility.Utility.*;
 
 /**
  *
@@ -63,12 +66,20 @@ public class BachecaController extends HttpServlet {
             
         } else if (action.equals("addPost")) {
             String idCasa = (String) session.getAttribute("idCasa");
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            // notifico il post nuovo ai coinquilini
+            List<Long> listLong = c.getUtenti();
+            for(int i=0; i<listLong.size(); i++){
+                Utente coinquilino = gestoreUtente.getUtenteById(listLong.get(i));
+                coinquilino.setPostUnread(coinquilino.getPostUnread()+1);
+            }
+            // aggiungo il post alla bacheca
             gestoreBacheca.addPost(
                     (String)session.getAttribute("email"),
                     request.getParameter("contenuto"),
                     idCasa);
-            Casa c = casaFacade.find(idCasa);
             
+            c = gestoreCasa.getCasaById(idCasa);
             request.setAttribute("casa", buildGson(c));
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
@@ -100,7 +111,6 @@ public class BachecaController extends HttpServlet {
             request.setAttribute("errorPage", buildGson("no_action"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");
         }
-
         rd.forward(request, response);
     }
 

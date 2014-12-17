@@ -1,6 +1,5 @@
 package web;
 
-import borcellippa.coinquilini.casa.bacheca.bacheca.Bacheca;
 import borcellippa.coinquilini.casa.casa.Casa;
 import borcellippa.coinquilini.cookies.GestoreUserCookieLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
@@ -23,16 +22,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static utility.Utility.buildGson;
+import static utility.Utility.*;
 
 public class UserController extends HttpServlet {
 
     @EJB
     private GestoreUserCookieLocal gestoreUserCookie;
-
     @EJB
     private GestoreUtenteLocal gestoreUtente;
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -385,7 +383,7 @@ public class UserController extends HttpServlet {
             String gsonUser = buildGson(user);
             request.setAttribute("utente", gsonUser);
 
-            // se mi sono loggato con g+ devo ancora modificare il profilo per inserire una passoword
+            // se mi sono loggato con g+ devo ancora modificare il profilo per inserire una password
             if (needPwd) {
                 request.setAttribute("location", buildGson("completaSocial"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/completaSocial.jsp");
@@ -482,7 +480,6 @@ public class UserController extends HttpServlet {
             request.setAttribute("errorPage", buildGson("no_action"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");
         }
-
         rd.forward(request, response);
     }
 

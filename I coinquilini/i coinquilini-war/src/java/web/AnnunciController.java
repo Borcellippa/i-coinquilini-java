@@ -3,56 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web;
 
+import borcellippa.coinquilini.utente.GestoreUtenteLocal;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static utility.Utility.buildGson;
+import static utility.Utility.*;
 
-/**
- *
- * @author Fede
- */
 public class AnnunciController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @EJB
+    private GestoreUtenteLocal gestoreUtente;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        
+
         // creo la sessione utente o richiamo quella già creata
         HttpSession session = request.getSession();
-        
+
         if (session.getAttribute("email") == null) {
             session.setAttribute("email", "ospite");
             session.setAttribute("tipoAccount", "ospite");
             session.setAttribute("nome_utente", "ospite");
         }
-        
+
         RequestDispatcher rd = null;
         String action = request.getParameter("action");
 
-        if(session.getAttribute("email") == null){
+        if (session.getAttribute("email") == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             rd.forward(request, response);
         }
-        
+
         if (action.equals("visualizza_annunci")) {
             // TODO
         }
