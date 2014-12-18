@@ -5,7 +5,10 @@
  */
 package web;
 
+import borcellippa.coinquilini.casa.casa.Casa;
+import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -20,6 +23,8 @@ public class AnnunciController extends HttpServlet {
 
     @EJB
     private GestoreUtenteLocal gestoreUtente;
+    @EJB
+    private GestoreCasaLocal gestoreCasa;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -88,4 +93,15 @@ public class AnnunciController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public HttpServletRequest initializeRequest(HttpServletRequest request, String email, String idCasa) {
+        if (email != null) {
+            Utente u = gestoreUtente.getUtenteByEmail(email);
+            request.setAttribute("utente", buildGson(u));
+        }
+        if (idCasa != null) {
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            request.setAttribute("casa", buildGson(c));
+        }
+        return request;
+    }
 }

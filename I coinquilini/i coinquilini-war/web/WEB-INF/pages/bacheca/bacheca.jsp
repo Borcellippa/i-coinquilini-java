@@ -7,7 +7,8 @@
 <%@include  file="../templates/topTemplateSideMenu.jsp" %>
 <%
     Gson gsonCasa = new Gson();
-    String casaFromJson = ((String) request.getAttribute("casa"));
+    String casaFromJson = "ccc";
+    casaFromJson = ((String) request.getAttribute("casa"));
     Casa casa = gsonCasa.fromJson(casaFromJson, Casa.class);
     List<Post> listaPost = casa.getBacheca().getPosts();
 %>

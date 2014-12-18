@@ -7,12 +7,10 @@ package web;
 
 import borcellippa.coinquilini.casa.bacheca.bacheca.GestoreBachecaLocal;
 import borcellippa.coinquilini.casa.casa.Casa;
-import borcellippa.coinquilini.casa.casa.CasaFacadeLocal;
 import borcellippa.coinquilini.casa.casa.GestoreCasaLocal;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
 import borcellippa.coinquilini.utente.Utente;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -45,14 +43,14 @@ public class BachecaController extends HttpServlet {
 
         RequestDispatcher rd;
         String action = request.getParameter("action");
-        System.out.println("BachecaController_action: " + action);
 
         HttpSession session = request.getSession();
-            
+        request = initializeRequest(request, (String) session.getAttribute("email"), (String) session.getAttribute("idCasa"));
+
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
-            
+
         } else if (action.equals("addPost")) {
             String idCasa = (String) session.getAttribute("idCasa");
             Casa c = gestoreCasa.getCasaById(idCasa);
@@ -60,47 +58,43 @@ public class BachecaController extends HttpServlet {
             List<Long> usersList = c.getUtenti();
             for (Long i : usersList) {
                 Utente coinquilino = gestoreUtente.getUtenteById(i);
-                if(!coinquilino.getEmail().equals(session.getAttribute("email")))
+                if (!coinquilino.getEmail().equals(session.getAttribute("email"))) {
                     gestoreUtente.notifyUser("post", coinquilino.getId());
+                }
             }
             // aggiungo il post alla bacheca
             gestoreBacheca.addPost(
-                    (String)session.getAttribute("email"),
+                    (String) session.getAttribute("email"),
                     request.getParameter("contenuto"),
                     idCasa);
-            Utente u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            Utente u = gestoreUtente.getUtenteByEmail((String) session.getAttribute("email"));
             gestoreUtente.resetNotifications("post", u.getId());
             c = gestoreCasa.getCasaById(idCasa);
-            request.setAttribute("casa", buildGson(c));
+            initializeRequest(request, (String) session.getAttribute("email"), idCasa);
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
-            
+
         } else if (action.equals("getBacheca")) {
             //Recupero i dati della wishlist da DB
             String idCasa = (String) session.getAttribute("idCasa");
-            Casa c = gestoreCasa.getCasaById(idCasa);
-            Utente u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            Utente u = gestoreUtente.getUtenteByEmail((String) session.getAttribute("email"));
             gestoreUtente.resetNotifications("post", u.getId());
             // necessario per l'aggiornamento dell'oggetto utente e relative notifiche
-            u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
-            String gsonCasa = buildGson(c);
-            request.setAttribute("casa", gsonCasa);
+            initializeRequest(request, (String) session.getAttribute("email"), idCasa);
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
-            
+
         } else if (action.equals("eliminaPost")) {
             String idCasa = (String) session.getAttribute("idCasa");
             Casa c = gestoreCasa.getCasaById(idCasa);
             String idPost = request.getParameter("idPost");
             gestoreBacheca.eliminaPost(c.getBacheca(), Long.parseLong(idPost));
-            c = gestoreCasa.getCasaById(idCasa);
-            String gsonCasa = buildGson(c);
-            Utente u = gestoreUtente.getUtenteByEmail((String)session.getAttribute("email"));
+            Utente u = gestoreUtente.getUtenteByEmail((String) session.getAttribute("email"));
             gestoreUtente.resetNotifications("post", u.getId());
-            request.setAttribute("casa", gsonCasa);
+            initializeRequest(request, (String) session.getAttribute("email"), idCasa);
             request.setAttribute("location", buildGson("bacheca"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
-            
+
         } else {
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
@@ -146,6 +140,17 @@ public class BachecaController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }// </editor-fold
 
+    public HttpServletRequest initializeRequest(HttpServletRequest request, String email, String idCasa) {
+        if (email != null) {
+            Utente u = gestoreUtente.getUtenteByEmail(email);
+            request.setAttribute("utente", buildGson(u));
+        }
+        if (idCasa != null) {
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            request.setAttribute("casa", buildGson(c));
+        }
+        return request;
+    }
 }

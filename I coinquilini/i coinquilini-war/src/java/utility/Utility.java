@@ -5,23 +5,13 @@
  */
 package utility;
 
-import borcellippa.coinquilini.utente.GestoreUtenteLocal;
-import borcellippa.coinquilini.utente.Utente;
 import com.google.gson.Gson;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Mattia
  */
 public class Utility {
-
-    /**
-     *
-     * @param obj
-     * @return
-     */
     public static String buildGson(Object obj) {
         Gson gson = new Gson();
         String json = gson.toJson(obj);

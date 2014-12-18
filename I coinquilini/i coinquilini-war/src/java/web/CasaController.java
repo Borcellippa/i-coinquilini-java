@@ -55,10 +55,12 @@ public class CasaController extends HttpServlet {
 
         if (action == null) {
             request.setAttribute("location", buildGson("home"));
+            initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             
         } else if (action.equals("creaCasa")) {
             request.setAttribute("location", buildGson("creaCasa"));
+            initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/creaCasa.jsp");
 
         } else if (action.equals("addCasa")) {
@@ -88,13 +90,13 @@ public class CasaController extends HttpServlet {
                 session.setAttribute("idCasa", c.getId());
                 
                 gestoreUtente.resetNotifications("post", u.getId());
-                String gsonCasa = buildGson(c);
-                request.setAttribute("casa", gsonCasa);
                 request.setAttribute("location", buildGson("bacheca"));
+                initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
             } else {
                 request.setAttribute("errore", buildGson("casa_presente"));
                 request.setAttribute("location", buildGson("home"));
+                initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
 
             }
@@ -113,8 +115,6 @@ public class CasaController extends HttpServlet {
             c.setNomeCasa(nomeCasa);
             gestoreCasa.editCasa(c);
 
-            String gsonCasa = buildGson(c);
-            request.setAttribute("casa", gsonCasa);
             request.setAttribute("location", buildGson("profilo_casa"));
 
             // carico le info sugli utenti in modo da stamparli tra le informazioni
@@ -129,7 +129,7 @@ public class CasaController extends HttpServlet {
             }
             String gsonCoinqulini = buildGson(listUtenti);
             request.setAttribute("coinquilini", gsonCoinqulini);
-
+            initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/profilo_casa.jsp");
 
         } else if (action.equals("entraInCasa")) {
@@ -146,21 +146,22 @@ public class CasaController extends HttpServlet {
                     u.setCasa(c);
                     u.setPostUnread(0);
                     gestoreUtente.editUtente(u);
-                    String gsonCasa = buildGson(c);
                     gestoreUtente.resetNotifications("post", u.getId());
                     session.setAttribute("idCasa", c.getId());
-                    request.setAttribute("casa", gsonCasa);
                     request.setAttribute("location", buildGson("bacheca"));
+                    initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 } else {
                     request.setAttribute("location", buildGson("entraCasa"));
                     request.setAttribute("errore", buildGson("utente_inquilino"));
+                    initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 }
             } else {
                 Utente u = gestoreUtente.getUtenteByEmail((String) session.getAttribute("email"));
                 request.setAttribute("location", buildGson("entraCasa"));
                 request.setAttribute("errore", buildGson("casa_assente"));
+                initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             }
 
@@ -177,14 +178,14 @@ public class CasaController extends HttpServlet {
             gestoreCasa.editCasa(c);
 
             request.setAttribute("location", buildGson("home"));
+            initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
 
         } else if (action.equals("profilo_casa")) {
             session = request.getSession();
             String idCasa = (String) session.getAttribute("idCasa"); // carico l'id della casa
             Casa c = gestoreCasa.getCasaById(idCasa);
-            String gsonCasa = buildGson(c);
-            request.setAttribute("casa", gsonCasa);
+            
             request.setAttribute("location", buildGson("profilo_casa"));
 
             // carico le info sugli utenti in modo da stamparli tra le informazioni
@@ -200,12 +201,13 @@ public class CasaController extends HttpServlet {
 
             String gsonCoinqulini = buildGson(listUtenti);
             request.setAttribute("coinquilini", gsonCoinqulini);
-
+            initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/profilo_casa.jsp");
 
         } else { // caso in cui non ci sia nessuna action da eseguire
             request.setAttribute("location", buildGson("error_page"));
             request.setAttribute("errorPage", buildGson("no_action"));
+            initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/templates/errore.jsp");
         }
         
@@ -251,4 +253,15 @@ public class CasaController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public HttpServletRequest initializeRequest(HttpServletRequest request, String email, String idCasa) {
+        if (email != null) {
+            Utente u = gestoreUtente.getUtenteByEmail(email);
+            request.setAttribute("utente", buildGson(u));
+        }
+        if (idCasa != null) {
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            request.setAttribute("casa", buildGson(c));
+        }
+        return request;
+    }
 }

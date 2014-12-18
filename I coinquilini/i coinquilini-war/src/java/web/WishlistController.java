@@ -12,6 +12,7 @@ import borcellippa.coinquilini.casa.wishlist.Wishlist;
 import borcellippa.coinquilini.casa.wishlist.wishlistentry.GestoreWishlistEntryLocal;
 import borcellippa.coinquilini.casa.wishlist.wishlistentry.WishlistEntry;
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
+import borcellippa.coinquilini.utente.Utente;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
@@ -53,28 +54,30 @@ public class WishlistController extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null) {
+            initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
             request.setAttribute("location", buildGson("home"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
         } else if (action.equals("getWishlist")) {
             //Recupero i dati della wishlist da DB
             String idCasa = (String) session.getAttribute("idCasa");
             Casa c = gestoreCasa.getCasaById(idCasa);
-            
-            if (c != null) {
 
-                request.setAttribute("casa", buildGson(c));
+            if (c != null) {
+                initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
                 request.setAttribute("location", buildGson("wishlist"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
             } else {
+                initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
                 request.setAttribute("errore", buildGson("Errore durante la creazione della wishlist"));
                 request.setAttribute("location", buildGson("home"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
             }
         } else if (action.equals("acquista_entries")) {
             String entriesJson = request.getParameter("entries");
-            Type type = new TypeToken<Long[]>(){}.getType();
+            Type type = new TypeToken<Long[]>() {
+            }.getType();
             Long[] entriesIDs = new Gson().fromJson(entriesJson, type);
-            
+
             for (Long entryID : entriesIDs) {
                 if (entryID != null) {
                     WishlistEntry we = gestoreWishlistEntry.getWishlistEntry(entryID);
@@ -82,15 +85,19 @@ public class WishlistController extends HttpServlet {
                     gestoreWishlistEntry.edit(we);
                 }
             }
-            
+
             int totale = Integer.parseInt(request.getParameter("totale"));
-            System.out.println("***************** TOTALE: "+totale);
-            
-            /**************** TODO ****************/
-            /** ADD BUSINESS LOGIC PER BORSELLINO */
-            /**************************************/
-            
-            
+            System.out.println("***************** TOTALE: " + totale);
+
+            /**
+             * ************** TODO ***************
+             */
+            /**
+             * ADD BUSINESS LOGIC PER BORSELLINO
+             */
+            /**
+             * ***********************************
+             */
             /* Tanto la richiesta è ajax, non tornerà mai */
             rd = null;
             response.setContentType("text/plain");  // Set content type of the response so that            jQuery knows what it can expect.
@@ -106,11 +113,8 @@ public class WishlistController extends HttpServlet {
                 String descrizione = request.getParameter("descrizione");
                 descrizione = Character.toUpperCase(descrizione.charAt(0)) + descrizione.substring(1);
                 int quantita = Integer.parseInt(request.getParameter("quantita"));
-                w = gestoreWishlist.addEntry(w, descrizione, quantita);
-                c = gestoreCasa.getCasaById(idCasa);
-                String gsonCasa = buildGson(c);
-                request.setAttribute("casa", gsonCasa);
-                request.setAttribute("location", buildGson("casa"));
+                gestoreWishlist.addEntry(w, descrizione, quantita);
+                initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
             } else {
                 request.setAttribute("errore", buildGson("Errore durante la creazione della wishlist"));
@@ -123,10 +127,8 @@ public class WishlistController extends HttpServlet {
             Wishlist w = c.getWishlist();
             if (w != null) {
                 Long idEntry = Long.parseLong(request.getParameter("EID"));
-                w = gestoreWishlist.deleteEntry(w, idEntry);
-                c = gestoreCasa.getCasaById(idCasa);
-                String gsonCasa = buildGson(c);
-                request.setAttribute("casa", gsonCasa);
+                gestoreWishlist.deleteEntry(w, idEntry);
+                initializeRequest(request, (String) session.getAttribute("email"), (String)session.getAttribute("idCasa"));
                 request.setAttribute("location", buildGson("wishlist"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/house/wishlist.jsp");
             } else {
@@ -181,4 +183,15 @@ public class WishlistController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public HttpServletRequest initializeRequest(HttpServletRequest request, String email, String idCasa) {
+        if (email != null) {
+            Utente u = gestoreUtente.getUtenteByEmail(email);
+            request.setAttribute("utente", buildGson(u));
+        }
+        if (idCasa != null) {
+            Casa c = gestoreCasa.getCasaById(idCasa);
+            request.setAttribute("casa", buildGson(c));
+        }
+        return request;
+    }
 }

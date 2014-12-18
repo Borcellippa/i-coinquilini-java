@@ -37,4 +37,10 @@
             30
         </session-timeout>
     </session-config>
+    <ejb-local-ref>
+        <ejb-ref-name>GestoreCasa</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>borcellippa.coinquilini.casa.casa.GestoreCasaLocal</local>
+        <ejb-link>I_coinquilini-ejb.jar#GestoreCasa</ejb-link>
+    </ejb-local-ref>
 </web-app>
