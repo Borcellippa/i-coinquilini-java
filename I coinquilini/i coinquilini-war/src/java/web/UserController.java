@@ -89,8 +89,7 @@ public class UserController extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else {
                     Casa c = user.getCasa();
-                    String gsonCasa = buildGson(c);
-                    request.setAttribute("casa", gsonCasa);
+                    request = Utility.initializeRequest(request,email,c.getId());
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
@@ -116,8 +115,7 @@ public class UserController extends HttpServlet {
             } else {
                 Casa c = user.getCasa();
                 if (c != null) {
-                    String gsonCasa = buildGson(c);
-                    request.setAttribute("casa", gsonCasa);
+                    request = Utility.initializeRequest(request,email,c.getId());
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 } else {
@@ -143,8 +141,7 @@ public class UserController extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                 } else { // l'utente è un inquilino quindi entra nella sua casa
                     Casa c = user.getCasa();
-                    String gsonCasa = buildGson(c);
-                    request.setAttribute("casa", gsonCasa); // carico la pagina con tutte le informazioni della casa
+                    request = Utility.initializeRequest(request,email,c.getId());
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
@@ -194,9 +191,8 @@ public class UserController extends HttpServlet {
                     if (u.getTipoUtente().equals("U")) {
                         rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
                     } else {
-                        Casa c = u.getCasa();
                         request.setAttribute("location", buildGson("bacheca"));
-                        request.setAttribute("casa", buildGson(c));
+                        request = Utility.initializeRequest(request,u.getEmail(),u.getCasa().getId());
                         rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                     }
                 } else {
@@ -281,8 +277,7 @@ public class UserController extends HttpServlet {
                     // reset delle notifiche sui post
                     gestoreUtente.resetNotifications("post", u.getId());
                     Casa c = u.getCasa();
-                    String gsonCasa = buildGson(c);
-                    request.setAttribute("casa", gsonCasa);
+                    request = Utility.initializeRequest(request,email,c.getId());
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
@@ -398,8 +393,7 @@ public class UserController extends HttpServlet {
                 } else {
                     gestoreUtente.resetNotifications("post", user.getId());
                     Casa c = user.getCasa();
-                    String gsonCasa = buildGson(c);
-                    request.setAttribute("casa", gsonCasa);
+                    request = Utility.initializeRequest(request,email,c.getId());
                     request.setAttribute("location", buildGson("bacheca"));
                     rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/bacheca/bacheca.jsp");
                 }
@@ -424,9 +418,8 @@ public class UserController extends HttpServlet {
                 request.setAttribute("location", buildGson("entraCasa"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
             } else {
-                String gsonUser = buildGson(u);
-                request.setAttribute("utente", gsonUser);
-                request.setAttribute("location", buildGson("profilo"));
+                request = Utility.initializeRequest(request,email,u.getCasa().getId());
+                request.setAttribute("location", buildGson("profilo_utente"));
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
             }
 
@@ -434,8 +427,7 @@ public class UserController extends HttpServlet {
             session = request.getSession(); // prendo l'utente dalla sessione
             String email = (String) session.getAttribute("email");
             Utente u = gestoreUtente.getUtenteByEmail(email);
-            String gsonUser = buildGson(u);
-            request.setAttribute("utente", gsonUser);
+            request = Utility.initializeRequest(request,email,u.getCasa().getId());
             request.setAttribute("location", buildGson("profilo_utente"));
             rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/profilo_utente.jsp");
                     
@@ -465,9 +457,7 @@ public class UserController extends HttpServlet {
             }
 
             // caricamento della wiew
-            u = gestoreUtente.getUtenteByEmail(email);
-            String gsonUser = buildGson(u);
-            request.setAttribute("utente", gsonUser);
+            request = Utility.initializeRequest(request,email,u.getCasa().getId());
             request.setAttribute("location", buildGson("profilo"));
             if (u.getTipoUtente().equals("U")) {
                 rd = getServletContext().getRequestDispatcher("/WEB-INF/pages/utente/entraCasa.jsp");
