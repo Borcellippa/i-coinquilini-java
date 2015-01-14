@@ -43,4 +43,16 @@
         <local>borcellippa.coinquilini.casa.casa.GestoreCasaLocal</local>
         <ejb-link>I_coinquilini-ejb.jar#GestoreCasa</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>GestoreUtente</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>borcellippa.coinquilini.utente.GestoreUtenteLocal</local>
+        <ejb-link>I_coinquilini-ejb.jar#GestoreUtente</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>GestoreBacheca</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>borcellippa.coinquilini.casa.bacheca.bacheca.GestoreBachecaLocal</local>
+        <ejb-link>I_coinquilini-ejb.jar#GestoreBacheca</ejb-link>
+    </ejb-local-ref>
 </web-app>

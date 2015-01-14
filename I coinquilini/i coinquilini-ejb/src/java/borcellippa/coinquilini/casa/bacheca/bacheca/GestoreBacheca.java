@@ -71,7 +71,10 @@ public class GestoreBacheca implements GestoreBachecaLocal {
     @Override
     public Bacheca getBacheca(String casaId) {
         Casa c = casaFacade.find(casaId);
-        return c.getBacheca();
+        if(c != null)
+            return c.getBacheca();
+        else
+            return null;
     }
 
     @Override
