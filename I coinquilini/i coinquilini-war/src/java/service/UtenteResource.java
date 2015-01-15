@@ -74,6 +74,13 @@ public class UtenteResource {
     }
     
     @POST
+    @Path("/getUtente")
+    @Produces("application/json")
+    public Utente getUtente(@FormParam("email") String email) {
+        return gestoreUtente.getUtenteByEmail(email);
+    }
+    
+    @POST
     @Path("/testLogin")
     public String testLogin(@FormParam("email") String email,@FormParam("password")  String password) {
         return email+password;
