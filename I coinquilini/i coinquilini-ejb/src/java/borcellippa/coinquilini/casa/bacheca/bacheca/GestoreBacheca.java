@@ -65,10 +65,12 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         post.setAutore_img(i.getFoto_path());
         post.setContenuto(contenuto);
         Bacheca b = c.getBacheca();
+        
         Calendar cal = new GregorianCalendar();
         SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("dd/MM/yyyy HH:mm");
-        post.setDataPubblicazione(cal.getTime().toString());
+        df.applyPattern("dd/MM/yyyy - HH:mm");
+        post.setDataPubblicazione(df.format(cal.getTime()));
+        
         post.setAutore_email(email_autore);
         postFacade.create(post);
         List<Post> list = b.getPosts();

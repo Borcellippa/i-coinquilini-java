@@ -39,10 +39,6 @@
             <% } else {
                 for (int i = listaPost.size(); i > 0; i--) {
                     Post p = listaPost.get(i - 1);
-                    String dataPost;
-                    SimpleDateFormat df = new SimpleDateFormat();
-                    df.applyPattern("dd/MM/yyyy HH:mm");
-                    String[] splited;
             %>
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -55,11 +51,7 @@
                         <div class="col-md-12">
                             <h3><%= p.getAutore()%></h3>
                             <p>
-                                <% 
-                                    dataPost = df.format(p.getDataPubblicazione());
-                                    splited = dataPost.split(" ");
-                                    out.println(splited[0]+" - "+splited[1]);
-                                %>
+                                <% out.println(p.getDataPubblicazione()); %>
                             </p>
                         </div>
                     </div>
