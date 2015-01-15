@@ -96,7 +96,7 @@
 
                         <%
                             } else {
-                                out.println("What is love, baby don't hurt me, don't hurt me, no more...");
+                                out.println("... tu pensa a vivere, alla casa ci pensiamo noi ...");
                             }
                         %>
 
