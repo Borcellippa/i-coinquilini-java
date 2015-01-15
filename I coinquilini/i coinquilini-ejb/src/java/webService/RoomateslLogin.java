@@ -25,7 +25,7 @@ import com.google.gson.Gson;
 @Stateless()
 public class RoomateslLogin {
     @EJB
-    private GestoreUtenteLocal ejbRef;// Add business logic below. (Right-click in editor and choose
+    private GestoreUtenteLocal ejbRef; // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Web Service Operation")
 
     /**
