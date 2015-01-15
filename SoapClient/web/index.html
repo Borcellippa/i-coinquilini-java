@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>SOAP Client</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    </head>
+    <body>
+        <fieldset style="width: 40%; margin: 50px;background-color: darkgray;border-radius: 70px;padding: 30px;margin-left: auto;margin-right: auto;">
+            <h3><b>Effettua l'accesso attraverso Roommates!</b></h3>
+            </br>
+            <div class="wizard-content" id="formRegistrazione"> 
+                <form method="POST" action="SoapConnection" role="form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="text" name="password" class="form-control" required>
+                    </div>
+                    
+                    <input type="hidden" name="action" value="verificaLogin">
+                    
+                    </br>
+                    
+                    <div class="form-group" style="text-align: center">
+                        <button type="submit" class="btn btn-lg">Effettua accesso</button>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+    </body>
+</html>
