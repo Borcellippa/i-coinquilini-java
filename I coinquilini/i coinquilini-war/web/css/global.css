@@ -2,6 +2,19 @@ body{
     min-width: 1150px;
 }
 
+#meteoContainer{
+    background-color: lightcyan;
+    padding: 15px;
+    border-radius: 50px;
+    border-style: inset;
+    border-width: medium;
+    border-top-color: rgb(58, 212, 217);
+    border-left-color: rgb(58, 212, 217);
+    border-bottom-color: rgb(116, 226, 230);
+    border-right-color: rgb(116, 226, 230);
+    padding-left: 35px;
+}
+
 .input-prezzo-totale{
     background: url(../images/euro.png) no-repeat scroll 7px 7px;
     padding-left:40px;

@@ -1,7 +1,20 @@
+<%@page import="com.google.gson.JsonArray"%>
+<%@page import="com.google.gson.JsonParser"%>
+<%@page import="java.io.BufferedReader"%>
+<%@page import="java.io.InputStreamReader"%>
+<%@page import="borcellippa.coinquilini.casa.casa.Casa"%>
 <%@page import="borcellippa.coinquilini.utente.Utente"%>
 <%@page import="com.google.gson.Gson"%>
+<%@page import="java.net.HttpURLConnection"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.io.DataOutputStream"%>
+<%@page import="com.google.gson.JsonObject"%>
+
+
 
 <%
+    String iconUrl = "",descrizioneMeteo = "", mainMeteo = "";
+    int temperatura = 0;
     Gson gsonLocation = new Gson();
     String location = "";
     if (request.getAttribute("location") != null) {
@@ -13,7 +26,61 @@
     if (request.getAttribute("utente") != null) {
         String ut = (String)request.getAttribute("utente");
         u = gsonLocation.fromJson(ut, Utente.class);
+        Casa c = u.getCasa();
+        
+        try{
+            /* Scarico il json */
+            String meteoUrl = "http://molten-ruler-747.appspot.com";
+            URL obj = new URL(meteoUrl);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
+            String urlParameters = "citta="+c.getCitta();
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer res = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                    res.append(inputLine);
+            }
+            in.close();
+            
+            /* Lo parsifico */
+            String meteoString = new String(res);
+            JsonParser parser = new JsonParser();
+            JsonObject jsonMeteo = parser.parse(meteoString).getAsJsonObject();
+            String cod = jsonMeteo.get("cod").getAsString();
+            if(cod.equals("200")){
+                System.out.println("OOOK");
+                JsonArray array = jsonMeteo.getAsJsonArray("weather");
+                String tempString = array.get(0).toString();
+                JsonObject tempObj = parser.parse(tempString).getAsJsonObject();
+
+                //immagine
+                iconUrl = "http://openweathermap.org/img/w/"+tempObj.get("icon").getAsString()+".png";
+
+                // testo
+                descrizioneMeteo = tempObj.get("description").getAsString();
+                
+                // main
+                mainMeteo = tempObj.get("main").getAsString();
+                
+                // temp
+                JsonObject temperaturaTemp = jsonMeteo.getAsJsonObject("main");
+                temperatura = (int)temperaturaTemp.get("temp").getAsFloat();
+                System.out.println("STAMPO: "+iconUrl);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
+    
+    
 %>
 
 
@@ -163,5 +230,22 @@
                 </div>
             </div>
         </div>
+        
+        </br>
+        
+        <% if(u != null && u.getCasa() != null){ %>
+        <div id="meteo">
+            <fieldset id="meteoContainer">
+                <h2>Meteo a <b><%= u.getCasa().getCitta() %></b></h2>
+                <div style="display: flex; margin-top: -25px; margin-left: -26px;">
+                    <img src="<%= iconUrl %>" style="width: 80px; height: 80px">
+                    <h1 style="margin-top: 20px"><b><%= temperatura %>°</b></h1>
+                </div>
+                <div>
+                    <h4>Si prevede <b><%= descrizioneMeteo %></b></h4>
+                </div>
+            </fieldset>
+        </div>
+        <% } %>
     </div>
 </div>
