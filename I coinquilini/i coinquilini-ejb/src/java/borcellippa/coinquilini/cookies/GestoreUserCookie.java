@@ -78,6 +78,12 @@ public class GestoreUserCookie implements GestoreUserCookieLocal {
         return sb.toString();
     }
 
+    /**
+     * Funzione utilizzata per ricercare un utente in base al token generato 
+     * in precedenza e salvato nel cookie
+     * @param token
+     * @return 
+     */
     @Override
     public Utente getUtenteByToken(String token) {
         return userCookieFacade.getUtenteByToken(token);

@@ -20,7 +20,13 @@ public class GestoreWishlistEntry implements GestoreWishlistEntryLocal {
     private WishlistEntryFacadeLocal wishlistEntryFacade;
 
     
-    
+    /**
+     * Crea una nuova wishlistEntry
+     * @param w La wishlist alla quale associare la entry
+     * @param descrizione
+     * @param quantita
+     * @return L'oggetto wishlistEntry creato
+     */
     @Override
     public WishlistEntry createEntry(Wishlist w, String descrizione, int quantita) {
         WishlistEntry we = new WishlistEntry();
@@ -31,11 +37,6 @@ public class GestoreWishlistEntry implements GestoreWishlistEntryLocal {
         return wishlistEntryFacade.find(we.getId());
     }
     
-    
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
     @Override
     public WishlistEntry getEntry(Long entryID) {
         return wishlistEntryFacade.find(entryID);

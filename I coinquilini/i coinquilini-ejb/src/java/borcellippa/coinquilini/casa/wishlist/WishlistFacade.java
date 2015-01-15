@@ -31,6 +31,11 @@ public class WishlistFacade extends AbstractFacade<Wishlist> implements Wishlist
         super(Wishlist.class);
     }
 
+    /**
+     * Restituisce la wishlist associata ad una casa
+     * @param casaId ID della casa della quale si vuole ricercare la wishlsit
+     * @return La wishlist associata alla casa
+     */
     @Override
     public Wishlist getWishlistByHouse(String casaId) {
         try {

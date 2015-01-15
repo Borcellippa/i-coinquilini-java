@@ -36,14 +36,25 @@ public class GestoreCasa implements GestoreCasaLocal {
     @EJB
     private CasaFacadeLocal casaFacade;
 
-    
+    /**
+     * Questo metodo viene utilizzato per accedere ad una casa sulla base 
+     * del suo codice univoco
+     * @param codiceCasa Il codice della casa alla quale si vuole accedere
+     * @return La casa associata al codice fornito
+     */
     @Override
     public Casa getCasaByCodiceCasa(String codiceCasa) {
         Casa c = casaFacade.getCasaByCodiceCasa(codiceCasa);
         return c;
     }
     
-
+    /**
+     * Data una casa, questo metodo la persiste nel database dopo aver creato
+     * tutti gli oggetti accessori necessari(calendario,bacheca,...)
+     * @param c La casa da persistere
+     * @return Il codice univoco generato necessario ad un nuovo utente per 
+     * entrare in casa
+     */
     @Override
     public String addCasa(Casa c) {
 
@@ -66,11 +77,20 @@ public class GestoreCasa implements GestoreCasaLocal {
         return codiceCasa;
     }
 
+     /**
+     * Restituisce una casa basandosi sull'id
+     * @param idCasa ID della casa da cercare
+     * @return La casa associata all'ID
+     */
     @Override
     public Casa getCasaById(String idCasa) {
         return casaFacade.find(idCasa);
     }
 
+    /**
+     * Modifica l'oggetto casa salvato sul database
+     * @param c La casa da modificare
+     */
     @Override
     public void editCasa(Casa c) {
         casaFacade.edit(c);

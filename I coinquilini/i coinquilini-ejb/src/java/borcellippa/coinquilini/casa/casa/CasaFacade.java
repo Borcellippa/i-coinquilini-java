@@ -31,6 +31,12 @@ public class CasaFacade extends AbstractFacade<Casa> implements CasaFacadeLocal 
         super(Casa.class);
     }
 
+    /**
+     * Questo metodo viene utilizzato per accedere ad una casa sulla base 
+     * del suo codice univoco
+     * @param codiceCasa Il codice della casa alla quale si vuole accedere
+     * @return La casa associata al codice fornito
+     */
     @Override
     public Casa getCasaByCodiceCasa(String codiceCasa) {
         try {

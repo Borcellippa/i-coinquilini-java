@@ -8,7 +8,6 @@ package borcellippa.coinquilini.casa.bacheca.post;
 
 import borcellippa.coinquilini.media.Media;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,8 +27,7 @@ public class Post implements Serializable {
     private Long id;
     @Lob
     private String contenuto;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dataPubblicazione;
+    private String dataPubblicazione;
     private Media media;
     private String autore;
     private String autore_img;
@@ -116,7 +114,7 @@ public class Post implements Serializable {
      *
      * @return the value of dataPubblicazione
      */
-    public Date getDataPubblicazione() {
+    public String getDataPubblicazione() {
         return dataPubblicazione;
     }
 
@@ -125,7 +123,7 @@ public class Post implements Serializable {
      *
      * @param dataPubblicazione new value of dataPubblicazione
      */
-    public void setDataPubblicazione(Date dataPubblicazione) {
+    public void setDataPubblicazione(String dataPubblicazione) {
         this.dataPubblicazione = dataPubblicazione;
     }
 

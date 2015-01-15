@@ -28,9 +28,13 @@ public class GestoreWishlist implements GestoreWishlistLocal {
         return wishlistFacade.getWishlistByHouse(casaId);
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
+    /**
+     * Crea un oggetto wishlistEntry, lo aggiunge alla wishlist e lo salva sul database
+     * @param w La wishlist alla quale aggiungere la entry
+     * @param descrizione La descrizione della entry
+     * @param quantita Quantità della entry
+     * @return La wishlist aggiornata con il nuovo oggetto
+     */
     @Override
     public Wishlist addEntry(Wishlist w, String descrizione, int quantita) {
         WishlistEntry we = gestoreWishlistEntry.createEntry(w,descrizione,quantita);
@@ -41,6 +45,12 @@ public class GestoreWishlist implements GestoreWishlistLocal {
         return wishlistFacade.find(w.getId());
     }
 
+    /**
+     * Elimina una entry della wishlist in base al'ID
+     * @param w La wishlist dalla quale eliminare la entry
+     * @param idEntry ID della entry
+     * @return La wishlist aggiornata senza la entry
+     */
     @Override
     public Wishlist deleteEntry(Wishlist w, Long idEntry) {
         List<WishlistEntry> we = w.getEntries();

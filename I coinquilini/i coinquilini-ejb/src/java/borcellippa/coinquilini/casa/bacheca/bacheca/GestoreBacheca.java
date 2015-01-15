@@ -36,6 +36,11 @@ public class GestoreBacheca implements GestoreBachecaLocal {
     @EJB
     private UtenteFacadeLocal utenteFacade;
     
+    /**
+     * Dato l'id della casa restituisce la lista dei post presenti nella bacheca associata
+     * @param casaId Id della casa di interesse
+     * @return La lista dei post associati alla casa
+     */
     @Override
     public List<Post> getPosts(String casaId) {
         Casa c = casaFacade.find(casaId);
@@ -44,6 +49,13 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         return listaPosts;
     }
 
+    /**
+     * Inserisce un nuovo post nella bacheca
+     * @param email_autore Email dell'autore
+     * @param contenuto Ciò che verrà mostrato nel post
+     * @param casa_id Id della casa associata alla bacheca
+     * @return L'oggetto post creato
+     */
     @Override
     public Post addPost(String email_autore, String contenuto, String casa_id) {
         Casa c = casaFacade.find(casa_id);
@@ -56,7 +68,7 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         Calendar cal = new GregorianCalendar();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("dd/MM/yyyy HH:mm");
-        post.setDataPubblicazione(cal.getTime());
+        post.setDataPubblicazione(cal.getTime().toString());
         post.setAutore_email(email_autore);
         postFacade.create(post);
         List<Post> list = b.getPosts();
@@ -68,6 +80,11 @@ public class GestoreBacheca implements GestoreBachecaLocal {
         return post;
     }
 
+    /**
+     * Restituisce la bacheca associata alla casa
+     * @param casaId La casa della quale si vuole ottenere la bacheca
+     * @return L'oggetto Bacheca
+     */
     @Override
     public Bacheca getBacheca(String casaId) {
         Casa c = casaFacade.find(casaId);
@@ -77,6 +94,11 @@ public class GestoreBacheca implements GestoreBachecaLocal {
             return null;
     }
 
+    /**
+     * Elimina un post
+     * @param b La bacheca che contiene il post da eliminare
+     * @param idPost Id del post che si vuole eliminare
+     */
     @Override
     public void eliminaPost(Bacheca b, Long idPost) {
         Post p = postFacade.find(idPost);

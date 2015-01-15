@@ -33,6 +33,11 @@ public class BachecaFacade extends AbstractFacade<Bacheca> implements BachecaFac
         super(Bacheca.class);
     }
 
+    /**
+     * Restituisce la lista dei post associati ad una bacheca
+     * @param bacheca_id La bacheca che contiene i post da restituire
+     * @return La lista dei post
+     */
     @Override
     public List<Post> getPosts(Long bacheca_id) {
         try {
