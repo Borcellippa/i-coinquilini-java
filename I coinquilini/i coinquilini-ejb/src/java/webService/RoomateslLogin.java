@@ -8,11 +8,9 @@ package webService;
 
 import borcellippa.coinquilini.utente.GestoreUtenteLocal;
 import borcellippa.coinquilini.utente.Utente;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.ejb.Stateless;
-import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import com.google.gson.Gson;
